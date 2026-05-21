@@ -30,6 +30,11 @@ Validação atualizada para a versão v6.10, com comparativo mobile usando apena
 22 - `npm install` após ajuste v6.10: aprovado, sem vulnerabilidades.
 23 - `npm run build` após ajuste v6.10: aprovado.
 24 - Smoke HTTP local após v6.10 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+25 - Commit local após v6.10: aprovado em `89d5145`.
+26 - Push para GitHub `origin/main`: aprovado.
+27 - Deploy Cloudflare Pages após v6.10: aprovado com `npx wrangler pages deploy dist`.
+28 - Smoke HTTP remoto no preview `https://08d4f79d.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
+29 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
 
 ## Observações
 
@@ -37,3 +42,4 @@ Validação atualizada para a versão v6.10, com comparativo mobile usando apena
 02 - Nome Cloudflare configurado em `wrangler.toml`: `hssfiap-chalange-1twdor-2025`.
 03 - `node_modules` e `dist` foram protegidos no `.gitignore`.
 04 - O primeiro deploy retornou projeto inexistente; o projeto Pages foi criado e o deploy foi repetido com sucesso.
+05 - O script `npm run wrangler:deploy` executou o build, mas o deploy falhou porque `wrangler` não estava no PATH do terminal; a publicação foi concluída com `npx wrangler pages deploy dist`.
