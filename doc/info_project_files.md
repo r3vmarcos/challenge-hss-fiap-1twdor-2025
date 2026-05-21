@@ -48,6 +48,14 @@
 - [`functions/api/simulacoes-roi.js`](../functions/api/simulacoes-roi.js) -> endpoint de simulações.
 - [`migrations/`](../migrations) -> migrations D1 preparadas.
 
+## Ajustes Responsivos Atuais
+
+- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona?, Diferencial e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar demonstração permanecem no header.
+- [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
+- [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
+- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
+- [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> no mobile, o comparativo exibe apenas os textos informativos.
+
 ## Textos Visíveis Do Site
 
 ### Cabeçalho
@@ -105,7 +113,9 @@ Origem dos cards: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 ### Processo Comparativo
 
 Origem visual: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx)
-Origem dos cards: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
+Origem dos cards laterais: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
+Origem dos cards informativos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
+Observação mobile: no layout compacto são exibidos apenas os cards informativos.
 
 - Sem HSS - processo tradicional
 - O processo depende de e-mails, conferências manuais e cobranças recorrentes. Quanto mais lento o ciclo, maior o prejuízo por médico parado.
@@ -113,12 +123,20 @@ Origem dos cards: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 - Etapa tradicional 02: A equipe perde tempo cobrando documentos, conferindo anexos e atualizando status manualmente.
 - Etapa tradicional 03: A ausência de premissas de tempo por cenário torna o prazo pouco previsível para a operação.
 - Etapa tradicional 04: Quanto mais lenta a liberação, maior o impacto de médicos parados, agendas vazias e receita postergada.
+- Informação tradicional 01: Documentos ficam fora de um fluxo único, o que dificulta auditoria, rastreabilidade e priorização.
+- Informação tradicional 02: A rotina administrativa vira acompanhamento manual, com retrabalho para lembrar pendências e atualizar controles.
+- Informação tradicional 03: A operação perde previsibilidade porque cada credenciamento depende de validações dispersas e sem padrão claro.
+- Informação tradicional 04: O atraso deixa profissionais sem atuar, reduz capacidade de agenda e posterga receita da instituição.
 - Com HSS - processo digital
 - O ADM define os tempos por cenário e a calculadora usa essas premissas para estimar economia, receita antecipada e ROI.
 - Ganho digital 01: O fluxo digital centraliza etapas, documentos e premissas por tipo de credenciamento configurado no ADM.
 - Ganho digital 02: A instituição define tempo sem HSS, tempo com HSS, percentuais e custos para cada cenário ativo.
 - Ganho digital 03: A calculadora converte dias economizados em receita antecipada, economia operacional e ROI estimado.
 - Ganho digital 04: O painel ADM ativa ou desativa cenários, mantendo o site alinhado ao processo comercial da HSS.
+- Informação digital 01: O processo ganha uma trilha organizada para acompanhar documentos, etapas e responsáveis com mais clareza.
+- Informação digital 02: As premissas configuradas no ADM deixam a simulação alinhada ao tipo real de credenciamento analisado.
+- Informação digital 03: O ganho de tempo passa a ser traduzido em indicadores financeiros fáceis de apresentar para decisão.
+- Informação digital 04: A equipe comercial mantém a calculadora atualizada sem depender de alteração direta no código da landing.
 
 ### Depoimentos
 
@@ -189,6 +207,7 @@ Origem: [`src/components/calculadora/calculadora-roi.tsx`](../src/components/cal
 - Destrave para continuar rolando a página.
 - Travar calculadora na tela
 - Destravar calculadora
+- Quando travada no PC/notebook, a calculadora bloqueia a rolagem da página até ser destravada.
 
 ### Formulário De Lead
 

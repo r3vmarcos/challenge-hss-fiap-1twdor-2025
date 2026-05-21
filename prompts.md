@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-05-21 - Mobile informativo, bloqueio da calculadora, commits e deploy
+
+Pedido: no mobile exibir apenas `informacoesSemHss` e `informacoesComHss`; no PC/notebook, ao fixar a calculadora, impedir a rolagem da página; fazer commits e deploys.
+
+Aplicacao: o layout compacto do comparativo passou a renderizar apenas `informacoes`, o travamento da calculadora passou a congelar a posição da página e bloquear wheel, touch e teclas de rolagem, e a documentação foi atualizada antes da validação, commit e deploy.
+
+## 2026-05-21 - Conteudos distintos no comparativo Sem HSS
+
+Pedido: no bloco "Sem HSS - processo tradicional", separar o conteudo exibido no lado dos cards do conteudo exibido no lado da informacao, pois os dois lados estavam iguais.
+
+Aplicacao: foram criados textos informativos separados em `dadosLanding.ts`, o componente `secao-processo-comparativo.tsx` passou a receber `itens` e `informacoes`, e a documentacao foi atualizada para indicar os arrays corretos de cada lado.
+
 ## 2026-05-21 - Revisão estrutural e publicação
 
 Pedido: inspecionar o projeto, separar cada parte do site em componentes para facilitar modificações, revisar ortografia global em pt-BR, listar melhorias possíveis, criar README no padrão GitHub, criar repositório, publicar no GitHub, fazer deploy no Cloudflare no projeto `hssfiap-chalange-1twdor-2025` e gerar commit local/remoto.
@@ -29,6 +41,12 @@ Aplicação: a calculadora recebeu modo compacto, o header passa a ocultar no mo
 Pedido: manter a versão PC/notebook, adaptar tablet/mobile, corrigir a imagem da médica para não ultrapassar o fundo azul claro e adicionar ao portal um menu A11y com todos os recursos informados.
 
 Aplicação: o hero foi ajustado em telas menores, benefícios e comparativo passaram a ter fallback estático em tablet/mobile, foi criado o componente global `MenuAcessibilidade` e adicionadas opções de contraste, fonte, tamanho, espaçamento, cursor, daltonismo, leitura por hover e restauração de padrões.
+
+## 2026-05-21 - Header mobile e modal de explicação
+
+Pedido: no mobile deixar Benefícios, Como funciona?, Diferencial e Depoimentos como menu sanduíche; manter Calculadora ROI e Agendar demonstração no header; reduzir logos; fazer o botão A11y sumir ao rolar e reaparecer em 3 segundos; deixar o modal "!" central, compacto ao texto e fechando ao clicar fora.
+
+Aplicação: o cabeçalho mobile passou a exibir CTAs diretos e menu sanduíche para os links de navegação, os logos foram reduzidos por CSS, o botão A11y ganhou temporização no scroll e o modal de explicação das etapas da calculadora ficou compacto, centralizado e com fechamento pelo backdrop.
 
 ## 2026-05-21 - Ajustes finais A11y e responsivo
 

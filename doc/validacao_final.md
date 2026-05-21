@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação em atualização para a versão v6.7, com ajustes finais do menu A11y, mobile 100vw, abas em tablet e revisão de mojibake/pt-BR.
+Validação atualizada para a versão v6.10, com comparativo mobile usando apenas textos informativos e bloqueio de rolagem quando a calculadora fica travada no PC/notebook.
 
 ## Checklist Técnico
 
@@ -22,6 +22,14 @@ Validação em atualização para a versão v6.7, com ajustes finais do menu A11
 14 - Build após compactação da calculadora e documentação de textos da v6.5: aprovado.
 15 - Build após responsivo tablet/mobile e menu A11y da v6.6: aprovado.
 16 - Build após ajustes finais A11y/mobile/tablet da v6.7: aprovado.
+17 - Build após header mobile, A11y temporizado e modal compacto da v6.8: aprovado.
+18 - Smoke HTTP local após v6.8 em `http://localhost:5196/`: aprovado com HTTP 200.
+19 - `npm install` após ajuste v6.9: aprovado, sem vulnerabilidades.
+20 - `npm run build` após ajuste v6.9: aprovado.
+21 - Smoke HTTP local após v6.9 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+22 - `npm install` após ajuste v6.10: aprovado, sem vulnerabilidades.
+23 - `npm run build` após ajuste v6.10: aprovado.
+24 - Smoke HTTP local após v6.10 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
 
 ## Observações
 

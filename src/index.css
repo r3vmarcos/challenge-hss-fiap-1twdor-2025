@@ -284,8 +284,8 @@ body::-webkit-scrollbar-thumb:hover,
 .logo-origami {
   position: relative;
   display: inline-grid;
-  height: 3rem;
-  width: 13rem;
+  height: 2.2rem;
+  width: 9rem;
   place-items: center;
   perspective: 900px;
 }
@@ -324,26 +324,47 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .logo-origami img {
-  max-height: 2.8rem;
+  max-height: 2rem;
   width: 100%;
   object-fit: contain;
   object-position: center;
 }
 
 .logo-origami-fiap img {
-  max-width: 8rem;
+  max-width: 5.5rem;
 }
 
 .logo-origami-sombra {
   position: absolute;
   left: 50%;
-  top: 0.45rem;
-  height: 2rem;
-  width: 9rem;
+  top: 0.25rem;
+  height: 1.4rem;
+  width: 6rem;
   border-radius: 999px;
   background: rgba(75, 50, 216, 0.12);
   filter: blur(18px);
   transform: translateX(-50%) translateZ(-1px);
+}
+
+@media (max-width: 640px) {
+  .logo-origami {
+    height: 1.6rem;
+    width: 5rem;
+  }
+
+  .logo-origami img {
+    max-height: 1.45rem;
+  }
+
+  .logo-origami-fiap img {
+    max-width: 3.6rem;
+  }
+
+  .logo-origami-sombra {
+    top: 0.15rem;
+    height: 1rem;
+    width: 3.8rem;
+  }
 }
 
 @keyframes logo-origami-entrada {

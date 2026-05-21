@@ -225,57 +225,119 @@ export function CalculadoraRoi({
       return;
     }
 
-    const overflowOriginal =
+    const posicaoScrollTravada =
+      window.scrollY;
+    const overflowHtmlOriginal =
+      document.documentElement.style.overflow;
+    const overflowBodyOriginal =
       document.body.style.overflow;
+    const positionBodyOriginal =
+      document.body.style.position;
+    const topBodyOriginal =
+      document.body.style.top;
+    const widthBodyOriginal =
+      document.body.style.width;
     document.body.classList.add(
       "calculadora-travada",
     );
 
-    function avisarTravamento(
+    function bloquearRolagem(
       evento: Event,
     ): void {
-      const alvo = evento.target;
+      if (evento instanceof KeyboardEvent) {
+        const teclasRolagem = [
+          "ArrowDown",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp",
+          " ",
+        ];
 
-      if (
-        alvo instanceof Node &&
-        painelCalculadoraRef.current?.contains(alvo)
-      ) {
-        return;
+        if (!teclasRolagem.includes(evento.key)) {
+          return;
+        }
       }
 
+      const alvo = evento.target;
+
       evento.preventDefault();
-      definirTentativasRolagemTravada(
-        (valorAtual) =>
-          Math.min(valorAtual + 1, 9),
-      );
+
+      if (
+        !(alvo instanceof Node) ||
+        !painelCalculadoraRef.current?.contains(alvo)
+      ) {
+        definirTentativasRolagemTravada(
+          (valorAtual) =>
+            Math.min(valorAtual + 1, 9),
+        );
+      }
     }
 
+    function manterPosicaoTravada(): void {
+      window.scrollTo(0, posicaoScrollTravada);
+    }
+
+    document.documentElement.style.overflow =
+      "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top =
+      `-${posicaoScrollTravada}px`;
+    document.body.style.width = "100%";
     window.addEventListener(
       "wheel",
-      avisarTravamento,
+      bloquearRolagem,
       { passive: false },
     );
     window.addEventListener(
       "touchmove",
-      avisarTravamento,
+      bloquearRolagem,
       { passive: false },
+    );
+    window.addEventListener(
+      "keydown",
+      bloquearRolagem,
+      { passive: false },
+    );
+    window.addEventListener(
+      "scroll",
+      manterPosicaoTravada,
+      { passive: true },
     );
 
     return () => {
+      document.documentElement.style.overflow =
+        overflowHtmlOriginal;
       document.body.style.overflow =
-        overflowOriginal;
+        overflowBodyOriginal;
+      document.body.style.position =
+        positionBodyOriginal;
+      document.body.style.top =
+        topBodyOriginal;
+      document.body.style.width =
+        widthBodyOriginal;
       document.body.classList.remove(
         "calculadora-travada",
       );
       window.removeEventListener(
         "wheel",
-        avisarTravamento,
+        bloquearRolagem,
       );
       window.removeEventListener(
         "touchmove",
-        avisarTravamento,
+        bloquearRolagem,
       );
+      window.removeEventListener(
+        "keydown",
+        bloquearRolagem,
+      );
+      window.removeEventListener(
+        "scroll",
+        manterPosicaoTravada,
+      );
+      window.scrollTo(0, posicaoScrollTravada);
     };
   }, [calculadoraTravada]);
 
@@ -1569,10 +1631,24 @@ function NavegacaoEtapas({
     </div>
 
     {etapaExplicada ? (
-      <div className="fixed inset-0 z-[70] flex items-center justify-center bg-hss-tinta/70 px-4 backdrop-blur-sm lg:hidden">
-        <div className="w-full max-w-sm rounded-[2rem] border border-hss-violeta/25 bg-white p-6 shadow-neon dark:border-white/10 dark:bg-hss-tinta">
+      <div
+        className="fixed inset-0 z-[70] flex items-center justify-center bg-hss-tinta/35 px-4 backdrop-blur-[1px] lg:hidden"
+        onClick={() =>
+          definirEtapaExplicada(null)
+        }
+        role="presentation"
+      >
+        <div
+          className="w-fit max-w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-hss-violeta/25 bg-white p-4 shadow-neon dark:border-white/10 dark:bg-hss-tinta"
+          onClick={(evento) =>
+            evento.stopPropagation()
+          }
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Explicação da etapa ${etapaExplicada.nome}`}
+        >
           <div className="flex items-start justify-between gap-4">
-            <h3 className="text-xl font-black text-hss-roxo dark:text-white">
+            <h3 className="text-sm font-black text-hss-roxo dark:text-white">
               {etapaExplicada.nome.toUpperCase()}
             </h3>
             <button
@@ -1581,12 +1657,12 @@ function NavegacaoEtapas({
                 definirEtapaExplicada(null)
               }
               aria-label="Fechar explicação"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 text-lg font-black text-hss-roxo dark:border-white/10 dark:text-white"
+              className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-hss-violeta/20 text-sm font-black text-hss-roxo dark:border-white/10 dark:text-white"
             >
-              - 
+              x
             </button>
           </div>
-          <p className="mt-4 text-sm font-semibold leading-7 text-slate-600 dark:text-slate-300">
+          <p className="mt-2 text-sm font-semibold leading-6 text-slate-600 dark:text-slate-300">
             {descricoesEtapas[etapaExplicada.numero]}
           </p>
         </div>

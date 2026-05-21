@@ -37,6 +37,9 @@ O painel ADM controla os tipos de credenciamento, tempos, custos, percentuais e 
 - Hero com métricas animadas e imagem institucional.
 - Seções independentes para benefícios, processo, depoimentos, diferencial ADM, calculadora e formulário.
 - Scrollytelling com seções fixas para benefícios, comparação sem HSS/com HSS e calculadora em tela cheia.
+- Comparativo sem HSS/com HSS com textos separados para cards laterais e painel informativo.
+- No mobile, o comparativo exibe apenas os textos informativos de cada bloco.
+- No PC/notebook, o pino da calculadora fixa o painel e bloqueia a rolagem da página até destravar.
 - Layout responsivo para PC/notebook, tablet e mobile.
 - Menu global de acessibilidade com contraste, fonte, espaçamento, cursor, daltonismo e leitura por hover.
 - Calculadora de ROI para empresa/hospital/clínica e médico.

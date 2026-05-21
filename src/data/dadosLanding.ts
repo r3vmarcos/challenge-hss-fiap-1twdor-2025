@@ -58,17 +58,31 @@ export const etapasProcesso = [
 ];
 
 export const problemasSemHss = [
-  "Arquivos espalhados em e-mails, planilhas e pastas internas dificultam o controle do processo.",
-  "A equipe perde tempo cobrando documentos, conferindo anexos e atualizando status manualmente.",
-  "A ausência de premissas de tempo por cenário torna o prazo pouco previsível para a operação.",
-  "Quanto mais lenta a liberação, maior o impacto de médicos parados, agendas vazias e receita postergada.",
+  "sem S Arquivos espalhados em e-mails, planilhas e pastas internas dificultam o controle do processo.",
+  "sem S A equipe perde tempo cobrando documentos, conferindo anexos e atualizando status manualmente.",
+  "sem S A ausência de premissas de tempo por cenário torna o prazo pouco previsível para a operação.",
+  "sem S Quanto mais lenta a liberação, maior o impacto de médicos parados, agendas vazias e receita postergada.",
+];
+
+export const informacoesSemHss = [
+  "sem R Documentos ficam fora de um fluxo único, o que dificulta auditoria, rastreabilidade e priorização.",
+  "sem R A rotina administrativa vira acompanhamento manual, com retrabalho para lembrar pendências e atualizar controles.",
+  "sem R A operação perde previsibilidade porque cada credenciamento depende de validações dispersas e sem padrão claro.",
+  "sem R O atraso deixa profissionais sem atuar, reduz capacidade de agenda e posterga receita da instituição.",
 ];
 
 export const ganhosComHss = [
-  "O fluxo digital centraliza etapas, documentos e premissas por tipo de credenciamento configurado no ADM.",
-  "A instituição define tempo sem HSS, tempo com HSS, percentuais e custos para cada cenário ativo.",
-  "A calculadora converte dias economizados em receita antecipada, economia operacional e ROI estimado.",
-  "O painel ADM ativa ou desativa cenários, mantendo o site alinhado ao processo comercial da HSS.",
+  "com S O fluxo digital centraliza etapas, documentos e premissas por tipo de credenciamento configurado no ADM.",
+  "com S A instituição define tempo sem HSS, tempo com HSS, percentuais e custos para cada cenário ativo.",
+  "com S A calculadora converte dias economizados em receita antecipada, economia operacional e ROI estimado.",
+  "com S O painel ADM ativa ou desativa cenários, mantendo o site alinhado ao processo comercial da HSS.",
+];
+
+export const informacoesComHss = [
+  "com R O processo ganha uma trilha organizada para acompanhar documentos, etapas e responsáveis com mais clareza.",
+  "com R As premissas configuradas no ADM deixam a simulação alinhada ao tipo real de credenciamento analisado.",
+  "com R O ganho de tempo passa a ser traduzido em indicadores financeiros fáceis de apresentar para decisão.",
+  "com R A equipe comercial mantém a calculadora atualizada sem depender de alteração direta no código da landing.",
 ];
 
 export const depoimentos = [

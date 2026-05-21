@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -82,6 +83,52 @@ export function MenuAcessibilidade(): JSX.Element {
       return configuracoesPadrao;
     }
   });
+  const [
+    botaoVisivel,
+    definirBotaoVisivel,
+  ] = useState(true);
+  const temporizadorScrollRef =
+    useRef<number | null>(null);
+  const botaoAcessibilidadeVisivel =
+    menuAberto || botaoVisivel;
+
+  useEffect(() => {
+    function aoRolar(): void {
+      if (menuAberto) {
+        return;
+      }
+
+      definirBotaoVisivel(false);
+
+      if (temporizadorScrollRef.current) {
+        window.clearTimeout(
+          temporizadorScrollRef.current,
+        );
+      }
+
+      temporizadorScrollRef.current =
+        window.setTimeout(() => {
+          definirBotaoVisivel(true);
+        }, 3000);
+    }
+
+    window.addEventListener("scroll", aoRolar, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        aoRolar,
+      );
+
+      if (temporizadorScrollRef.current) {
+        window.clearTimeout(
+          temporizadorScrollRef.current,
+        );
+      }
+    };
+  }, [menuAberto]);
 
   useEffect(() => {
     window.localStorage.setItem(
@@ -275,6 +322,9 @@ export function MenuAcessibilidade(): JSX.Element {
           menuAberto
             ? "-translate-x-[23.5rem] bg-hss-roxo text-white max-sm:-translate-x-[calc(100vw-4.5rem)]"
             : "bg-hss-roxo text-white",
+          botaoAcessibilidadeVisivel
+            ? "opacity-100"
+            : "pointer-events-none translate-x-20 opacity-0",
         ].join(" ")}
         aria-expanded={menuAberto}
         aria-haspopup="dialog"

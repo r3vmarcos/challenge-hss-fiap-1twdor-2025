@@ -51,8 +51,11 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
 | Seção completa Sem HSS / Com HSS | [secao-processo-comparativo.tsx](../src/components/secoes/secao-processo-comparativo.tsx) | Layout sticky, cores, lados dos textos/cards, títulos e destaque progressivo. |
-| Textos "Sem HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `problemasSemHss`. |
-| Textos "Com HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `ganhosComHss`. |
+| Textos dos cards "Sem HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `problemasSemHss`. |
+| Textos informativos "Sem HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `informacoesSemHss`. |
+| Textos dos cards "Com HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `ganhosComHss`. |
+| Textos informativos "Com HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `informacoesComHss`. |
+| Comparativo no mobile | [secao-processo-comparativo.tsx](../src/components/secoes/secao-processo-comparativo.tsx) | Renderiza apenas os arrays informativos no layout compacto. |
 
 ## Depoimentos
 
@@ -73,7 +76,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
-| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, botão de travar, abas, etapas, resumo e composição visual. |
+| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, botão de travar, bloqueio de rolagem, abas, etapas, resumo e composição visual. |
 | Campos numéricos | [campo-numerico.tsx](../src/components/calculadora/campo-numerico.tsx) | Componente de input numérico reutilizável. |
 | Cards de resultado | [cartao-resultado.tsx](../src/components/calculadora/cartao-resultado.tsx) | Visual dos KPIs da calculadora. |
 | Regras de cálculo | [calculosRoi.ts](../src/services/calculosRoi.ts) | Fórmulas de ROI, payback, receita antecipada, economia e formatação. |

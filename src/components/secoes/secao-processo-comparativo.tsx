@@ -6,6 +6,8 @@ import {
 } from "react";
 import {
   ganhosComHss,
+  informacoesComHss,
+  informacoesSemHss,
   problemasSemHss,
 } from "@/data/dadosLanding";
 /* === IMPORTAÇÕES | fim === */
@@ -22,6 +24,7 @@ type BlocoProcessoProps = {
   descricao: string;
   etiqueta: string;
   itens: string[];
+  informacoes: string[];
   invertido: boolean;
 };
 
@@ -55,6 +58,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
         descricao="O processo depende de e-mails, conferências manuais e cobranças recorrentes. Quanto mais lento o ciclo, maior o prejuízo por médico parado."
         etiqueta="Etapa tradicional"
         itens={problemasSemHss}
+        informacoes={informacoesSemHss}
         invertido={false}
       />
 
@@ -64,6 +68,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
         descricao="O ADM define os tempos por cenário e a calculadora usa essas premissas para estimar economia, receita antecipada e ROI."
         etiqueta="Ganho digital"
         itens={ganhosComHss}
+        informacoes={informacoesComHss}
         invertido
       />
     </section>
@@ -78,6 +83,7 @@ function BlocoProcessoTravado({
   descricao,
   etiqueta,
   itens,
+  informacoes,
   invertido,
 }: BlocoProcessoProps): JSX.Element {
   const blocoRef =
@@ -340,7 +346,7 @@ function BlocoProcessoTravado({
           </article>
 
           <div className="grid gap-3">
-            {itens.map((item, indice) => (
+            {informacoes.map((item, indice) => (
               <article
                 key={item}
                 className={
@@ -442,7 +448,7 @@ function BlocoProcessoTravado({
             </p>
 
             <div className="mt-5 space-y-3">
-              {itens.map(
+              {informacoes.map(
                 (item, indice) => {
                   const carregado =
                     indice <
@@ -453,7 +459,7 @@ function BlocoProcessoTravado({
                         Math.min(
                           cardsVisiveis -
                             1,
-                          itens.length -
+                          informacoes.length -
                             1,
                         )
                       : false;

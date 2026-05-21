@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { LogoOrigami } from "@/components/ui/logo-origami";
 
@@ -19,10 +20,13 @@ const links = [
 export function Cabecalho({
   paginaAdm = false,
 }: CabecalhoProps): JSX.Element {
+  const [menuMobileAberto, definirMenuMobileAberto] = useState(false);
+  const linksMobile = links.filter((link) => !link.destaque);
+
   return (
     <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
-      <div className="mx-auto max-w-[1110px] px-4 py-3 sm:px-6 lg:px-0">
-        <div className="flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1110px] px-3 py-2 sm:px-6 lg:px-0 lg:py-3">
+        <div className="flex items-center justify-between gap-2">
           <a href="#topo" className="flex items-center" aria-label="Ir para o início">
             <LogoOrigami />
           </a>
@@ -33,26 +37,75 @@ export function Cabecalho({
             linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] hover:text-hss-violeta"
           />
 
-          <div className="flex items-center gap-3">
-            <ShimmerButton href="#lead" className="hidden px-6 py-3 text-[13px] sm:inline-flex">
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            {!paginaAdm ? (
+              <ShimmerButton
+                href="#roi"
+                variante="contorno"
+                className="px-2.5 py-2 text-[10px] leading-none sm:px-4 sm:text-xs lg:hidden"
+              >
+                Calculadora ROI
+              </ShimmerButton>
+            ) : null}
+
+            <ShimmerButton href="#lead" className="px-2.5 py-2 text-[10px] leading-none sm:px-4 sm:text-xs lg:px-6 lg:py-3 lg:text-[13px]">
               Agendar demonstração
             </ShimmerButton>
+
             <a
               href="#adm"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon sm:inline-flex"
               aria-label="Abrir portal ADM"
               title="Portal ADM"
             >
               <IconePortalAdm />
             </a>
+
+            {!paginaAdm ? (
+              <button
+                type="button"
+                onClick={() => definirMenuMobileAberto((aberto) => !aberto)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm lg:hidden"
+                aria-label={menuMobileAberto ? "Fechar menu" : "Abrir menu"}
+                aria-expanded={menuMobileAberto}
+                aria-controls="menu-mobile-principal"
+              >
+                <IconeMenu aberto={menuMobileAberto} />
+              </button>
+            ) : null}
           </div>
         </div>
 
-        <NavPrincipal
-          paginaAdm={paginaAdm}
-          className="scrollbar-hss mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden"
-          linkClassName="shrink-0 rounded-full border border-[#d9dbe7] bg-white px-4 py-2 text-xs font-normal text-[#070814] shadow-sm"
-        />
+        {!paginaAdm ? (
+          <nav
+            id="menu-mobile-principal"
+            className={[
+              "mt-2 grid gap-1.5 overflow-hidden rounded-2xl border border-[#d9dbe7] bg-white/95 p-2 shadow-sm transition-all lg:hidden",
+              menuMobileAberto
+                ? "max-h-64 opacity-100"
+                : "max-h-0 border-transparent p-0 opacity-0",
+            ].join(" ")}
+            aria-label="Navegação mobile"
+          >
+            {linksMobile.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => definirMenuMobileAberto(false)}
+                className="rounded-xl px-3 py-2 text-sm font-bold text-[#070814] hover:bg-hss-violeta/10 hover:text-hss-roxo"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#adm"
+              onClick={() => definirMenuMobileAberto(false)}
+              className="rounded-xl px-3 py-2 text-sm font-bold text-hss-roxo hover:bg-hss-violeta/10 sm:hidden"
+            >
+              Portal ADM
+            </a>
+          </nav>
+        ) : null}
       </div>
     </header>
   );
@@ -124,3 +177,33 @@ function IconePortalAdm(): JSX.Element {
   );
 }
 /* === ICONE PORTAL ADM | fim === */
+
+/* === ICONE MENU MOBILE | inicio === */
+function IconeMenu({ aberto }: { aberto: boolean }): JSX.Element {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {aberto ? (
+        <>
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </>
+      ) : (
+        <>
+          <path d="M4 7h16" />
+          <path d="M4 12h16" />
+          <path d="M4 17h16" />
+        </>
+      )}
+    </svg>
+  );
+}
+/* === ICONE MENU MOBILE | fim === */

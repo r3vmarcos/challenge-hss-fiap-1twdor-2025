@@ -1,5 +1,27 @@
 # Changelog
 
+## v6.10 - Mobile informativo e calculadora travada
+
+01 - Ajustado o comparativo Sem HSS / Com HSS no mobile para exibir apenas os arrays `informacoesSemHss` e `informacoesComHss`.
+02 - Reforcado o bloqueio de rolagem da pagina quando a calculadora fica fixada no PC/notebook.
+03 - O travamento da calculadora agora bloqueia wheel, touch, teclas de rolagem e mantem a posicao da pagina ate destravar.
+04 - Atualizada a documentacao do projeto com o comportamento novo.
+
+## v6.9 - Conteudos distintos no comparativo
+
+01 - Separados os textos dos cards laterais e dos cards informativos do bloco "Sem HSS - processo tradicional".
+02 - Criados os arrays `informacoesSemHss` e `informacoesComHss` em `src/data/dadosLanding.ts`.
+03 - Atualizado o componente de processo comparativo para renderizar cada lado com sua propria fonte de conteudo.
+04 - Atualizada a documentacao de mapa e inventario de textos do projeto.
+
+## v6.8 - Header mobile e refinamentos A11y
+
+01 - Transformada a navegação mobile de Benefícios, Como funciona?, Diferencial e Depoimentos em menu sanduíche.
+02 - Mantidos Calculadora ROI e Agendar demonstração visíveis no header mobile.
+03 - Reduzido o tamanho dos logos alternados no cabeçalho, com escala menor no mobile.
+04 - Ajustado o botão A11y para sumir durante a rolagem e reaparecer após 3 segundos sem scroll.
+05 - Ajustado o modal de explicação das etapas da calculadora para abrir centralizado, compacto ao texto e fechar ao clicar fora.
+
 ## v6.7 - Ajustes finais A11y, mobile e ortografia
 
 01 - Removida a rolagem interna do menu de acessibilidade.
