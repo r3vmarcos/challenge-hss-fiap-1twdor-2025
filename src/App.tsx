@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Cabecalho } from "@/components/cabecalho";
 import { CamadasParallax } from "@/components/camadas-parallax";
 import { Rodape } from "@/components/layout/rodape";
@@ -14,6 +14,7 @@ import { calcularRoiEmpresa } from "@/services/calculosRoi";
 export default function App(): JSX.Element {
   const [hashAtual, definirHashAtual] = useState(() => window.location.hash);
   const [dicasHoverAtivas, definirDicasHoverAtivas] = useState(false);
+  const primeiraRolagemRef = useRef(true);
   const resultadoHero = useMemo(() => calcularRoiEmpresa(dadosBaseHero), []);
   const paginaAdm = hashAtual === "#adm";
 
@@ -22,6 +23,10 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
 
   useEffect(() => {
@@ -37,6 +42,12 @@ export default function App(): JSX.Element {
     const idDestino = hashAtual.slice(1);
 
     window.requestAnimationFrame(() => {
+      if (primeiraRolagemRef.current) {
+        primeiraRolagemRef.current = false;
+        window.scrollTo({ top: 0, behavior: "auto" });
+        return;
+      }
+
       if (!idDestino || idDestino === "topo" || idDestino === "adm") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;

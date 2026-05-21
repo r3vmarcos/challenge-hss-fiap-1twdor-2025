@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação em atualização para a versão v6.6, com responsivo tablet/mobile, correção da imagem do hero e menu global de acessibilidade.
+Validação em atualização para a versão v6.7, com ajustes finais do menu A11y, mobile 100vw, abas em tablet e revisão de mojibake/pt-BR.
 
 ## Checklist Técnico
 
@@ -21,6 +21,7 @@ Validação em atualização para a versão v6.6, com responsivo tablet/mobile, 
 13 - Build após ajustes visuais e mapa do site da v6.4: aprovado.
 14 - Build após compactação da calculadora e documentação de textos da v6.5: aprovado.
 15 - Build após responsivo tablet/mobile e menu A11y da v6.6: aprovado.
+16 - Build após ajustes finais A11y/mobile/tablet da v6.7: aprovado.
 
 ## Observações
 

@@ -303,15 +303,15 @@ export function SecaoBeneficios(): JSX.Element {
       >
         <div className="mx-auto max-w-[720px]">
           <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
-            BenefÃ­cios da nossa
-            soluÃ§Ã£o
+            Benefícios da nossa
+            solução
           </h2>
           <p className="mt-5 text-base font-medium leading-7 text-[#171826] sm:text-lg">
             Transforme o
-            credenciamento mÃ©dico em um
+            credenciamento médico em um
             processo mais organizado,
-            rastreÃ¡vel e eficiente.
-            Centralize validaÃ§Ãµes,
+            rastreável e eficiente.
+            Centralize validações,
             reduza retrabalho e
             acompanhe cada etapa com
             mais controle operacional.

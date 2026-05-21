@@ -273,8 +273,8 @@ export function MenuAcessibilidade(): JSX.Element {
         className={[
           "fixed right-3 top-1/2 z-[120] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full shadow-[0_18px_42px_rgba(15,23,42,0.24)] transition md:right-5",
           menuAberto
-            ? "translate-x-[-19.5rem] bg-hss-roxo text-white max-sm:translate-x-0 max-sm:top-auto max-sm:bottom-4"
-            : "bg-hss-roxo text-white max-sm:top-auto max-sm:bottom-4",
+            ? "-translate-x-[23.5rem] bg-hss-roxo text-white max-sm:-translate-x-[calc(100vw-4.5rem)]"
+            : "bg-hss-roxo text-white",
         ].join(" ")}
         aria-expanded={menuAberto}
         aria-haspopup="dialog"
@@ -291,6 +291,7 @@ export function MenuAcessibilidade(): JSX.Element {
       {menuAberto ? (
         <button
           type="button"
+          data-a11y-menu
           className="fixed inset-0 z-[100] bg-hss-tinta/35 backdrop-blur-[1px]"
           aria-label="Fechar menu de acessibilidade"
           onClick={() =>
@@ -311,7 +312,7 @@ export function MenuAcessibilidade(): JSX.Element {
         aria-modal="true"
         aria-label="Opções de acessibilidade"
       >
-        <div className="flex max-h-[82vh] flex-col overflow-y-auto p-4 sm:max-h-[74vh]">
+        <div className="flex max-h-[calc(100vh-1rem)] flex-col overflow-hidden p-3 sm:max-h-[92vh]">
           <div className="flex items-center justify-between gap-3">
             <h2 className="flex items-center gap-2 text-lg font-black">
               <IconeAjustes />
@@ -329,7 +330,7 @@ export function MenuAcessibilidade(): JSX.Element {
             </button>
           </div>
 
-          <div className="mt-4 grid gap-3 text-sm">
+          <div className="mt-3 grid gap-2 text-[13px]">
             <ControleToggle
               titulo="Alto contraste"
               ativo={
@@ -426,7 +427,7 @@ export function MenuAcessibilidade(): JSX.Element {
               }
             />
 
-            <label className="grid gap-1.5 rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-3">
+            <label className="grid gap-1 rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-2.5">
               <span className="font-black">
                 Daltonismo
               </span>
@@ -441,7 +442,7 @@ export function MenuAcessibilidade(): JSX.Element {
                       .value as ModoDaltonismo,
                   )
                 }
-                className="rounded-xl border border-hss-violeta/20 bg-white px-3 py-2 text-sm font-bold outline-none"
+                className="rounded-xl border border-hss-violeta/20 bg-white px-3 py-1.5 text-sm font-bold outline-none"
                 aria-label="Selecionar filtro de daltonismo"
               >
                 <option value="none">
@@ -466,7 +467,7 @@ export function MenuAcessibilidade(): JSX.Element {
                   configuracoesPadrao,
                 )
               }
-              className="rounded-2xl border border-hss-violeta/25 bg-white px-4 py-3 text-sm font-black text-hss-roxo hover:-translate-y-0.5 hover:shadow-neon"
+              className="rounded-2xl border border-hss-violeta/25 bg-white px-4 py-2 text-sm font-black text-hss-roxo hover:-translate-y-0.5 hover:shadow-neon"
             >
               Restaurar padrões
             </button>
@@ -492,7 +493,7 @@ function ControleToggle({
     <button
       type="button"
       onClick={aoAlternar}
-      className="flex items-center justify-between gap-3 rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-3 text-left font-black"
+      className="flex items-center justify-between gap-3 rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-2.5 text-left font-black"
       aria-pressed={ativo}
     >
       <span>{titulo}</span>
@@ -522,9 +523,9 @@ function GrupoOpcoes({
   aoEscolher: (valor: string) => void;
 }): JSX.Element {
   return (
-    <div className="rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-3">
+    <div className="rounded-2xl border border-hss-violeta/15 bg-[#f8f8fc] p-2.5">
       <p className="font-black">{titulo}</p>
-      <div className="mt-2 flex flex-wrap gap-1.5">
+      <div className="mt-1.5 flex flex-wrap gap-1">
         {opcoes.map(([valor, rotulo]) => (
           <button
             key={valor}
@@ -534,8 +535,8 @@ function GrupoOpcoes({
             }
             className={
               valorAtual === valor
-                ? "rounded-full bg-hss-roxo px-3 py-1.5 text-xs font-black text-white"
-                : "rounded-full border border-hss-violeta/20 bg-white px-3 py-1.5 text-xs font-black text-hss-roxo"
+                ? "rounded-full bg-hss-roxo px-2.5 py-1 text-xs font-black text-white"
+                : "rounded-full border border-hss-violeta/20 bg-white px-2.5 py-1 text-xs font-black text-hss-roxo"
             }
             aria-pressed={
               valorAtual === valor
@@ -555,6 +556,7 @@ function FiltrosDaltonismo(): JSX.Element {
   return (
     <svg
       aria-hidden="true"
+      data-a11y-menu
       className="pointer-events-none fixed h-0 w-0"
     >
       <defs>
@@ -595,8 +597,11 @@ function IconeAjustes(): JSX.Element {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.07a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.07a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.05-.05A2 2 0 1 1 7.03 4.3l.05.05A1.65 1.65 0 0 0 8.9 4.7a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.07a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.65 1.65 0 0 0 19.4 9c.26.61.86 1 1.51 1H21a2 2 0 1 1 0 4h-.07c-.65 0-1.25.39-1.53 1Z" />
+      <circle cx="16" cy="4" r="1" />
+      <path d="m18 19 1-7-6 1" />
+      <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+      <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+      <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
     </svg>
   );
 }

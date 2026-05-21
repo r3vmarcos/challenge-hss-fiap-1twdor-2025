@@ -13,6 +13,9 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 * {
@@ -20,11 +23,19 @@ html {
 }
 
 body {
+  width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
   background: #eef0f7;
   color: #070814;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body.calculadora-travada header {
@@ -103,15 +114,15 @@ body.a11y-contraste svg {
   filter: grayscale(100%) contrast(125%);
 }
 
-body.a11y-protanopia #root {
+body.a11y-protanopia #topo > :not([data-a11y-menu]) {
   filter: url("#a11y-protanopia");
 }
 
-body.a11y-deuteranopia #root {
+body.a11y-deuteranopia #topo > :not([data-a11y-menu]) {
   filter: url("#a11y-deuteranopia");
 }
 
-body.a11y-tritanopia #root {
+body.a11y-tritanopia #topo > :not([data-a11y-menu]) {
   filter: url("#a11y-tritanopia");
 }
 

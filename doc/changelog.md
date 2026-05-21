@@ -1,5 +1,16 @@
 # Changelog
 
+## v6.7 - Ajustes finais A11y, mobile e ortografia
+
+01 - Removida a rolagem interna do menu de acessibilidade.
+02 - Corrigido o posicionamento do botão A11y em modos de daltonismo, mantendo-o fixo no meio da viewport durante a rolagem.
+03 - Substituído o ícone do menu A11y pelo SVG de acessibilidade solicitado.
+04 - Ajustada a posição do botão A11y aberto para ficar fora do painel, um pouco mais à esquerda.
+05 - Garantido scroll no topo ao atualizar a página.
+06 - Reforçado `100vw` em mobile para evitar vazamento horizontal.
+07 - Ajustadas as abas da calculadora para aparecerem lado a lado em tablet.
+08 - Revisados mojibake e ortografia pt-BR nos arquivos alterados.
+
 ## v6.6 - Responsivo tablet/mobile e menu de acessibilidade
 
 01 - Mantida a versão PC/notebook como referência visual principal.

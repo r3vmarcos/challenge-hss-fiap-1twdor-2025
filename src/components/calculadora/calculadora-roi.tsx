@@ -1499,14 +1499,14 @@ function NavegacaoEtapas({
         type="button"
         onClick={() => rolar(-1)}
         aria-label="Ver etapas anteriores"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white sm:hidden"
       >
         &lt;
       </button>
 
       <div
         ref={listaRef}
-        className="scrollbar-hss flex snap-x snap-mandatory gap-1.5 overflow-x-auto py-0.5 lg:grid lg:snap-none lg:grid-cols-5 lg:overflow-visible"
+        className="scrollbar-hss flex snap-x snap-mandatory gap-1.5 overflow-x-auto py-0.5 sm:grid sm:snap-none sm:grid-cols-5 sm:overflow-visible"
       >
         {etapas.map((etapa) => {
           const ativo =
@@ -1515,7 +1515,7 @@ function NavegacaoEtapas({
           return (
             <div
               key={etapa.numero}
-              className="group relative grid w-full shrink-0 snap-start grid-cols-[minmax(0,1fr)_2.5rem] gap-2 lg:block lg:min-w-0"
+              className="group relative grid w-full shrink-0 snap-start grid-cols-[minmax(0,1fr)_2.5rem] gap-2 sm:block sm:min-w-0"
             >
               <button
                 type="button"
@@ -1562,7 +1562,7 @@ function NavegacaoEtapas({
         type="button"
         onClick={() => rolar(1)}
         aria-label="Ver próximas etapas"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white sm:hidden"
       >
         &gt;
       </button>

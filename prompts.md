@@ -29,3 +29,9 @@ Aplicação: a calculadora recebeu modo compacto, o header passa a ocultar no mo
 Pedido: manter a versão PC/notebook, adaptar tablet/mobile, corrigir a imagem da médica para não ultrapassar o fundo azul claro e adicionar ao portal um menu A11y com todos os recursos informados.
 
 Aplicação: o hero foi ajustado em telas menores, benefícios e comparativo passaram a ter fallback estático em tablet/mobile, foi criado o componente global `MenuAcessibilidade` e adicionadas opções de contraste, fonte, tamanho, espaçamento, cursor, daltonismo, leitura por hover e restauração de padrões.
+
+## 2026-05-21 - Ajustes finais A11y e responsivo
+
+Pedido: remover rolagem do menu A11y, manter o botão fixo no meio da tela, corrigir Protanopia, trocar o ícone pelo SVG de acessibilidade, posicionar melhor o botão com menu aberto, iniciar sempre no topo ao atualizar, reforçar 100vw no mobile, alinhar abas da calculadora no tablet e revisar mojibake/pt-BR.
+
+Aplicação: o menu A11y foi compactado sem rolagem interna, o filtro de daltonismo deixou de afetar o botão fixo, o ícone foi atualizado, a página passa a iniciar no topo, o mobile foi protegido contra overflow horizontal, as abas aparecem lado a lado em tablet e a codificação dos arquivos alterados foi revisada.
