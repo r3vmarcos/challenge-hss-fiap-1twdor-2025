@@ -1,5 +1,18 @@
 # Changelog
 
+## v6.4 - Mapa do site, header, comparativo e calculadora travável
+
+01 - Criado `docs/map_site_info.md` com o mapa dos arquivos que controlam cada informação da landing, ADM, dados e deploy.
+02 - Alterado o botão redondo do cabeçalho para abrir o Portal ADM via `#adm`.
+03 - Aplicado efeito circulando discreto no link "Calculadora ROI" do cabeçalho, com visual contornado em azul escuro.
+04 - Ajustado o bloco "Sem HSS - processo tradicional" com destaque uppercase laranja em "Sem", título em uma linha e cards/bordas em laranja claro.
+05 - Ajustado o bloco "Com HSS - processo digital" com destaque uppercase azul em "Com", título em uma linha e cards/bordas em azul claro.
+06 - Invertido o bloco "Com HSS - processo digital" para texto à esquerda e cards à direita.
+07 - Removido o encaixe magnético automático da calculadora.
+08 - Adicionado botão de pino para travar/destravar a calculadora em PC/notebook, com aviso quando o usuário tenta rolar a página travada.
+09 - Ajustada a seção da calculadora para caber de "Calcule agora o ROI" até "Composição visual" em área próxima de 95vh.
+10 - Alterado o footer para usar ícones de site, LinkedIn, Facebook e Instagram sem nomes visíveis.
+
 ## v6.3 - Revisão de fluidez, limpeza e deploy
 
 01 - Revisada a fluidez das seções sticky de benefícios, processo tradicional, processo digital e calculadora.

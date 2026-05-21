@@ -123,6 +123,7 @@ npm run wrangler:deploy
 - [`doc/changelog.md`](doc/changelog.md)
 - [`doc/info_project_files.md`](doc/info_project_files.md)
 - [`doc/validacao_final.md`](doc/validacao_final.md)
+- [`docs/map_site_info.md`](docs/map_site_info.md)
 - [`prompts.md`](prompts.md)
 
 ## Melhorias Sugeridas

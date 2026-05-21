@@ -50,6 +50,7 @@
 ## Documentação
 
 - [`README.md`](../README.md) -> visão geral e instruções GitHub.
+- [`docs/map_site_info.md`](../docs/map_site_info.md) -> mapa de onde modificar cada parte e dado do site.
 - [`doc/changelog.md`](./changelog.md) -> histórico de mudanças.
 - [`doc/validacao_final.md`](./validacao_final.md) -> validação técnica da entrega.
 - [`prompts.md`](../prompts.md) -> histórico do pedido aplicado.

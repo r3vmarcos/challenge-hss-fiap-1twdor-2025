@@ -365,23 +365,6 @@ body::-webkit-scrollbar-thumb:hover,
 }
 /* === COMPONENTES INSPIRA UI ADAPTADOS | fim === */
 
-/* === CALCULADORA MAGNETICA | inicio === */
-.calculadora-magnetica {
-  scroll-margin-top: 74px;
-  width: 100%;
-}
-
-.calculadora-magnetica > div {
-  min-width: 0;
-}
-
-@media (min-width: 1024px) {
-  .calculadora-magnetica {
-    min-height: calc(100vh - 74px);
-  }
-}
-/* === CALCULADORA MAGNETICA | fim === */
-
 /* === CAMADAS PARALLAX 100VW 100VH | inicio === */
 .camadas-parallax {
   position: fixed;

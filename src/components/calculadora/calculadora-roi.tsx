@@ -132,8 +132,8 @@ export function CalculadoraRoi({
 }: {
   dicasHoverAtivas: boolean;
 }): JSX.Element {
-  const secaoCalculadoraRef = useRef<HTMLElement>(null);
-  const ultimoEncaixeRef = useRef(0);
+  const painelCalculadoraRef =
+    useRef<HTMLDivElement>(null);
   const [visao, definirVisao] =
     useLocalStorage<VisaoCalculadora>(
       "hss_roi_visao",
@@ -164,6 +164,14 @@ export function CalculadoraRoi({
     etapaAtual,
     definirEtapaAtual,
   ] = useState<EtapaCalculadora>(1);
+  const [
+    calculadoraTravada,
+    definirCalculadoraTravada,
+  ] = useState(false);
+  const [
+    tentativasRolagemTravada,
+    definirTentativasRolagemTravada,
+  ] = useState(0);
 
   const configuracoes = useMemo(
     () =>
@@ -210,73 +218,60 @@ export function CalculadoraRoi({
     );
 
   useEffect(() => {
-    const elemento = secaoCalculadoraRef.current;
-
-    if (!elemento) {
+    if (
+      !calculadoraTravada ||
+      window.innerWidth < 1024
+    ) {
       return;
     }
 
-    function obterTopoAbsoluto(alvo: HTMLElement): number {
-      const retangulo = alvo.getBoundingClientRect();
+    const overflowOriginal =
+      document.body.style.overflow;
 
-      return retangulo.top + window.scrollY;
-    }
+    function avisarTravamento(
+      evento: Event,
+    ): void {
+      const alvo = evento.target;
 
-    function centralizarCalculadora(): void {
-      const alvo = secaoCalculadoraRef.current;
-
-      if (!alvo) {
+      if (
+        alvo instanceof Node &&
+        painelCalculadoraRef.current?.contains(alvo)
+      ) {
         return;
       }
 
-      const alturaCabecalho = 74;
-      const topoAbsoluto = obterTopoAbsoluto(alvo);
-      const alturaElemento = alvo.offsetHeight;
-      const espacoDisponivel = window.innerHeight - alturaCabecalho;
-      const deslocamentoCentral = Math.max(
-        0,
-        (espacoDisponivel - alturaElemento) / 2,
+      evento.preventDefault();
+      definirTentativasRolagemTravada(
+        (valorAtual) =>
+          Math.min(valorAtual + 1, 9),
       );
-
-      const destino = Math.max(
-        0,
-        topoAbsoluto - alturaCabecalho - deslocamentoCentral,
-      );
-
-      window.scrollTo({
-        top: destino,
-        behavior: "smooth",
-      });
     }
 
-    const observador = new IntersectionObserver(
-      ([entrada]) => {
-        const agora = Date.now();
-        const podeEncaixar =
-          entrada.isIntersecting &&
-          entrada.intersectionRatio >= 0.28 &&
-          agora - ultimoEncaixeRef.current > 1400;
-
-        if (!podeEncaixar) {
-          return;
-        }
-
-        ultimoEncaixeRef.current = agora;
-        centralizarCalculadora();
-      },
-      {
-        root: null,
-        threshold: [0, 0.28, 0.45, 0.7],
-        rootMargin: "-74px 0px -18% 0px",
-      },
+    document.body.style.overflow = "hidden";
+    window.addEventListener(
+      "wheel",
+      avisarTravamento,
+      { passive: false },
+    );
+    window.addEventListener(
+      "touchmove",
+      avisarTravamento,
+      { passive: false },
     );
 
-    observador.observe(elemento);
-
     return () => {
-      observador.disconnect();
+      document.body.style.overflow =
+        overflowOriginal;
+      window.removeEventListener(
+        "wheel",
+        avisarTravamento,
+      );
+      window.removeEventListener(
+        "touchmove",
+        avisarTravamento,
+      );
     };
-  }, []);
+  }, [calculadoraTravada]);
 
   useEffect(() => {
     if (
@@ -407,13 +402,57 @@ export function CalculadoraRoi({
     );
   }
 
+  function alternarTravamentoCalculadora(): void {
+    definirTentativasRolagemTravada(0);
+    definirCalculadoraTravada(
+      (estadoAtual) => !estadoAtual,
+    );
+  }
+
+  const classePainelCalculadora =
+    calculadoraTravada
+      ? "lg:fixed lg:left-1/2 lg:top-[86px] lg:z-[90] lg:max-h-[calc(100vh-104px)] lg:w-[min(1420px,calc(100vw-2rem))] lg:-translate-x-1/2 lg:overflow-y-auto lg:rounded-[2rem] lg:bg-[#eef0f7]/95 lg:p-3 lg:shadow-[0_30px_90px_rgba(15,23,42,0.22)] lg:backdrop-blur"
+      : "";
+
   return (
     <section
-      ref={secaoCalculadoraRef}
       id="roi"
-      className="calculadora-magnetica flex min-h-[calc(100vh-74px)] w-full scroll-mt-[74px] items-center px-3 py-4 sm:px-4 lg:px-6"
+      className="flex min-h-[95vh] w-full scroll-mt-[74px] items-center px-3 py-3 sm:px-4 lg:px-6"
     >
-      <div className="mx-auto flex w-full max-w-[1420px] flex-col">
+      <div
+        ref={painelCalculadoraRef}
+        className={[
+          "relative mx-auto flex w-full max-w-[1420px] flex-col",
+          classePainelCalculadora,
+        ].join(" ")}
+      >
+        <button
+          type="button"
+          onClick={alternarTravamentoCalculadora}
+          className={
+            calculadoraTravada
+              ? "hidden lg:inline-flex absolute right-4 top-4 z-20 h-11 w-11 items-center justify-center rounded-full border border-hss-roxo bg-hss-roxo text-white shadow-neon"
+              : "hidden lg:inline-flex absolute right-4 top-4 z-20 h-11 w-11 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
+          }
+          aria-label={
+            calculadoraTravada
+              ? "Destravar calculadora"
+              : "Travar calculadora na tela"
+          }
+          title={
+            calculadoraTravada
+              ? "Destravar calculadora"
+              : "Travar calculadora na tela"
+          }
+        >
+          <IconePino />
+          {calculadoraTravada &&
+          tentativasRolagemTravada >= 3 ? (
+            <span className="absolute right-0 top-[calc(100%+0.5rem)] w-44 rounded-2xl bg-hss-tinta px-3 py-2 text-left text-xs font-bold leading-5 text-white shadow-neon">
+              Destrave para continuar rolando a página.
+            </span>
+          ) : null}
+        </button>
         <div className="hidden">
           <div className="w-full">
             <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">
@@ -445,7 +484,7 @@ export function CalculadoraRoi({
           </a>
         </div>
 
-        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.75rem] border border-hss-violeta/15 bg-white/90 p-3 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-4">
+        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.75rem] border border-hss-violeta/15 bg-white/90 p-3 pr-16 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-4 sm:pr-16">
           <h3 className="text-xl font-black tracking-tight text-slate-950 dark:text-white sm:text-2xl">
             Calcule agora o ROI
           </h3>
@@ -1570,6 +1609,26 @@ function IconeInfo(): JSX.Element {
   );
 }
 
+function IconePino(): JSX.Element {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 17v5" />
+      <path d="m5 17 14 0" />
+      <path d="m8 3 8 0" />
+      <path d="m9 3 1 9-3 5h10l-3-5 1-9" />
+    </svg>
+  );
+}
+
 function CampoTexto({
   label,
   valor,
@@ -1940,6 +1999,3 @@ function MiniGrafico({
   );
 }
 /* === MINI GRAFICO | fim === */
-
-
-

@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação concluída para a versão v6.3, com revisão de fluidez, limpeza de código não utilizado, revisão pt-BR, GitHub e deploy Cloudflare.
+Validação em atualização para a versão v6.4, com mapa do site, ajustes de cabeçalho, comparativo, calculadora travável, footer com ícones, GitHub e deploy Cloudflare.
 
 ## Checklist Técnico
 
@@ -18,6 +18,7 @@ Validação concluída para a versão v6.3, com revisão de fluidez, limpeza de 
 10 - Build após scrollytelling final, footer modal e calculadora em 100vh: aprovado.
 11 - Limpeza de código não utilizado da v6.3: aprovada.
 12 - Build após revisão de fluidez e ortografia da v6.3: aprovado.
+13 - Build após ajustes visuais e mapa do site da v6.4: aprovado.
 
 ## Observações
 

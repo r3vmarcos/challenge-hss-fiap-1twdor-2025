@@ -24,6 +24,8 @@ type BlocoProcessoProps = {
   itens: string[];
   invertido: boolean;
 };
+
+type TemaProcesso = "sem" | "com";
 /* === TIPOS | fim === */
 
 /* === CONSTANTES DO SCROLL-DRIVEN | inicio === */
@@ -80,6 +82,7 @@ function BlocoProcessoTravado({
 }: BlocoProcessoProps): JSX.Element {
   const blocoRef =
     useRef<HTMLDivElement | null>(null);
+  const tema: TemaProcesso = invertido ? "com" : "sem";
 
   const [
     cardsVisiveis,
@@ -319,8 +322,8 @@ function BlocoProcessoTravado({
           <div
             className={
               invertido
-                ? "order-2 space-y-3 lg:order-1"
-                : "space-y-3"
+                ? "order-2 space-y-3 lg:order-2"
+                : "order-2 space-y-3 lg:order-1"
             }
           >
             {itens.map(
@@ -339,6 +342,7 @@ function BlocoProcessoTravado({
                     totalItens={
                       itens.length
                     }
+                    tema={tema}
                   />
                 );
               },
@@ -350,12 +354,12 @@ function BlocoProcessoTravado({
           <article
             className={
               invertido
-                ? "order-1 rounded-2xl bg-[#eef0f7]/70 p-7 backdrop-blur lg:order-2"
-                : "rounded-2xl bg-[#eef0f7]/70 p-7 backdrop-blur"
+                ? "order-1 rounded-2xl bg-[#eef0f7]/70 p-7 backdrop-blur lg:order-1"
+                : "order-1 rounded-2xl bg-[#eef0f7]/70 p-7 backdrop-blur lg:order-2"
             }
           >
-            <h2 className="text-[1.55rem] font-black leading-tight text-[#070814] sm:text-[1.85rem]">
-              {titulo}
+            <h2 className="whitespace-nowrap text-[1.35rem] font-black leading-tight text-[#070814] sm:text-[1.65rem] xl:text-[1.85rem]">
+              <TituloProcesso titulo={titulo} tema={tema} />
             </h2>
 
             <p className="mt-4 max-w-[500px] text-sm font-medium leading-7 text-slate-600 sm:text-base">
@@ -384,10 +388,16 @@ function BlocoProcessoTravado({
                       key={item}
                       className={
                         ativo
-                          ? "rounded-2xl bg-hss-roxo px-5 py-3 text-sm font-bold leading-6 text-white shadow-[0_18px_42px_rgba(75,50,216,0.28)] transition"
+                          ? tema === "sem"
+                            ? "rounded-2xl border border-[#f97316] bg-[#f97316] px-5 py-3 text-sm font-bold leading-6 text-white shadow-[0_18px_42px_rgba(249,115,22,0.22)] transition"
+                            : "rounded-2xl border border-[#2563eb] bg-[#2563eb] px-5 py-3 text-sm font-bold leading-6 text-white shadow-[0_18px_42px_rgba(37,99,235,0.22)] transition"
                           : carregado
-                            ? "rounded-2xl bg-white px-5 py-3 text-sm font-bold leading-6 text-[#070814] shadow-[0_12px_28px_rgba(15,23,42,0.08)] transition"
-                            : "rounded-2xl bg-[#c9cacc]/90 px-5 py-3 text-sm font-semibold leading-6 text-slate-600 transition"
+                            ? tema === "sem"
+                              ? "rounded-2xl border border-[#fed7aa] bg-white px-5 py-3 text-sm font-bold leading-6 text-[#070814] shadow-[0_12px_28px_rgba(249,115,22,0.10)] transition"
+                              : "rounded-2xl border border-[#bfdbfe] bg-white px-5 py-3 text-sm font-bold leading-6 text-[#070814] shadow-[0_12px_28px_rgba(37,99,235,0.10)] transition"
+                            : tema === "sem"
+                              ? "rounded-2xl border border-[#fed7aa] bg-[#ffedd5]/85 px-5 py-3 text-sm font-semibold leading-6 text-slate-600 transition"
+                              : "rounded-2xl border border-[#bfdbfe] bg-[#dbeafe]/85 px-5 py-3 text-sm font-semibold leading-6 text-slate-600 transition"
                       }
                     >
                       <span
@@ -395,7 +405,9 @@ function BlocoProcessoTravado({
                           ativo
                             ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-white/70"
                             : carregado
-                              ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-hss-roxo"
+                              ? tema === "sem"
+                                ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#ea580c]"
+                                : "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#1d4ed8]"
                               : "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-slate-500"
                         }
                       >
@@ -422,6 +434,33 @@ function BlocoProcessoTravado({
 }
 /* === BLOCO PROCESSO TRAVADO | fim === */
 
+/* === TITULO PROCESSO | inicio === */
+function TituloProcesso({
+  titulo,
+  tema,
+}: {
+  titulo: string;
+  tema: TemaProcesso;
+}): JSX.Element {
+  const [primeiraPalavra, ...restante] = titulo.split(" ");
+
+  return (
+    <>
+      <span
+        className={
+          tema === "sem"
+            ? "font-black uppercase text-[#f97316]"
+            : "font-black uppercase text-[#2563eb]"
+        }
+      >
+        {primeiraPalavra}
+      </span>{" "}
+      {restante.join(" ")}
+    </>
+  );
+}
+/* === TITULO PROCESSO | fim === */
+
 /* === CARTÃO PASSO ANIMADO | inicio === */
 function CartaoPassoAnimado({
   etiqueta,
@@ -429,22 +468,30 @@ function CartaoPassoAnimado({
   indice,
   visivel,
   totalItens,
+  tema,
 }: {
   etiqueta: string;
   item: string;
   indice: number;
   visivel: boolean;
   totalItens: number;
+  tema: TemaProcesso;
 }): JSX.Element {
   return (
     <article
       className={[
         "rounded-2xl border bg-white p-5",
-        "shadow-[0_18px_42px_rgba(75,50,216,0.10)]",
+        tema === "sem"
+          ? "shadow-[0_18px_42px_rgba(249,115,22,0.10)]"
+          : "shadow-[0_18px_42px_rgba(37,99,235,0.10)]",
         "transition-[opacity,transform,filter] duration-500 ease-out",
         visivel
-          ? "translate-x-0 border-hss-violeta opacity-100 blur-0"
-          : "translate-x-[130px] border-[#d8dbea] opacity-0 blur-[2px]",
+          ? tema === "sem"
+            ? "translate-x-0 border-[#fdba74] opacity-100 blur-0"
+            : "translate-x-0 border-[#93c5fd] opacity-100 blur-0"
+          : tema === "sem"
+            ? "translate-x-[130px] border-[#fed7aa] opacity-0 blur-[2px]"
+            : "translate-x-[130px] border-[#bfdbfe] opacity-0 blur-[2px]",
       ].join(" ")}
       style={{
         transitionDelay: visivel
@@ -452,7 +499,13 @@ function CartaoPassoAnimado({
           : `${(totalItens - indice) * 35}ms`,
       }}
     >
-      <span className="text-xs font-black text-hss-roxo">
+      <span
+        className={
+          tema === "sem"
+            ? "text-xs font-black text-[#ea580c]"
+            : "text-xs font-black text-[#1d4ed8]"
+        }
+      >
         {etiqueta}{" "}
         {String(indice + 1).padStart(
           2,
