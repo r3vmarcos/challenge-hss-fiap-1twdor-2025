@@ -56,7 +56,7 @@ export default function App(): JSX.Element {
         aoAlternarDicasHover={() => definirDicasHoverAtivas(!dicasHoverAtivas)}
         paginaAdm={paginaAdm}
       />
-      <main className="relative z-10">
+      <main className="relative z-10 pt-[74px] lg:pt-[73px]">
         {paginaAdm ? (
           <PaginaAdm />
         ) : (

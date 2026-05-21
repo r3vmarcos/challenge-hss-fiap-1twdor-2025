@@ -1,5 +1,5 @@
-import logoHss from "@/assets/logo-health-sync-solutions.png";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { LogoOrigami } from "@/components/ui/logo-origami";
 
 /* === COMPONENTE CABECALHO | inicio === */
 interface CabecalhoProps {
@@ -22,21 +22,17 @@ export function Cabecalho({
   paginaAdm = false,
 }: CabecalhoProps): JSX.Element {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
-      <div className="mx-auto max-w-[1110px] px-4 py-4 sm:px-6 lg:px-0">
+    <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
+      <div className="mx-auto max-w-[1110px] px-4 py-3 sm:px-6 lg:px-0">
         <div className="flex items-center justify-between gap-4">
-          <a href="#topo" className="flex items-center" aria-label="Ir para o inxcio">
-            <img
-              src={logoHss}
-              alt="Health Sync Solutions"
-              className="h-10 w-[176px] object-contain object-left sm:h-12 sm:w-[210px]"
-            />
+          <a href="#topo" className="flex items-center" aria-label="Ir para o início">
+            <LogoOrigami />
           </a>
 
           <NavPrincipal
             paginaAdm={paginaAdm}
             className="hidden items-center gap-6 lg:flex"
-            linkClassName="text-[13px] font-black tracking-[0.01em] text-[#070814] hover:text-hss-violeta"
+            linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] hover:text-hss-violeta"
           />
 
           <div className="flex items-center gap-3">
@@ -59,8 +55,8 @@ export function Cabecalho({
 
         <NavPrincipal
           paginaAdm={paginaAdm}
-          className="scrollbar-hss mt-4 flex gap-2 overflow-x-auto pb-1 lg:hidden"
-          linkClassName="shrink-0 rounded-full border border-[#d9dbe7] bg-white px-4 py-2 text-xs font-black text-[#070814] shadow-sm"
+          className="scrollbar-hss mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden"
+          linkClassName="shrink-0 rounded-full border border-[#d9dbe7] bg-white px-4 py-2 text-xs font-normal text-[#070814] shadow-sm"
         />
       </div>
     </header>

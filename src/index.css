@@ -143,6 +143,111 @@ body::-webkit-scrollbar-thumb:hover,
 /* === BARRA DE ROLAGEM | fim === */
 
 /* === COMPONENTES INSPIRA UI ADAPTADOS | inicio === */
+.logo-origami {
+  position: relative;
+  display: inline-grid;
+  height: 3rem;
+  width: 13rem;
+  place-items: center start;
+  perspective: 900px;
+}
+
+.logo-origami-face {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center start;
+  transform-origin: 50% 0%;
+  animation: logo-origami-entrada 0.7s cubic-bezier(0.2, 0.75, 0.18, 1) both;
+}
+
+.logo-origami-face::before,
+.logo-origami-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: center;
+}
+
+.logo-origami-face::before {
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.55), transparent 46%);
+  clip-path: polygon(0 0, 54% 0, 38% 100%, 0 100%);
+  animation: logo-origami-brilho 0.7s ease both;
+}
+
+.logo-origami-face::after {
+  background: linear-gradient(250deg, rgba(75, 50, 216, 0.12), transparent 52%);
+  clip-path: polygon(52% 0, 100% 0, 100% 100%, 36% 100%);
+  animation: logo-origami-dobra 0.7s ease both;
+}
+
+.logo-origami img {
+  max-height: 2.8rem;
+  width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.logo-origami-fiap img {
+  max-width: 7.5rem;
+}
+
+.logo-origami-sombra {
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  height: 2rem;
+  width: 9rem;
+  border-radius: 999px;
+  background: rgba(75, 50, 216, 0.12);
+  filter: blur(18px);
+  transform: translateZ(-1px);
+}
+
+@keyframes logo-origami-entrada {
+  0% {
+    opacity: 0;
+    transform: rotateX(-76deg) skewX(-5deg) translateY(-0.35rem);
+  }
+
+  55% {
+    opacity: 1;
+    transform: rotateX(12deg) skewX(1deg) translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) skewX(0deg) translateY(0);
+  }
+}
+
+@keyframes logo-origami-brilho {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes logo-origami-dobra {
+  0% {
+    opacity: 0.8;
+    transform: rotateY(38deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotateY(0deg);
+  }
+}
+
 .shimmer-button {
   position: relative;
   isolation: isolate;
@@ -259,6 +364,17 @@ body::-webkit-scrollbar-thumb:hover,
   }
 }
 /* === COMPONENTES INSPIRA UI ADAPTADOS | fim === */
+
+/* === CALCULADORA MAGNETICA | inicio === */
+.calculadora-magnetica {
+  scroll-snap-align: start;
+  scroll-margin-top: 74px;
+}
+
+.calculadora-magnetica > div {
+  min-width: 0;
+}
+/* === CALCULADORA MAGNETICA | fim === */
 
 /* === CAMADAS PARALLAX 100VW 100VH | inicio === */
 .camadas-parallax {
@@ -428,6 +544,9 @@ body::-webkit-scrollbar-thumb:hover,
 @media (prefers-reduced-motion: reduce) {
   .parallax-profundidade,
   .marquee-faixa,
+  .logo-origami-face,
+  .logo-origami-face::before,
+  .logo-origami-face::after,
   .shimmer-button::before {
     animation: none !important;
     transform: none !important;

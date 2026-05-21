@@ -13,6 +13,10 @@
 09 - Atualizado `wrangler.toml` com o projeto Cloudflare `hssfiap-chalange-1twdor-2025`.
 10 - Registradas melhorias sugeridas para próximas versões.
 11 - Ajustado hero para reduzir o título, alinhar a médica ao fundo azul claro e aplicar degradê transparente na imagem.
+12 - Congelado o header no topo e suavizado o peso dos links de navegação.
+13 - Adicionado logo origami alternando HSS por 5s e FIAP por 2s.
+14 - Reposicionado o fundo azul claro do hero para ficar entre parallax e médica.
+15 - Ajustada a calculadora para ocupar a tela e encaixar magneticamente ao atingir 50% de visibilidade.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 

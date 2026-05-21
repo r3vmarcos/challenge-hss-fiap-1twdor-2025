@@ -14,11 +14,6 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
 
   return (
     <section className="relative isolate min-h-[calc(100vh-74px)] overflow-hidden bg-[#eef0f7]/92 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-14 lg:pt-20">
-      <div
-        className="absolute bottom-10 right-[3vw] top-8 hidden w-[48vw] max-w-[650px] rounded-full bg-[#d7e7fb] lg:block"
-        aria-hidden="true"
-      />
-
       <div className="relative z-10 mx-auto grid min-h-[calc(100vh-154px)] max-w-[1110px] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr]">
         <div className="revelar-scroll relative z-20 max-w-[560px]">
           <h1 className="text-[2.55rem] font-black leading-[1.05] tracking-[0.03em] text-[#070814] sm:text-[3.6rem] lg:text-[4rem] xl:text-[4.28rem]">
@@ -46,7 +41,10 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
         </div>
 
         <div className="revelar-scroll relative z-10 flex min-h-[420px] items-end justify-center lg:min-h-[620px]">
-          <div className="absolute inset-x-8 bottom-8 top-0 rounded-full bg-[#d7e7fb] lg:hidden" aria-hidden="true" />
+          <div
+            className="absolute bottom-0 left-1/2 top-0 z-0 w-[92vw] max-w-[650px] -translate-x-1/2 rounded-full bg-[#d7e7fb] lg:bottom-8 lg:top-0 lg:w-[48vw]"
+            aria-hidden="true"
+          />
           <img
             src={medicaHero}
             alt="Médica representando o credenciamento digital da Health Sync Solutions"

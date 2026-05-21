@@ -132,6 +132,8 @@ export function CalculadoraRoi({
 }: {
   dicasHoverAtivas: boolean;
 }): JSX.Element {
+  const secaoCalculadoraRef = useRef<HTMLElement>(null);
+  const ultimoEncaixeRef = useRef(0);
   const [visao, definirVisao] =
     useLocalStorage<VisaoCalculadora>(
       "hss_roi_visao",
@@ -206,6 +208,35 @@ export function CalculadoraRoi({
       configuracoesMedico,
       dadosMedico.tipoCredenciamentoId,
     );
+
+  useEffect(() => {
+    const elemento = secaoCalculadoraRef.current;
+    if (!elemento) return;
+
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        const agora = Date.now();
+        const podeEncaixar =
+          entrada.isIntersecting &&
+          entrada.intersectionRatio >= 0.5 &&
+          agora - ultimoEncaixeRef.current > 1600;
+
+        if (!podeEncaixar) return;
+
+        ultimoEncaixeRef.current = agora;
+        elemento.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      },
+      {
+        threshold: [0, 0.5, 0.75, 1],
+      },
+    );
+
+    observador.observe(elemento);
+    return () => observador.disconnect();
+  }, []);
 
   useEffect(() => {
     if (
@@ -338,10 +369,11 @@ export function CalculadoraRoi({
 
   return (
     <section
+      ref={secaoCalculadoraRef}
       id="roi"
-      className="scroll-mt-36 px-4 py-16 sm:px-6 lg:px-8 md:scroll-mt-24"
+      className="calculadora-magnetica flex min-h-screen w-screen scroll-mt-[74px] items-start px-4 py-8 sm:px-6 lg:px-8"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-[100vw] flex-col xl:max-w-[1440px]">
         <div className="revelar-scroll flex flex-col gap-6">
           <div className="w-full">
             <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">
