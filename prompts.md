@@ -23,3 +23,9 @@ Aplicação: o mapa de edição foi criado, os botões do cabeçalho foram ajust
 Pedido: diminuir mais a altura, fontes e campos da calculadora, esconder o header ao travar a calculadora, reduzir "Composição visual" e listar cada texto do site em `doc/info_project_files.md`.
 
 Aplicação: a calculadora recebeu modo compacto, o header passa a ocultar no modo travado, a composição visual foi reduzida e o inventário de textos visíveis foi adicionado à documentação do projeto.
+
+## 2026-05-21 - Responsivo e menu de acessibilidade
+
+Pedido: manter a versão PC/notebook, adaptar tablet/mobile, corrigir a imagem da médica para não ultrapassar o fundo azul claro e adicionar ao portal um menu A11y com todos os recursos informados.
+
+Aplicação: o hero foi ajustado em telas menores, benefícios e comparativo passaram a ter fallback estático em tablet/mobile, foi criado o componente global `MenuAcessibilidade` e adicionadas opções de contraste, fonte, tamanho, espaçamento, cursor, daltonismo, leitura por hover e restauração de padrões.

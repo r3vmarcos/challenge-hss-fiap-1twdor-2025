@@ -80,6 +80,34 @@ export function SecaoBeneficios(): JSX.Element {
     alturaScrollInterno,
     definirAlturaScrollInterno,
   ] = useState<number>(2600);
+  const [
+    layoutCompacto,
+    definirLayoutCompacto,
+  ] = useState(false);
+
+  /* === LAYOUT RESPONSIVO | inicio === */
+  useEffect(() => {
+    function atualizarLayout(): void {
+      definirLayoutCompacto(
+        window.innerWidth < 1024,
+      );
+    }
+
+    atualizarLayout();
+
+    window.addEventListener(
+      "resize",
+      atualizarLayout,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        atualizarLayout,
+      );
+    };
+  }, []);
+  /* === LAYOUT RESPONSIVO | fim === */
 
   /* === CALCULO DE ALTURA DA AREA SCROLL-DRIVEN | inicio === */
   useEffect(() => {
@@ -266,6 +294,56 @@ export function SecaoBeneficios(): JSX.Element {
     };
   }, [alturaScrollInterno]);
   /* === CONTROLE DE SCROLL-DRIVEN E TRAVAMENTO | fim === */
+
+  if (layoutCompacto) {
+    return (
+      <section
+        id="beneficios"
+        className="scroll-mt-[74px] bg-[#eef0f7] px-4 py-16 sm:px-6 md:py-20"
+      >
+        <div className="mx-auto max-w-[720px]">
+          <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
+            BenefÃ­cios da nossa
+            soluÃ§Ã£o
+          </h2>
+          <p className="mt-5 text-base font-medium leading-7 text-[#171826] sm:text-lg">
+            Transforme o
+            credenciamento mÃ©dico em um
+            processo mais organizado,
+            rastreÃ¡vel e eficiente.
+            Centralize validaÃ§Ãµes,
+            reduza retrabalho e
+            acompanhe cada etapa com
+            mais controle operacional.
+          </p>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {beneficios.map(
+              (beneficio, indice) => (
+                <article
+                  key={beneficio.titulo}
+                  className="rounded-2xl border border-[#d8dbea] bg-white p-5 shadow-[0_16px_34px_rgba(15,23,42,0.07)]"
+                >
+                  <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-hss-violeta/10 text-[#070814]">
+                    {beneficio.icone}
+                  </span>
+                  <span className="text-xs font-black text-hss-roxo">
+                    {String(indice + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-2 text-lg font-black leading-tight text-[#070814]">
+                    {beneficio.titulo}
+                  </h3>
+                  <p className="mt-2 text-sm font-medium leading-6 text-[#1f2937]">
+                    {beneficio.texto}
+                  </p>
+                </article>
+              ),
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   /* === CLASSES DO CONTEUDO TRAVADO | inicio === */
   const classeConteudoTravado =

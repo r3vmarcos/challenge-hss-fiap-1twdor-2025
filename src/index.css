@@ -32,6 +32,96 @@ body.calculadora-travada header {
   pointer-events: none;
 }
 
+/* === ACESSIBILIDADE GLOBAL | inicio === */
+body.a11y-font-lexend {
+  font-family: Lexend, Lexand, system-ui, sans-serif;
+}
+
+body.a11y-font-poppins {
+  font-family: Poppins, Lexend, system-ui, sans-serif;
+}
+
+body.a11y-font-inter {
+  font-family: Inter, Lexend, system-ui, sans-serif;
+}
+
+body.a11y-fonte-small {
+  font-size: 0.92rem;
+}
+
+body.a11y-fonte-medium {
+  font-size: 1rem;
+}
+
+body.a11y-fonte-large {
+  font-size: 1.08rem;
+}
+
+body.a11y-fonte-xlarge {
+  font-size: 1.16rem;
+}
+
+body.a11y-linha-normal {
+  line-height: 1.5;
+}
+
+body.a11y-linha-loose {
+  line-height: 1.75;
+}
+
+body.a11y-linha-veryLoose {
+  line-height: 2;
+}
+
+body.a11y-cursor-large,
+body.a11y-cursor-large * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='black' viewBox='0 0 16 16'%3E%3Cpath d='M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+
+body.a11y-contraste {
+  background: #000 !important;
+  color: #ff0 !important;
+}
+
+body.a11y-contraste :where(section, header, footer, aside, article, div, form, label) {
+  background-color: #000 !important;
+  color: #ff0 !important;
+  border-color: #ff0 !important;
+}
+
+body.a11y-contraste :where(a, button, input, select, textarea, strong, span, p, h1, h2, h3, h4) {
+  color: #ff0 !important;
+  border-color: #ff0 !important;
+}
+
+body.a11y-contraste :where(button, input, select, textarea) {
+  background: #000 !important;
+}
+
+body.a11y-contraste img,
+body.a11y-contraste svg {
+  filter: grayscale(100%) contrast(125%);
+}
+
+body.a11y-protanopia #root {
+  filter: url("#a11y-protanopia");
+}
+
+body.a11y-deuteranopia #root {
+  filter: url("#a11y-deuteranopia");
+}
+
+body.a11y-tritanopia #root {
+  filter: url("#a11y-tritanopia");
+}
+
+.a11y-lendo {
+  outline: 4px solid #facc15 !important;
+  outline-offset: 3px !important;
+  border-radius: 0.5rem;
+}
+/* === ACESSIBILIDADE GLOBAL | fim === */
+
 button,
 input,
 select,

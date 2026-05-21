@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Cabecalho } from "@/components/cabecalho";
 import { CamadasParallax } from "@/components/camadas-parallax";
 import { Rodape } from "@/components/layout/rodape";
+import { MenuAcessibilidade } from "@/components/menu-acessibilidade";
 import { PaginaAdm } from "@/components/paginas/pagina-adm";
 import { PaginaLanding } from "@/components/paginas/pagina-landing";
 import { dadosBaseHero } from "@/data/dadosLanding";
@@ -70,6 +71,7 @@ export default function App(): JSX.Element {
       <div className="relative z-10">
         <Rodape />
       </div>
+      <MenuAcessibilidade />
     </div>
   );
 }

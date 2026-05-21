@@ -21,6 +21,7 @@
 - [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> cabeÃ§alho com navegaÃ§Ã£o e CTA.
 - [`src/components/layout/rodape.tsx`](../src/components/layout/rodape.tsx) -> rodapÃ© com fontes e referÃªncias.
 - [`src/components/camadas-parallax.tsx`](../src/components/camadas-parallax.tsx) -> camadas de fundo com parallax.
+- [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> menu global A11y com contraste, fonte, leitura por hover, daltonismo e cursor.
 
 ## SeÃ§Ãµes Da Landing
 
@@ -229,6 +230,36 @@ Origem das fontes: [`src/data/conteudoHss.ts`](../src/data/conteudoHss.ts)
 - Facebook FIAP
 - Instagram FIAP
 - Fechar fontes e referÃªncias
+
+### Menu De Acessibilidade
+
+Origem: [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx)
+
+- Acessibilidade
+- Alto contraste
+- Leitura por hover
+- Cursor grande
+- Tamanho do texto
+- A-
+- A
+- A+
+- A++
+- Fonte
+- Lexend
+- Poppins
+- Inter
+- EspaÃ§amento de linhas
+- Normal
+- Largo
+- Muito largo
+- Daltonismo
+- Desativado
+- Protanopia
+- Deuteranopia
+- Tritanopia
+- Restaurar padrÃµes
+- Abrir menu de acessibilidade
+- Fechar menu de acessibilidade
 
 ## DocumentaÃ§Ã£o
 

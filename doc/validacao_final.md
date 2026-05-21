@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação em atualização para a versão v6.5, com calculadora compacta, header oculto no modo travado e inventário dos textos visíveis do site.
+Validação em atualização para a versão v6.6, com responsivo tablet/mobile, correção da imagem do hero e menu global de acessibilidade.
 
 ## Checklist Técnico
 
@@ -20,6 +20,7 @@ Validação em atualização para a versão v6.5, com calculadora compacta, head
 12 - Build após revisão de fluidez e ortografia da v6.3: aprovado.
 13 - Build após ajustes visuais e mapa do site da v6.4: aprovado.
 14 - Build após compactação da calculadora e documentação de textos da v6.5: aprovado.
+15 - Build após responsivo tablet/mobile e menu A11y da v6.6: aprovado.
 
 ## Observações
 

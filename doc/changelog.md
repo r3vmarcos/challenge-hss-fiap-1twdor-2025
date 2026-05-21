@@ -1,5 +1,15 @@
 # Changelog
 
+## v6.6 - Responsivo tablet/mobile e menu de acessibilidade
+
+01 - Mantida a versão PC/notebook como referência visual principal.
+02 - Ajustado o hero em tablet/mobile para centralizar conteúdo, reduzir escalas e impedir que a imagem da médica ultrapasse o fundo azul claro.
+03 - Adaptadas as seções de benefícios e processo comparativo para layout estático em tablet/mobile, mantendo o scrollytelling apenas em PC/notebook.
+04 - Criado `src/components/menu-acessibilidade.tsx` com menu global de acessibilidade.
+05 - Adicionados alto contraste, tamanho de fonte, família de fonte, espaçamento de linhas, cursor grande, filtros de daltonismo, leitura por hover e restauração de padrões.
+06 - Adicionadas classes globais A11y em `src/index.css` e filtros SVG para daltonismo.
+07 - Atualizado `index.html` para carregar Lexend, Poppins e Inter.
+
 ## v6.5 - Calculadora compacta e inventário de textos
 
 01 - Reduzida novamente a altura visual da calculadora, fontes, campos, abas, cards de resultado e composição visual.

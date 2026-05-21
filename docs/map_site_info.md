@@ -20,6 +20,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 | Logo alternado HSS/FIAP | [logo-origami.tsx](../src/components/ui/logo-origami.tsx) | Alternância dos logos, tempos de exibição e imagem ativa. |
 | Imagens dos logos | [logo-health-sync-solutions.png](../src/assets/logo-health-sync-solutions.png), [logo-fiap.png](../src/assets/logo-fiap.png) | Troca dos arquivos de marca. |
 | Efeito dos botões do header | [shimmer-button.tsx](../src/components/ui/shimmer-button.tsx), [index.css](../src/index.css) | Componente e CSS do efeito circulando. |
+| Menu A11y | [menu-acessibilidade.tsx](../src/components/menu-acessibilidade.tsx), [index.css](../src/index.css) | Alto contraste, fonte, tamanho, espaçamento, cursor, daltonismo e leitura por hover. |
 
 ## Hero
 

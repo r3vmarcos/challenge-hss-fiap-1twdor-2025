@@ -83,6 +83,10 @@ function BlocoProcessoTravado({
   const blocoRef =
     useRef<HTMLDivElement | null>(null);
   const tema: TemaProcesso = invertido ? "com" : "sem";
+  const [
+    layoutCompacto,
+    definirLayoutCompacto,
+  ] = useState(false);
 
   const [
     cardsVisiveis,
@@ -97,6 +101,30 @@ function BlocoProcessoTravado({
     alturaScrollInterno,
     definirAlturaScrollInterno,
   ] = useState<number>(980);
+
+  /* === LAYOUT RESPONSIVO | inicio === */
+  useEffect(() => {
+    function atualizarLayout(): void {
+      definirLayoutCompacto(
+        window.innerWidth < 1024,
+      );
+    }
+
+    atualizarLayout();
+
+    window.addEventListener(
+      "resize",
+      atualizarLayout,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        atualizarLayout,
+      );
+    };
+  }, []);
+  /* === LAYOUT RESPONSIVO | fim === */
 
   /* === ALTURA DO BLOCO SCROLL-DRIVEN | inicio === */
   useEffect(() => {
@@ -295,6 +323,53 @@ function BlocoProcessoTravado({
   /* === CONTROLE DE TRAVAMENTO E CARDS | fim === */
 
   /* === CLASSES DE POSIÇÃO | inicio === */
+  if (layoutCompacto) {
+    return (
+      <div
+        id={id}
+        className="scroll-mt-[74px] bg-[#eef0f7] px-4 py-14 sm:px-6 md:py-18"
+      >
+        <div className="mx-auto grid max-w-[720px] gap-6">
+          <article>
+            <h2 className="whitespace-nowrap text-[1.45rem] font-black leading-tight text-[#070814] sm:text-[2rem]">
+              <TituloProcesso titulo={titulo} tema={tema} />
+            </h2>
+            <p className="mt-4 text-sm font-medium leading-7 text-slate-600 sm:text-base">
+              {descricao}
+            </p>
+          </article>
+
+          <div className="grid gap-3">
+            {itens.map((item, indice) => (
+              <article
+                key={item}
+                className={
+                  tema === "sem"
+                    ? "rounded-2xl border border-[#fdba74] bg-white p-4 shadow-[0_14px_34px_rgba(249,115,22,0.10)]"
+                    : "rounded-2xl border border-[#93c5fd] bg-white p-4 shadow-[0_14px_34px_rgba(37,99,235,0.10)]"
+                }
+              >
+                <span
+                  className={
+                    tema === "sem"
+                      ? "text-xs font-black uppercase tracking-[0.16em] text-[#ea580c]"
+                      : "text-xs font-black uppercase tracking-[0.16em] text-[#1d4ed8]"
+                  }
+                >
+                  {etiqueta}{" "}
+                  {String(indice + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-2 text-sm font-black leading-6 text-[#070814] sm:text-base">
+                  {item}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const classeConteudoTravado =
     estadoTravamento === "travado"
       ? "fixed left-0 right-0 top-[74px] z-30"
