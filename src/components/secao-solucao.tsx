@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 
 /* === DADOS DE BENEFICIOS | inicio === */
 const beneficios = [
@@ -38,7 +38,7 @@ const beneficios = [
 /* === COMPONENTE BENEFICIOS | inicio === */
 export function SecaoBeneficios(): JSX.Element {
   const secaoRef = useRef<HTMLElement>(null);
-  const [cardsVisiveis, definirCardsVisiveis] = useState(1);
+  const [cardsVisiveis, definirCardsVisiveis] = useState(0);
 
   useEffect(() => {
     function aoRolar(): void {
@@ -46,9 +46,9 @@ export function SecaoBeneficios(): JSX.Element {
       if (!elemento) return;
 
       const topo = elemento.offsetTop;
-      const passo = Math.max(window.innerHeight * 0.34, 220);
+      const passo = Math.max(window.innerHeight * 0.38, 260);
       const progressoEtapas = Math.max(window.scrollY - topo, 0) / passo;
-      definirCardsVisiveis(Math.min(beneficios.length, Math.max(1, Math.floor(progressoEtapas) + 1)));
+      definirCardsVisiveis(Math.min(beneficios.length, Math.max(0, Math.floor(progressoEtapas))));
     }
 
     aoRolar();
@@ -61,7 +61,7 @@ export function SecaoBeneficios(): JSX.Element {
   }, []);
 
   return (
-    <section ref={secaoRef} id="beneficios" className="relative min-h-[calc(100vh+204vh)] scroll-mt-28 bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
+    <section ref={secaoRef} id="beneficios" className="relative min-h-[calc(100vh+268vh)] scroll-mt-28 bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
       <div className="sticky top-[74px] mx-auto grid min-h-[calc(100vh-74px)] max-w-[1110px] items-center gap-10 py-10 lg:grid-cols-[0.75fr_1.25fr]">
         <div className="revelar-scroll">
           <h2 className="max-w-[430px] text-[2.25rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[2.85rem]">
@@ -126,3 +126,4 @@ function IconeEscudo(): JSX.Element {
   return <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /></svg>;
 }
 /* === ICONES BENEFICIOS | fim === */
+

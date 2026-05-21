@@ -25,6 +25,7 @@
 21 - Ajustado o tempo de travamento das seções sticky para liberar o scroll apenas após todos os cards/etapas carregarem.
 22 - Compactada a calculadora para ocupar 100vh com rolagem interna nos painéis.
 23 - Atualizado footer com grupos sociais separados para HSS e FIAP e modal de fontes.
+24 - Ajustado o scrollytelling de benefícios para iniciar apenas com texto fixo e revelar os cards 01 a 06 durante o scroll.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 
