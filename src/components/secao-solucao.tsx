@@ -46,9 +46,9 @@ export function SecaoBeneficios(): JSX.Element {
       if (!elemento) return;
 
       const topo = elemento.offsetTop;
-      const alturaRolavel = Math.max(elemento.offsetHeight - window.innerHeight, 1);
-      const progresso = Math.min(Math.max((window.scrollY - topo) / alturaRolavel, 0), 1);
-      definirCardsVisiveis(Math.min(beneficios.length, Math.max(1, Math.floor(progresso * beneficios.length) + 1)));
+      const passo = Math.max(window.innerHeight * 0.34, 220);
+      const progressoEtapas = Math.max(window.scrollY - topo, 0) / passo;
+      definirCardsVisiveis(Math.min(beneficios.length, Math.max(1, Math.floor(progressoEtapas) + 1)));
     }
 
     aoRolar();
@@ -61,7 +61,7 @@ export function SecaoBeneficios(): JSX.Element {
   }, []);
 
   return (
-    <section ref={secaoRef} id="beneficios" className="relative min-h-[180vh] scroll-mt-28 bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
+    <section ref={secaoRef} id="beneficios" className="relative min-h-[calc(100vh+204vh)] scroll-mt-28 bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
       <div className="sticky top-[74px] mx-auto grid min-h-[calc(100vh-74px)] max-w-[1110px] items-center gap-10 py-10 lg:grid-cols-[0.75fr_1.25fr]">
         <div className="revelar-scroll">
           <h2 className="max-w-[430px] text-[2.25rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[2.85rem]">

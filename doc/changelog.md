@@ -22,6 +22,9 @@
 18 - Transformada a seção de benefícios em scrollytelling com cards surgindo na ordem 1 a 6.
 19 - Removido CTA intermediário de agendamento na seção de benefícios.
 20 - Transformadas as seções Sem HSS e Com HSS em blocos sticky de 90vh com destaque progressivo por etapa.
+21 - Ajustado o tempo de travamento das seções sticky para liberar o scroll apenas após todos os cards/etapas carregarem.
+22 - Compactada a calculadora para ocupar 100vh com rolagem interna nos painéis.
+23 - Atualizado footer com grupos sociais separados para HSS e FIAP e modal de fontes.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 

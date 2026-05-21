@@ -1,4 +1,4 @@
-import {
+﻿import {
   useEffect,
   useMemo,
   useRef,
@@ -371,22 +371,22 @@ export function CalculadoraRoi({
     <section
       ref={secaoCalculadoraRef}
       id="roi"
-      className="calculadora-magnetica flex min-h-screen w-screen scroll-mt-[74px] items-start px-4 py-8 sm:px-6 lg:px-8"
+      className="calculadora-magnetica flex h-[calc(100vh-74px)] w-screen scroll-mt-[74px] items-start px-4 py-4 sm:px-6 lg:px-8"
     >
-      <div className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-[100vw] flex-col xl:max-w-[1440px]">
-        <div className="revelar-scroll flex flex-col gap-6">
+      <div className="mx-auto flex h-full w-full max-w-[100vw] flex-col xl:max-w-[1440px]">
+        <div className="revelar-scroll flex flex-col gap-3">
           <div className="w-full">
             <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">
               Calculadora de ROI por
               cenário
             </span>
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+            <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-3xl">
               O ADM define as premissas,
               o usuário informa os
               valores e o ROI - 
               calculado por tempo.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">
+            <p className="mt-3 max-w-5xl text-sm font-medium leading-6 text-slate-600 dark:text-slate-300">
               A calculadora considera
               cenários como empresa
               contratando HSS, hospital
@@ -405,12 +405,12 @@ export function CalculadoraRoi({
           </a>
         </div>
 
-        <div className="revelar-scroll mt-8 rounded-[2rem] border border-hss-violeta/15 bg-white/90 p-4 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-6">
+        <div className="revelar-scroll mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] border border-hss-violeta/15 bg-white/90 p-4 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-5">
           <h3 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-3xl">
             Calcule agora o ROI
           </h3>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <BotaoVisao
               ativo={
                 visao === "empresa"
@@ -480,7 +480,7 @@ export function CalculadoraRoi({
             ))}
           </div>
 
-          <div className="mt-6 grid gap-6 lg:grid-cols-[1.12fr_0.88fr]">
+          <div className="mt-4 grid min-h-0 flex-1 gap-4 overflow-y-auto pr-1 lg:grid-cols-[1.12fr_0.88fr]">
             <div>
               {visao === "empresa" ? (
                 <FormularioEmpresa
@@ -527,7 +527,7 @@ export function CalculadoraRoi({
             </aside>
           </div>
 
-          <div className="mt-6 w-full">
+          <div className="mt-4 w-full">
             <MiniGrafico
               valores={
                 composicaoVisual.valores
@@ -542,7 +542,7 @@ export function CalculadoraRoi({
           </div>
         </div>
 
-        <div className="revelar-scroll mt-6 rounded-[2rem] border border-hss-violeta/15 bg-white/90 p-5 shadow-suave backdrop-blur transition hover:-translate-y-1 hover:border-hss-violeta/30 hover:shadow-neon dark:border-white/10 dark:bg-white/10 sm:flex sm:items-center sm:justify-between sm:p-6">
+        <div className="hidden">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-hss-violeta dark:text-hss-lavanda">
               Relatório
@@ -1733,7 +1733,7 @@ function ResumoEmpresa({
           detalhe="Mensalidade HSS + implantação amortizada."
         />
         <CartaoResultado
-          titulo="Prejuxzo sem HSS"
+          titulo="Prejuízo sem HSS"
           valor={formatarMoeda(
             resultado.prejuizoMensalSemHss,
           )}
@@ -1899,3 +1899,6 @@ function MiniGrafico({
   );
 }
 /* === MINI GRAFICO | fim === */
+
+
+

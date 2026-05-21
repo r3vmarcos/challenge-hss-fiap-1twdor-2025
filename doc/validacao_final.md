@@ -15,6 +15,7 @@ Validação concluída para a versão v6.2, com header fixo, logo origami, ajust
 07 - Cloudflare Pages: aprovado em `https://hssfiap-chalange-1twdor-2025.pages.dev/`.
 08 - Revisão de codificação nos arquivos alterados: aprovada.
 09 - Build após ajustes visuais da v6.2: aprovado.
+10 - Build após scrollytelling final, footer modal e calculadora em 100vh: aprovado.
 
 ## Observações
 

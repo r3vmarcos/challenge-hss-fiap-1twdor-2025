@@ -13,9 +13,9 @@ export function SecaoProcessoComparativo(): JSX.Element {
       if (!elemento) return 0;
 
       const topo = elemento.offsetTop;
-      const alturaRolavel = Math.max(elemento.offsetHeight - window.innerHeight, 1);
-      const progresso = Math.min(Math.max((window.scrollY - topo) / alturaRolavel, 0), 0.999);
-      return Math.min(total - 1, Math.floor(progresso * total));
+      const passo = Math.max(window.innerHeight * 0.38, 240);
+      const progressoEtapas = Math.max(window.scrollY - topo, 0) / passo;
+      return Math.min(total - 1, Math.floor(progressoEtapas));
     }
 
     function aoRolar(): void {
@@ -77,7 +77,7 @@ function BlocoProcesso({
   invertido: boolean;
 }): JSX.Element {
   return (
-    <div ref={refBloco} className="relative min-h-[190vh]">
+    <div ref={refBloco} className="relative min-h-[calc(100vh+152vh)]">
       <div className="sticky top-[74px] mx-auto grid h-[90vh] max-w-[1110px] items-center gap-8 overflow-hidden py-6 lg:grid-cols-2">
         <div className={invertido ? "order-2 space-y-3 lg:order-1" : "space-y-3"}>
           {itens.map((item, indice) => (
