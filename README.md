@@ -2,6 +2,10 @@
 
 Landing page React para o MedTech Challenge FIAP da Health Sync Solutions. O projeto apresenta o fluxo de credenciamento médico, compara o processo tradicional com o fluxo digital da HSS e oferece uma calculadora pública de ROI por cenários configuráveis no ADM.
 
+## Página Publicada
+
+https://hssfiap-chalange-1twdor-2025.pages.dev/
+
 ![React](https://img.shields.io/badge/React-18-blue)
 ![Vite](https://img.shields.io/badge/Vite-6-purple)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
@@ -10,6 +14,7 @@ Landing page React para o MedTech Challenge FIAP da Health Sync Solutions. O pro
 
 ## Sumário
 
+- [Página Publicada](#página-publicada)
 - [Visão Geral](#visão-geral)
 - [Funcionalidades](#funcionalidades)
 - [Stack](#stack)
@@ -35,6 +40,7 @@ O painel ADM controla os tipos de credenciamento, tempos, custos, percentuais e 
 - Painel ADM por hash em `/#adm`.
 - Persistência local por `localStorage`.
 - Cloudflare Pages Functions e D1 preparados em `functions/` e `migrations/`.
+- Deploy publicado no Cloudflare Pages.
 
 ## Stack
 
