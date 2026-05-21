@@ -1,4 +1,4 @@
-﻿import {
+import {
   useEffect,
   useMemo,
   useRef,
@@ -211,31 +211,71 @@ export function CalculadoraRoi({
 
   useEffect(() => {
     const elemento = secaoCalculadoraRef.current;
-    if (!elemento) return;
+
+    if (!elemento) {
+      return;
+    }
+
+    function obterTopoAbsoluto(alvo: HTMLElement): number {
+      const retangulo = alvo.getBoundingClientRect();
+
+      return retangulo.top + window.scrollY;
+    }
+
+    function centralizarCalculadora(): void {
+      const alvo = secaoCalculadoraRef.current;
+
+      if (!alvo) {
+        return;
+      }
+
+      const alturaCabecalho = 74;
+      const topoAbsoluto = obterTopoAbsoluto(alvo);
+      const alturaElemento = alvo.offsetHeight;
+      const espacoDisponivel = window.innerHeight - alturaCabecalho;
+      const deslocamentoCentral = Math.max(
+        0,
+        (espacoDisponivel - alturaElemento) / 2,
+      );
+
+      const destino = Math.max(
+        0,
+        topoAbsoluto - alturaCabecalho - deslocamentoCentral,
+      );
+
+      window.scrollTo({
+        top: destino,
+        behavior: "smooth",
+      });
+    }
 
     const observador = new IntersectionObserver(
       ([entrada]) => {
         const agora = Date.now();
         const podeEncaixar =
           entrada.isIntersecting &&
-          entrada.intersectionRatio >= 0.5 &&
-          agora - ultimoEncaixeRef.current > 1600;
+          entrada.intersectionRatio >= 0.28 &&
+          agora - ultimoEncaixeRef.current > 1400;
 
-        if (!podeEncaixar) return;
+        if (!podeEncaixar) {
+          return;
+        }
 
         ultimoEncaixeRef.current = agora;
-        elemento.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        centralizarCalculadora();
       },
       {
-        threshold: [0, 0.5, 0.75, 1],
+        root: null,
+        threshold: [0, 0.28, 0.45, 0.7],
+        rootMargin: "-74px 0px -18% 0px",
       },
     );
 
     observador.observe(elemento);
-    return () => observador.disconnect();
+
+    return () => {
+      observador.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -371,10 +411,10 @@ export function CalculadoraRoi({
     <section
       ref={secaoCalculadoraRef}
       id="roi"
-      className="calculadora-magnetica flex h-[calc(100vh-74px)] w-screen scroll-mt-[74px] items-start px-4 py-4 sm:px-6 lg:px-8"
+      className="calculadora-magnetica flex min-h-[calc(100vh-74px)] w-full scroll-mt-[74px] items-center px-3 py-4 sm:px-4 lg:px-6"
     >
-      <div className="mx-auto flex h-full w-full max-w-[100vw] flex-col xl:max-w-[1440px]">
-        <div className="revelar-scroll flex flex-col gap-3">
+      <div className="mx-auto flex w-full max-w-[1420px] flex-col">
+        <div className="hidden">
           <div className="w-full">
             <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">
               Calculadora de ROI por
@@ -405,12 +445,12 @@ export function CalculadoraRoi({
           </a>
         </div>
 
-        <div className="revelar-scroll mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] border border-hss-violeta/15 bg-white/90 p-4 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-5">
-          <h3 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.75rem] border border-hss-violeta/15 bg-white/90 p-3 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-4">
+          <h3 className="text-xl font-black tracking-tight text-slate-950 dark:text-white sm:text-2xl">
             Calcule agora o ROI
           </h3>
 
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
             <BotaoVisao
               ativo={
                 visao === "empresa"
@@ -431,7 +471,7 @@ export function CalculadoraRoi({
             />
           </div>
 
-          <div className="mt-4">
+          <div className="mt-2">
             <CampoSelectConfiguracao
               configuracoes={
                 visao === "empresa"
@@ -480,7 +520,7 @@ export function CalculadoraRoi({
             ))}
           </div>
 
-          <div className="mt-4 grid min-h-0 flex-1 gap-4 overflow-y-auto pr-1 lg:grid-cols-[1.12fr_0.88fr]">
+          <div className="mt-3 grid min-h-0 gap-3 pr-0 lg:grid-cols-[0.96fr_1.04fr]">
             <div>
               {visao === "empresa" ? (
                 <FormularioEmpresa
@@ -510,7 +550,7 @@ export function CalculadoraRoi({
                 />
               )}
             </div>
-            <aside className="lg:sticky lg:top-28 lg:h-fit">
+            <aside className="lg:h-fit">
               {visao === "empresa" ? (
                 <ResumoEmpresa
                   resultado={
@@ -527,19 +567,20 @@ export function CalculadoraRoi({
             </aside>
           </div>
 
-          <div className="mt-4 w-full">
-            <MiniGrafico
-              valores={
-                composicaoVisual.valores
-              }
-              rotulos={
-                composicaoVisual.rotulos
-              }
-              descricoes={
-                composicaoVisual.descricoes
-              }
-            />
-          </div>
+        </div>
+
+        <div className="mt-3 w-full">
+          <MiniGrafico
+            valores={
+              composicaoVisual.valores
+            }
+            rotulos={
+              composicaoVisual.rotulos
+            }
+            descricoes={
+              composicaoVisual.descricoes
+            }
+          />
         </div>
 
         <div className="hidden">
@@ -1408,12 +1449,12 @@ function NavegacaoEtapas({
 
   return (
     <>
-    <div className="mt-4 grid grid-cols-[2.5rem_minmax(0,1fr)_2.5rem] items-center gap-2 md:grid-cols-1">
+    <div className="mt-3 grid grid-cols-[2.25rem_minmax(0,1fr)_2.25rem] items-center gap-2 md:grid-cols-1">
       <button
         type="button"
         onClick={() => rolar(-1)}
         aria-label="Ver etapas anteriores"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
       >
         &lt;
       </button>
@@ -1439,8 +1480,8 @@ function NavegacaoEtapas({
                 aria-describedby={`descricao-etapa-${etapa.numero}`}
                 className={
                   ativo
-                    ? "h-10 w-full rounded-full border-2 border-hss-violeta bg-hss-lavanda px-4 text-sm font-black text-hss-roxo shadow-[0_0_24px_rgba(141,123,255,0.5)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
-                    : "h-10 w-full rounded-full border border-hss-violeta/15 bg-white px-4 text-sm font-bold text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "h-9 w-full rounded-full border-2 border-hss-violeta bg-hss-lavanda px-3 text-xs font-black text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
+                    : "h-9 w-full rounded-full border border-hss-violeta/15 bg-white px-3 text-xs font-bold text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }
               >
                 {etapa.nome.toUpperCase()}
@@ -1452,7 +1493,7 @@ function NavegacaoEtapas({
                   definirEtapaExplicada(etapa)
                 }
                 aria-label={`Explicar etapa ${etapa.nome}`}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-sm font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white lg:hidden"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-sm font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white lg:hidden"
               >
                 <IconeInfo />
               </button>
@@ -1476,7 +1517,7 @@ function NavegacaoEtapas({
         type="button"
         onClick={() => rolar(1)}
         aria-label="Ver próximas etapas"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white md:hidden"
       >
         &gt;
       </button>
@@ -1597,7 +1638,7 @@ function CampoSelectConfiguracao({
   ) => void;
 }): JSX.Element {
   return (
-    <label className="flex flex-col gap-3 rounded-3xl border border-hss-violeta/15 bg-white/85 p-4 shadow-[0_16px_36px_rgba(15,23,42,0.06)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
+    <label className="flex flex-col gap-2 rounded-2xl border border-hss-violeta/15 bg-white/85 p-3 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
       <span className="shrink-0 text-sm font-extrabold text-slate-950 lg:w-[290px]">
         Tipo de cenário configurado no ADM
       </span>
@@ -1611,7 +1652,7 @@ function CampoSelectConfiguracao({
             ),
           )
         }
-        className="w-full rounded-2xl border border-hss-violeta/20 bg-white px-4 py-3 font-bold text-slate-900 outline-none lg:flex-1"
+        className="w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
       >
         {configuracoes.map(
           (configuracao) => (
@@ -1654,8 +1695,8 @@ function TextoResultado({
   texto: string;
 }): JSX.Element {
   return (
-    <div className="rounded-[1.75rem] bg-hss-roxo/10 p-6 dark:bg-white/5">
-      <h3 className="text-2xl font-black text-slate-950 dark:text-white">
+    <div className="rounded-[1.5rem] bg-hss-roxo/10 p-4 dark:bg-white/5">
+      <h3 className="text-xl font-black text-slate-950 dark:text-white">
         Leitura do cenário
       </h3>
       <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
@@ -1682,18 +1723,18 @@ function BotaoVisao({
       onClick={aoClicar}
       className={
         ativo
-          ? "rounded-[1.5rem] bg-hss-roxo p-5 text-left text-white shadow-neon transition hover:-translate-y-1"
-          : "rounded-[1.5rem] border border-hss-violeta/15 bg-white/80 p-5 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+          ? "rounded-[1.25rem] bg-hss-roxo p-3 text-left text-white shadow-neon transition hover:-translate-y-1 sm:p-4"
+          : "rounded-[1.25rem] border border-hss-violeta/15 bg-white/80 p-3 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300 sm:p-4"
       }
     >
-      <strong className="block text-lg font-black">
+      <strong className="block text-base font-black">
         {titulo}
       </strong>
       <span
         className={
           ativo
-            ? "mt-2 block text-sm leading-6 text-white/75"
-            : "mt-2 block text-sm leading-6 text-slate-500 dark:text-slate-400"
+            ? "mt-1 block text-xs leading-5 text-white/75 sm:text-sm"
+            : "mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400 sm:text-sm"
         }
       >
         {subtitulo}
@@ -1847,12 +1888,12 @@ function MiniGrafico({
   );
 
   return (
-    <div className="rounded-[1.75rem] border border-hss-violeta/15 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+    <div className="rounded-[1.5rem] border border-hss-violeta/15 bg-white/70 p-3 dark:border-white/10 dark:bg-white/5">
       <p className="text-sm font-black uppercase tracking-[0.22em] text-hss-violeta dark:text-hss-lavanda">
         Composição visual
       </p>
       <div
-        className="mt-3 grid w-full gap-3"
+        className="mt-2 grid w-full gap-2"
         style={{
           gridTemplateColumns:
             "repeat(auto-fit, minmax(min(14rem, 100%), 1fr))",
@@ -1869,14 +1910,14 @@ function MiniGrafico({
             return (
               <div
                 key={rotulos[indice]}
-                className="group relative flex min-h-20 w-full flex-col justify-end rounded-2xl bg-hss-violeta/10 p-3 dark:bg-white/5"
+                className="group relative flex min-h-16 w-full flex-col justify-end rounded-2xl bg-hss-violeta/10 p-3 dark:bg-white/5"
                 tabIndex={0}
                 aria-label={`${rotulos[indice]}: ${descricoes[indice]}`}
               >
                 <div className="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-3 right-3 z-20 rounded-2xl border border-hss-violeta/20 bg-white p-3 text-xs font-semibold leading-5 text-slate-700 opacity-0 shadow-neon transition group-hover:opacity-100 group-focus:opacity-100 dark:border-white/10 dark:bg-hss-tinta dark:text-slate-200">
                   {descricoes[indice]}
                 </div>
-                <div className="h-5 w-full overflow-hidden rounded-full bg-white/75 dark:bg-hss-tinta/70">
+                <div className="h-4 w-full overflow-hidden rounded-full bg-white/75 dark:bg-hss-tinta/70">
                   <div
                     className="h-full rounded-l-full bg-hss-roxo shadow-neon transition-all"
                     style={{

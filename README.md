@@ -36,6 +36,7 @@ O painel ADM controla os tipos de credenciamento, tempos, custos, percentuais e 
 - Landing light baseada na referência visual do Figma.
 - Hero com métricas animadas e imagem institucional.
 - Seções independentes para benefícios, processo, depoimentos, diferencial ADM, calculadora e formulário.
+- Scrollytelling com seções fixas para benefícios, comparação sem HSS/com HSS e calculadora em tela cheia.
 - Calculadora de ROI para empresa/hospital/clínica e médico.
 - Painel ADM por hash em `/#adm`.
 - Persistência local por `localStorage`.

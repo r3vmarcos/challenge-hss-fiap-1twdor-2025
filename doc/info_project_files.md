@@ -31,7 +31,6 @@
 - [`src/components/secoes/secao-depoimentos.tsx`](../src/components/secoes/secao-depoimentos.tsx) -> depoimentos em marquee.
 - [`src/components/secoes/secao-diferencial-adm.tsx`](../src/components/secoes/secao-diferencial-adm.tsx) -> diferencial do ADM.
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> formulário de contato e demonstração.
-- [`src/components/secao-scrollytelling.tsx`](../src/components/secao-scrollytelling.tsx) -> reexporta as seções separadas para compatibilidade.
 
 ## UI Reutilizável
 
@@ -39,6 +38,7 @@
 - [`src/components/ui/card-spotlight.tsx`](../src/components/ui/card-spotlight.tsx) -> card com spotlight.
 - [`src/components/ui/marquee.tsx`](../src/components/ui/marquee.tsx) -> marquee horizontal.
 - [`src/components/ui/number-ticker.tsx`](../src/components/ui/number-ticker.tsx) -> contador animado.
+- [`src/components/ui/logo-origami.tsx`](../src/components/ui/logo-origami.tsx) -> alternância animada dos logos HSS/FIAP no cabeçalho.
 
 ## Cloudflare
 

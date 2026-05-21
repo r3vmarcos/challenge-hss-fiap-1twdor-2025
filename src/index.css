@@ -367,12 +367,18 @@ body::-webkit-scrollbar-thumb:hover,
 
 /* === CALCULADORA MAGNETICA | inicio === */
 .calculadora-magnetica {
-  scroll-snap-align: start;
   scroll-margin-top: 74px;
+  width: 100%;
 }
 
 .calculadora-magnetica > div {
   min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .calculadora-magnetica {
+    min-height: calc(100vh - 74px);
+  }
 }
 /* === CALCULADORA MAGNETICA | fim === */
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação concluída para a versão v6.2, com header fixo, logo origami, ajuste visual do hero, calculadora magnética, GitHub e deploy Cloudflare.
+Validação concluída para a versão v6.3, com revisão de fluidez, limpeza de código não utilizado, revisão pt-BR, GitHub e deploy Cloudflare.
 
 ## Checklist Técnico
 
@@ -16,6 +16,8 @@ Validação concluída para a versão v6.2, com header fixo, logo origami, ajust
 08 - Revisão de codificação nos arquivos alterados: aprovada.
 09 - Build após ajustes visuais da v6.2: aprovado.
 10 - Build após scrollytelling final, footer modal e calculadora em 100vh: aprovado.
+11 - Limpeza de código não utilizado da v6.3: aprovada.
+12 - Build após revisão de fluidez e ortografia da v6.3: aprovado.
 
 ## Observações
 

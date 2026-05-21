@@ -1,5 +1,17 @@
 # Changelog
 
+## v6.3 - Revisão de fluidez, limpeza e deploy
+
+01 - Revisada a fluidez das seções sticky de benefícios, processo tradicional, processo digital e calculadora.
+02 - Removidos componente de alternância de tema e reexport legado de scrollytelling que não eram mais utilizados.
+03 - Removidos exports institucionais sem consumo em `src/data/conteudoHss.ts`, mantendo apenas as fontes usadas no rodapé.
+04 - Removido import não utilizado em `src/components/secoes/secao-como-funciona.tsx`.
+05 - Padronizados comentários da seção comparativa no formato delimitado do projeto.
+06 - Removido BOM invisível de `src/components/secao-solucao.tsx`.
+07 - Revisada ortografia pt-BR nos textos ativos da landing, ADM, rodapé e calculadora.
+08 - Adicionado `*.zip` ao `.gitignore` para evitar publicar pacotes locais gerados.
+09 - Validado build de produção e republicado GitHub/Cloudflare.
+
 ## v6.1 - Componentização, revisão pt-BR e deploy
 
 01 - Separado o `App.tsx` para atuar apenas como orquestrador de layout, páginas e navegação por hash.
