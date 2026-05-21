@@ -17,6 +17,11 @@
 13 - Adicionado logo origami alternando HSS por 5s e FIAP por 2s.
 14 - Reposicionado o fundo azul claro do hero para ficar entre parallax e médica.
 15 - Ajustada a calculadora para ocupar a tela e encaixar magneticamente ao atingir 50% de visibilidade.
+16 - Centralizados os logos alternados no header.
+17 - Criado footer com logos HSS/FIAP, botões sociais e direitos reservados.
+18 - Transformada a seção de benefícios em scrollytelling com cards surgindo na ordem 1 a 6.
+19 - Removido CTA intermediário de agendamento na seção de benefícios.
+20 - Transformadas as seções Sem HSS e Com HSS em blocos sticky de 90vh com destaque progressivo por etapa.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 
