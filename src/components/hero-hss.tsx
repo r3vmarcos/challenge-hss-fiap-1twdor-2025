@@ -1,6 +1,6 @@
-import medicaHero from '@/assets/medica-hero-hss.png';
-import { NumberTicker } from '@/components/ui/number-ticker';
-import { ShimmerButton } from '@/components/ui/shimmer-button';
+import medicaHero from "@/assets/medica-hero-hss.png";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
 
 /* === COMPONENTE HERO | inicio === */
 interface HeroHssProps {
@@ -14,12 +14,15 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
 
   return (
     <section className="relative isolate min-h-[calc(100vh-74px)] overflow-hidden bg-[#eef0f7]/92 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-14 lg:pt-20">
-      <div className="absolute inset-y-12 right-[4vw] hidden w-[45vw] max-w-[620px] rounded-full bg-[#d7e7fb] lg:block" aria-hidden="true" />
+      <div
+        className="absolute bottom-10 right-[3vw] top-8 hidden w-[48vw] max-w-[650px] rounded-full bg-[#d7e7fb] lg:block"
+        aria-hidden="true"
+      />
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-154px)] max-w-[1110px] items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="revelar-scroll relative z-20 max-w-[600px]">
-          <h1 className="text-[3.15rem] font-black leading-[1.02] tracking-[0.05em] text-[#070814] sm:text-[4.7rem] lg:text-[5.05rem] xl:text-[5.45rem]">
-            Digitalize e simplifique o{' '}
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-154px)] max-w-[1110px] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr]">
+        <div className="revelar-scroll relative z-20 max-w-[560px]">
+          <h1 className="text-[2.55rem] font-black leading-[1.05] tracking-[0.03em] text-[#070814] sm:text-[3.6rem] lg:text-[4rem] xl:text-[4.28rem]">
+            Digitalize e simplifique o{" "}
             <span className="block text-hss-violeta">CREDENCIAMENTO MÉDICO</span>
           </h1>
           <p className="mt-6 max-w-[520px] text-[1.08rem] font-medium leading-8 text-[#111827] sm:text-[1.22rem]">
@@ -42,12 +45,20 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
           </div>
         </div>
 
-        <div className="revelar-scroll relative z-10 flex min-h-[420px] items-end justify-center lg:min-h-[620px] lg:justify-end">
-          <div className="absolute inset-x-8 bottom-10 top-0 rounded-full bg-[#d7e7fb] lg:hidden" aria-hidden="true" />
+        <div className="revelar-scroll relative z-10 flex min-h-[420px] items-end justify-center lg:min-h-[620px]">
+          <div className="absolute inset-x-8 bottom-8 top-0 rounded-full bg-[#d7e7fb] lg:hidden" aria-hidden="true" />
           <img
             src={medicaHero}
             alt="Médica representando o credenciamento digital da Health Sync Solutions"
-            className="relative z-10 max-h-[600px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_22px_32px_rgba(15,23,42,0.08)] lg:max-h-[640px] lg:max-w-[560px] xl:max-w-[620px]"
+            className="relative z-10 max-h-[570px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_22px_32px_rgba(15,23,42,0.08)] lg:-ml-4 lg:max-h-[610px] lg:max-w-[540px] xl:max-h-[630px] xl:max-w-[590px]"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(90deg, transparent 0%, black 10%, black 86%, transparent 100%), linear-gradient(180deg, black 0%, black 78%, transparent 100%)",
+              WebkitMaskComposite: "source-in",
+              maskComposite: "intersect",
+              maskImage:
+                "linear-gradient(90deg, transparent 0%, black 10%, black 86%, transparent 100%), linear-gradient(180deg, black 0%, black 78%, transparent 100%)",
+            }}
           />
         </div>
       </div>
@@ -60,7 +71,7 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
 function MetricaHero({ valor, texto, compacta = false }: { valor: JSX.Element; texto: string; compacta?: boolean }): JSX.Element {
   return (
     <div className="min-w-0 pr-3">
-      <strong className={compacta ? 'block truncate text-2xl font-black text-hss-roxo' : 'block text-3xl font-black text-hss-roxo'}>
+      <strong className={compacta ? "block truncate text-2xl font-black text-hss-roxo" : "block text-3xl font-black text-hss-roxo"}>
         {valor}
       </strong>
       <span className="mt-1 block text-sm leading-5 text-[#34323e]">{texto}</span>

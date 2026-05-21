@@ -12,6 +12,7 @@
 08 - Atualizado `README.md` no padrão GitHub.
 09 - Atualizado `wrangler.toml` com o projeto Cloudflare `hssfiap-chalange-1twdor-2025`.
 10 - Registradas melhorias sugeridas para próximas versões.
+11 - Ajustado hero para reduzir o título, alinhar a médica ao fundo azul claro e aplicar degradê transparente na imagem.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 
