@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+
+# Builds
+dist/
+.wrangler/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ambiente local
+.env
+.env.*
+!.env.example
+
+# Sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# TypeScript incremental
+*.tsbuildinfo

@@ -1,0 +1,9 @@
+name = "hssfiap-chalange-1twdor-2025"
+compatibility_date = "2026-05-06"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hss_roi_db"
+database_id = "867e174b-291a-47d0-8964-2e8d4fa2cc84"
+

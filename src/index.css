@@ -1,0 +1,436 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === ESTILOS GLOBAIS | inicio === */
+:root {
+  color-scheme: light;
+  font-family: Lexend, Lexand, system-ui, sans-serif;
+  background: #eef0f7;
+  scrollbar-color: #4b32d8 #eef0f7;
+  scrollbar-width: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: #eef0f7;
+  color: #070814;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:not(:disabled),
+a[href],
+summary {
+  cursor: pointer;
+}
+
+button,
+a[href],
+summary {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    color 0.22s ease,
+    filter 0.22s ease;
+}
+
+button:not(:disabled):hover,
+a[href]:hover,
+summary:hover {
+  filter: saturate(1.05) brightness(1.01);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.revelar-scroll {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.revelar-scroll.visivel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.grade-suave {
+  background-size: 32px 32px;
+}
+/* === ESTILOS GLOBAIS | fim === */
+
+/* === ESTADOS INTERATIVOS | inicio === */
+:where(input, select, textarea):hover {
+  border-color: rgba(75, 50, 216, 0.42);
+  box-shadow: 0 0 0 3px rgba(75, 50, 216, 0.10);
+}
+
+:where(input, select, textarea):focus {
+  border-color: #4b32d8;
+  box-shadow: 0 0 0 4px rgba(75, 50, 216, 0.14);
+}
+/* === ESTADOS INTERATIVOS | fim === */
+
+/* === BARRA DE ROLAGEM | inicio === */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+::-webkit-scrollbar {
+  height: 12px;
+  width: 14px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: #eef0f7;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  border: 3px solid #eef0f7;
+  border-radius: 999px;
+  background: #4b32d8;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+  background: #291b7f;
+}
+
+.scrollbar-hss {
+  scrollbar-color: #4b32d8 rgba(75, 50, 216, 0.08);
+  scrollbar-width: thin;
+}
+
+.scrollbar-hss::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.scrollbar-hss::-webkit-scrollbar-track {
+  background: rgba(75, 50, 216, 0.08);
+  border-radius: 999px;
+}
+
+.scrollbar-hss::-webkit-scrollbar-thumb {
+  background: #4b32d8;
+  border: 0;
+  border-radius: 999px;
+}
+/* === BARRA DE ROLAGEM | fim === */
+
+/* === COMPONENTES INSPIRA UI ADAPTADOS | inicio === */
+.shimmer-button {
+  position: relative;
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-align: center;
+  box-shadow: 0 14px 32px rgba(41, 27, 127, 0.18);
+}
+
+.shimmer-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 65deg, rgba(255, 255, 255, 0.95) 82deg, transparent 105deg, transparent 360deg);
+  animation: shimmer-girar 2.8s linear infinite;
+}
+
+.shimmer-button::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: calc(1.35rem - 1px);
+}
+
+.shimmer-button-primario {
+  border: 1px solid rgba(41, 27, 127, 0.12);
+  background: #291b7f;
+  color: white;
+}
+
+.shimmer-button-primario::after {
+  background: linear-gradient(135deg, #291b7f, #4b32d8);
+}
+
+.shimmer-button-contorno {
+  border: 1px solid rgba(41, 27, 127, 0.72);
+  background: transparent;
+  color: #291b7f;
+  box-shadow: none;
+}
+
+.shimmer-button-contorno::before {
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 60deg, rgba(75, 50, 216, 0.95) 84deg, transparent 108deg, transparent 360deg);
+}
+
+.shimmer-button-contorno::after {
+  background: #eef0f7;
+}
+
+@keyframes shimmer-girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.card-spotlight {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(75, 50, 216, 0.14);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.06);
+}
+
+.card-spotlight-brilho {
+  position: absolute;
+  inset: -45%;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(75, 50, 216, 0.2), transparent 34%);
+  opacity: 0;
+  transform: translate3d(-12%, -12%, 0) scale(0.85);
+  transition: opacity 0.28s ease, transform 0.32s ease;
+}
+
+.card-spotlight:hover .card-spotlight-brilho {
+  opacity: 1;
+  transform: translate3d(8%, 8%, 0) scale(1);
+}
+
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-faixa {
+  display: flex;
+  width: max-content;
+  animation: marquee-horizontal var(--duracao-marquee, 44s) linear infinite;
+}
+
+.marquee-grupo {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2rem;
+  padding-right: 2rem;
+}
+
+.marquee-container:hover .marquee-faixa {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-horizontal {
+  to {
+    transform: translateX(-50%);
+  }
+}
+/* === COMPONENTES INSPIRA UI ADAPTADOS | fim === */
+
+/* === CAMADAS PARALLAX 100VW 100VH | inicio === */
+.camadas-parallax {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.84;
+}
+
+.parallax-profundidade {
+  position: absolute;
+  display: block;
+  will-change: transform;
+  transition: opacity 0.25s ease;
+}
+
+.parallax-plano {
+  border: 1px solid rgba(75, 50, 216, 0.14);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.16));
+  box-shadow: 0 28px 90px rgba(75, 50, 216, 0.10);
+  backdrop-filter: blur(14px);
+}
+
+.parallax-plano-a {
+  left: clamp(1rem, 5vw, 5rem);
+  top: 8rem;
+  height: 9rem;
+  width: min(18rem, 42vw);
+  border-radius: 1.5rem;
+  transform: rotate(-8deg);
+}
+
+.parallax-plano-b {
+  right: clamp(1rem, 7vw, 7rem);
+  top: 28rem;
+  height: 12rem;
+  width: min(22rem, 48vw);
+  border-radius: 1.75rem;
+  transform: rotate(7deg);
+}
+
+.parallax-grade {
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  background-image: linear-gradient(rgba(34, 211, 238, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(75, 50, 216, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.28;
+}
+
+.parallax-grade-a {
+  right: 8vw;
+  top: 7rem;
+  height: 11rem;
+  width: 11rem;
+  border-radius: 1.25rem;
+  clip-path: polygon(0 12%, 88% 0, 100% 88%, 12% 100%);
+}
+
+.parallax-grade-b {
+  left: 6vw;
+  bottom: 9rem;
+  height: 13rem;
+  width: 13rem;
+  border-radius: 1.25rem;
+  clip-path: polygon(12% 0, 100% 18%, 82% 100%, 0 76%);
+}
+
+.parallax-linha {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(75, 50, 216, 0.36), rgba(34, 211, 238, 0.25), transparent);
+  opacity: 0.5;
+  transform-origin: center;
+}
+
+.parallax-linha-a {
+  left: -6rem;
+  top: 18rem;
+  width: 34rem;
+  rotate: -18deg;
+}
+
+.parallax-linha-b {
+  right: -7rem;
+  bottom: 18rem;
+  width: 38rem;
+  rotate: 14deg;
+}
+
+.parallax-chip {
+  height: 4.25rem;
+  width: 11rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(75, 50, 216, 0.14);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.54), rgba(247, 247, 255, 0.18));
+  box-shadow: 0 20px 70px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.parallax-chip::before,
+.parallax-chip::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(75, 50, 216, 0.15);
+}
+
+.parallax-chip::before {
+  top: 1rem;
+}
+
+.parallax-chip::after {
+  top: 2.35rem;
+  width: 55%;
+  background: rgba(34, 211, 238, 0.2);
+}
+
+.parallax-chip-a {
+  left: 13vw;
+  top: 34rem;
+  rotate: 10deg;
+}
+
+.parallax-chip-b {
+  right: 14vw;
+  bottom: 6rem;
+  rotate: -9deg;
+}
+
+@media (max-width: 768px) {
+  .parallax-plano-a,
+  .parallax-grade-b,
+  .parallax-linha-b {
+    display: none;
+  }
+
+  .camadas-parallax {
+    opacity: 0.55;
+  }
+
+  .parallax-plano-b {
+    right: -4rem;
+    top: 24rem;
+  }
+
+  .parallax-grade-a {
+    right: -3rem;
+    top: 6rem;
+  }
+
+  .parallax-chip-a {
+    left: -3rem;
+    top: 36rem;
+  }
+
+  .parallax-chip-b {
+    right: -4rem;
+    bottom: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-profundidade,
+  .marquee-faixa,
+  .shimmer-button::before {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+/* === CAMADAS PARALLAX 100VW 100VH | fim === */

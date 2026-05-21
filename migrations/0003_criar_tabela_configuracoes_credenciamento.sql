@@ -1,0 +1,33 @@
+-- === TABELA DE CONFIGURACOES DE CREDENCIAMENTO | inicio ===
+CREATE TABLE IF NOT EXISTS configuracoes_credenciamento (
+  id TEXT PRIMARY KEY,
+  ativo INTEGER NOT NULL DEFAULT 1,
+  nome TEXT NOT NULL,
+  categoria TEXT NOT NULL,
+  publico_alvo TEXT NOT NULL DEFAULT 'ambos',
+  cenario_roi TEXT NOT NULL DEFAULT 'hospital_credenciando_medico',
+  descricao TEXT,
+  premissa_site TEXT,
+  tempo_sem_hss_dias INTEGER NOT NULL DEFAULT 0,
+  tempo_com_hss_dias INTEGER NOT NULL DEFAULT 0,
+  receita_mensal_por_medico REAL NOT NULL DEFAULT 0,
+  margem_liquida_percentual REAL NOT NULL DEFAULT 0,
+  horas_administrativas_por_credenciamento REAL NOT NULL DEFAULT 0,
+  custo_hora_administrativa REAL NOT NULL DEFAULT 0,
+  taxa_retrabalho_percentual REAL NOT NULL DEFAULT 0,
+  custo_retrabalho_por_medico REAL NOT NULL DEFAULT 0,
+  taxa_documentos_vencidos_percentual REAL NOT NULL DEFAULT 0,
+  custo_documento_vencido REAL NOT NULL DEFAULT 0,
+  custo_mensal_hss REAL NOT NULL DEFAULT 0,
+  custo_implantacao_hss REAL NOT NULL DEFAULT 0,
+  reducao_administrativa_percentual REAL NOT NULL DEFAULT 0,
+  reducao_retrabalho_percentual REAL NOT NULL DEFAULT 0,
+  taxa_no_show_atual REAL NOT NULL DEFAULT 0,
+  taxa_no_show_com_hss REAL NOT NULL DEFAULT 0,
+  percentual_repasse_clinica REAL NOT NULL DEFAULT 0,
+  custo_operacional_mensal_medico REAL NOT NULL DEFAULT 0,
+  investimento_inicial_medico REAL NOT NULL DEFAULT 0,
+  criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+-- === TABELA DE CONFIGURACOES DE CREDENCIAMENTO | fim ===
