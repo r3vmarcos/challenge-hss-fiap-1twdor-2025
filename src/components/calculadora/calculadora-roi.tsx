@@ -227,6 +227,9 @@ export function CalculadoraRoi({
 
     const overflowOriginal =
       document.body.style.overflow;
+    document.body.classList.add(
+      "calculadora-travada",
+    );
 
     function avisarTravamento(
       evento: Event,
@@ -262,6 +265,9 @@ export function CalculadoraRoi({
     return () => {
       document.body.style.overflow =
         overflowOriginal;
+      document.body.classList.remove(
+        "calculadora-travada",
+      );
       window.removeEventListener(
         "wheel",
         avisarTravamento,
@@ -411,7 +417,7 @@ export function CalculadoraRoi({
 
   const classePainelCalculadora =
     calculadoraTravada
-      ? "lg:fixed lg:left-1/2 lg:top-[86px] lg:z-[90] lg:max-h-[calc(100vh-104px)] lg:w-[min(1420px,calc(100vw-2rem))] lg:-translate-x-1/2 lg:overflow-y-auto lg:rounded-[2rem] lg:bg-[#eef0f7]/95 lg:p-3 lg:shadow-[0_30px_90px_rgba(15,23,42,0.22)] lg:backdrop-blur"
+      ? "lg:fixed lg:left-1/2 lg:top-2 lg:z-[90] lg:max-h-[calc(100vh-16px)] lg:w-[min(1420px,calc(100vw-1rem))] lg:-translate-x-1/2 lg:overflow-hidden lg:rounded-[1.5rem] lg:bg-[#eef0f7]/95 lg:p-2 lg:shadow-[0_30px_90px_rgba(15,23,42,0.22)] lg:backdrop-blur"
       : "";
 
   return (
@@ -422,7 +428,7 @@ export function CalculadoraRoi({
       <div
         ref={painelCalculadoraRef}
         className={[
-          "relative mx-auto flex w-full max-w-[1420px] flex-col",
+          "calculadora-compacta relative mx-auto flex w-full max-w-[1420px] flex-col",
           classePainelCalculadora,
         ].join(" ")}
       >
@@ -431,8 +437,8 @@ export function CalculadoraRoi({
           onClick={alternarTravamentoCalculadora}
           className={
             calculadoraTravada
-              ? "hidden lg:inline-flex absolute right-4 top-4 z-20 h-11 w-11 items-center justify-center rounded-full border border-hss-roxo bg-hss-roxo text-white shadow-neon"
-              : "hidden lg:inline-flex absolute right-4 top-4 z-20 h-11 w-11 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
+              ? "hidden lg:inline-flex absolute right-3 top-3 z-20 h-9 w-9 items-center justify-center rounded-full border border-hss-roxo bg-hss-roxo text-white shadow-neon"
+              : "hidden lg:inline-flex absolute right-3 top-3 z-20 h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
           }
           aria-label={
             calculadoraTravada
@@ -484,12 +490,12 @@ export function CalculadoraRoi({
           </a>
         </div>
 
-        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.75rem] border border-hss-violeta/15 bg-white/90 p-3 pr-16 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-4 sm:pr-16">
-          <h3 className="text-xl font-black tracking-tight text-slate-950 dark:text-white sm:text-2xl">
+        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.35rem] border border-hss-violeta/15 bg-white/90 p-2 pr-14 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-3 sm:pr-14">
+          <h3 className="text-lg font-black tracking-tight text-slate-950 dark:text-white sm:text-xl">
             Calcule agora o ROI
           </h3>
 
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <div className="mt-1.5 grid gap-1.5 sm:grid-cols-2">
             <BotaoVisao
               ativo={
                 visao === "empresa"
@@ -510,7 +516,7 @@ export function CalculadoraRoi({
             />
           </div>
 
-          <div className="mt-2">
+          <div className="mt-1.5">
             <CampoSelectConfiguracao
               configuracoes={
                 visao === "empresa"
@@ -559,7 +565,7 @@ export function CalculadoraRoi({
             ))}
           </div>
 
-          <div className="mt-3 grid min-h-0 gap-3 pr-0 lg:grid-cols-[0.96fr_1.04fr]">
+          <div className="mt-2 grid min-h-0 gap-2 pr-0 lg:grid-cols-[0.94fr_1.06fr]">
             <div>
               {visao === "empresa" ? (
                 <FormularioEmpresa
@@ -608,7 +614,7 @@ export function CalculadoraRoi({
 
         </div>
 
-        <div className="mt-3 w-full">
+        <div className="mt-1.5 w-full">
           <MiniGrafico
             valores={
               composicaoVisual.valores
@@ -1488,7 +1494,7 @@ function NavegacaoEtapas({
 
   return (
     <>
-    <div className="mt-3 grid grid-cols-[2.25rem_minmax(0,1fr)_2.25rem] items-center gap-2 md:grid-cols-1">
+    <div className="mt-2 grid grid-cols-[2.25rem_minmax(0,1fr)_2.25rem] items-center gap-1.5 md:grid-cols-1">
       <button
         type="button"
         onClick={() => rolar(-1)}
@@ -1500,7 +1506,7 @@ function NavegacaoEtapas({
 
       <div
         ref={listaRef}
-        className="scrollbar-hss flex snap-x snap-mandatory gap-2 overflow-x-auto py-1 lg:grid lg:snap-none lg:grid-cols-5 lg:overflow-visible"
+        className="scrollbar-hss flex snap-x snap-mandatory gap-1.5 overflow-x-auto py-0.5 lg:grid lg:snap-none lg:grid-cols-5 lg:overflow-visible"
       >
         {etapas.map((etapa) => {
           const ativo =
@@ -1519,8 +1525,8 @@ function NavegacaoEtapas({
                 aria-describedby={`descricao-etapa-${etapa.numero}`}
                 className={
                   ativo
-                    ? "h-9 w-full rounded-full border-2 border-hss-violeta bg-hss-lavanda px-3 text-xs font-black text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
-                    : "h-9 w-full rounded-full border border-hss-violeta/15 bg-white px-3 text-xs font-bold text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "h-7 w-full rounded-full border-2 border-hss-violeta bg-hss-lavanda px-2 text-[11px] font-black text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
+                    : "h-7 w-full rounded-full border border-hss-violeta/15 bg-white px-2 text-[11px] font-bold text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }
               >
                 {etapa.nome.toUpperCase()}
@@ -1737,11 +1743,11 @@ function InfoProcesso({
   valor: string;
 }): JSX.Element {
   return (
-    <div className="rounded-2xl bg-white/80 p-3 shadow-sm dark:bg-white/10">
+    <div className="rounded-2xl bg-white/80 p-2 shadow-sm dark:bg-white/10">
       <span className="block text-xs font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
         {titulo}
       </span>
-      <strong className="mt-1 block text-lg text-hss-roxo dark:text-white">
+      <strong className="mt-0.5 block text-base text-hss-roxo dark:text-white">
         {valor}
       </strong>
     </div>
@@ -1754,11 +1760,11 @@ function TextoResultado({
   texto: string;
 }): JSX.Element {
   return (
-    <div className="rounded-[1.5rem] bg-hss-roxo/10 p-4 dark:bg-white/5">
-      <h3 className="text-xl font-black text-slate-950 dark:text-white">
+    <div className="rounded-[1.1rem] bg-hss-roxo/10 p-2.5 dark:bg-white/5">
+      <h3 className="text-base font-black text-slate-950 dark:text-white">
         Leitura do cenário
       </h3>
-      <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+      <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">
         {texto}
       </p>
     </div>
@@ -1782,18 +1788,18 @@ function BotaoVisao({
       onClick={aoClicar}
       className={
         ativo
-          ? "rounded-[1.25rem] bg-hss-roxo p-3 text-left text-white shadow-neon transition hover:-translate-y-1 sm:p-4"
-          : "rounded-[1.25rem] border border-hss-violeta/15 bg-white/80 p-3 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300 sm:p-4"
+          ? "rounded-[1rem] bg-hss-roxo p-2 text-left text-white shadow-neon transition hover:-translate-y-1"
+          : "rounded-[1rem] border border-hss-violeta/15 bg-white/80 p-2 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
       }
     >
-      <strong className="block text-base font-black">
+      <strong className="block text-sm font-black">
         {titulo}
       </strong>
       <span
         className={
           ativo
-            ? "mt-1 block text-xs leading-5 text-white/75 sm:text-sm"
-            : "mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400 sm:text-sm"
+            ? "mt-0.5 block text-[11px] leading-4 text-white/75"
+            : "mt-0.5 block text-[11px] leading-4 text-slate-500 dark:text-slate-400"
         }
       >
         {subtitulo}
@@ -1810,14 +1816,14 @@ function ResumoEmpresa({
   resultado: ResultadoEmpresaRoi;
 }): JSX.Element {
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <CartaoResultado
         destaque
         titulo="ROI estimado"
         valor={`${formatarNumero(resultado.roiPercentual)}%`}
         detalhe="Retorno considerando benefícios menos custos da HSS."
       />
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
         <CartaoResultado
           titulo="Benefícios mensais"
           valor={formatarMoeda(
@@ -1872,14 +1878,14 @@ function ResumoMedico({
   resultado: ResultadoMedicoRoi;
 }): JSX.Element {
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <CartaoResultado
         destaque
         titulo="ROI do médico"
         valor={`${formatarNumero(resultado.roiPercentual)}%`}
         detalhe="Retorno considerando custos de entrada e receita líquida."
       />
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
         <CartaoResultado
           titulo="Custo inicial total"
           valor={formatarMoeda(
@@ -1947,12 +1953,12 @@ function MiniGrafico({
   );
 
   return (
-    <div className="rounded-[1.5rem] border border-hss-violeta/15 bg-white/70 p-3 dark:border-white/10 dark:bg-white/5">
-      <p className="text-sm font-black uppercase tracking-[0.22em] text-hss-violeta dark:text-hss-lavanda">
+    <div className="rounded-[1rem] border border-hss-violeta/15 bg-white/70 p-2 dark:border-white/10 dark:bg-white/5">
+      <p className="text-[10px] font-black uppercase tracking-[0.14em] text-hss-violeta dark:text-hss-lavanda">
         Composição visual
       </p>
       <div
-        className="mt-2 grid w-full gap-2"
+        className="mt-1 grid w-full gap-1.5"
         style={{
           gridTemplateColumns:
             "repeat(auto-fit, minmax(min(14rem, 100%), 1fr))",
@@ -1969,14 +1975,14 @@ function MiniGrafico({
             return (
               <div
                 key={rotulos[indice]}
-                className="group relative flex min-h-16 w-full flex-col justify-end rounded-2xl bg-hss-violeta/10 p-3 dark:bg-white/5"
+                className="group relative flex min-h-11 w-full flex-col justify-end rounded-xl bg-hss-violeta/10 p-2 dark:bg-white/5"
                 tabIndex={0}
                 aria-label={`${rotulos[indice]}: ${descricoes[indice]}`}
               >
                 <div className="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-3 right-3 z-20 rounded-2xl border border-hss-violeta/20 bg-white p-3 text-xs font-semibold leading-5 text-slate-700 opacity-0 shadow-neon transition group-hover:opacity-100 group-focus:opacity-100 dark:border-white/10 dark:bg-hss-tinta dark:text-slate-200">
                   {descricoes[indice]}
                 </div>
-                <div className="h-4 w-full overflow-hidden rounded-full bg-white/75 dark:bg-hss-tinta/70">
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/75 dark:bg-hss-tinta/70">
                   <div
                     className="h-full rounded-l-full bg-hss-roxo shadow-neon transition-all"
                     style={{
@@ -1984,10 +1990,10 @@ function MiniGrafico({
                     }}
                   />
                 </div>
-                <strong className="mt-2 block text-sm text-slate-900 dark:text-white">
+                <strong className="mt-1 block text-xs text-slate-900 dark:text-white">
                   {rotulos[indice]}
                 </strong>
-                <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {formatarMoeda(valor)}
                 </span>
               </div>

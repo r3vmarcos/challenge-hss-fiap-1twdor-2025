@@ -26,19 +26,19 @@ export function CampoNumerico({
   return (
     <label
       htmlFor={id}
-      className="block rounded-3xl border border-hss-violeta/15 bg-white/75 p-4 shadow-sm dark:border-white/10 dark:bg-white/5"
+      className="block rounded-2xl border border-hss-violeta/15 bg-white/75 p-2.5 shadow-sm dark:border-white/10 dark:bg-white/5"
     >
-      <span className="block text-sm font-extrabold text-slate-800 dark:text-white">
+      <span className="block text-xs font-extrabold text-slate-800 dark:text-white">
         {label}
       </span>
       {ajuda ? (
-        <span className="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+        <span className="mt-0.5 block text-[11px] leading-4 text-slate-500 dark:text-slate-400">
           {ajuda}
         </span>
       ) : null}
-      <div className="mt-3 flex items-center gap-2 rounded-2xl border border-hss-violeta/20 bg-white px-3 py-2 dark:border-white/10 dark:bg-hss-tinta/70">
+      <div className="mt-1.5 flex items-center gap-1.5 rounded-xl border border-hss-violeta/20 bg-white px-2 py-1.5 dark:border-white/10 dark:bg-hss-tinta/70">
         {prefixo ? (
-          <span className="text-sm font-bold text-slate-400">
+          <span className="text-xs font-bold text-slate-400">
             {prefixo}
           </span>
         ) : null}
@@ -60,10 +60,10 @@ export function CampoNumerico({
               ),
             )
           }
-          className="w-full bg-transparent text-base font-bold text-slate-900 outline-none dark:text-white"
+          className="w-full bg-transparent text-sm font-bold text-slate-900 outline-none dark:text-white"
         />
         {sufixo ? (
-          <span className="text-sm font-bold text-slate-400">
+          <span className="text-xs font-bold text-slate-400">
             {sufixo}
           </span>
         ) : null}

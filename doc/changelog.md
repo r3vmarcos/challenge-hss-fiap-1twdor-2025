@@ -1,5 +1,13 @@
 # Changelog
 
+## v6.5 - Calculadora compacta e inventário de textos
+
+01 - Reduzida novamente a altura visual da calculadora, fontes, campos, abas, cards de resultado e composição visual.
+02 - Adicionado modo compacto por CSS em `.calculadora-compacta` para facilitar ajustes futuros sem espalhar regras.
+03 - Escondido o header automaticamente quando a calculadora é travada pelo botão de pino, liberando mais área útil da tela.
+04 - Reduzido o bloco "Composição visual" para ocupar menos altura.
+05 - Expandido `doc/info_project_files.md` com inventário dos textos visíveis do site por seção e origem dos arquivos.
+
 ## v6.4 - Mapa do site, header, comparativo e calculadora travável
 
 01 - Criado `docs/map_site_info.md` com o mapa dos arquivos que controlam cada informação da landing, ADM, dados e deploy.

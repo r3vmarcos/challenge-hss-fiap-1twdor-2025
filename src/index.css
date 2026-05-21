@@ -27,6 +27,11 @@ body {
   color: #070814;
 }
 
+body.calculadora-travada header {
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+
 button,
 input,
 select,
@@ -61,6 +66,38 @@ summary:hover {
 button:disabled {
   cursor: not-allowed;
 }
+
+/* === CALCULADORA COMPACTA | inicio === */
+.calculadora-compacta {
+  font-size: 0.86rem;
+}
+
+.calculadora-compacta .grid {
+  row-gap: 0.5rem;
+}
+
+.calculadora-compacta label {
+  padding: 0.55rem !important;
+  border-radius: 1rem;
+}
+
+.calculadora-compacta input,
+.calculadora-compacta select {
+  min-height: 2rem;
+  padding-block: 0.35rem !important;
+  font-size: 0.78rem !important;
+}
+
+.calculadora-compacta article {
+  padding: 0.7rem !important;
+  border-radius: 1rem !important;
+}
+
+.calculadora-compacta p,
+.calculadora-compacta span {
+  line-height: 1.35;
+}
+/* === CALCULADORA COMPACTA | fim === */
 
 .revelar-scroll {
   opacity: 0;
