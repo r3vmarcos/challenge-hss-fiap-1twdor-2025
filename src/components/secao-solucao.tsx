@@ -61,18 +61,18 @@ export function SecaoBeneficios(): JSX.Element {
   }, []);
 
   return (
-    <section ref={secaoRef} id="beneficios" className="relative min-h-[calc(100vh+268vh)] scroll-mt-28 bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
-      <div className="sticky top-[74px] mx-auto grid min-h-[calc(100vh-74px)] max-w-[1110px] items-center gap-10 py-10 lg:grid-cols-[0.75fr_1.25fr]">
-        <div className="revelar-scroll">
-          <h2 className="max-w-[430px] text-[2.25rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[2.85rem]">
+    <section ref={secaoRef} id="beneficios" className="relative min-h-[calc(100vh+268vh)] scroll-mt-[74px] bg-[#eef0f7] px-4 sm:px-6 lg:px-8">
+      <div className="sticky top-[74px] mx-auto grid h-[calc(100vh-74px)] max-w-[1110px] items-center gap-12 overflow-hidden py-0 lg:grid-cols-[0.72fr_1.28fr]">
+        <div className="revelar-scroll self-center lg:-mt-8">
+          <h2 className="max-w-[430px] text-[2.5rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[3.1rem]">
             Benefícios da nossa solução
           </h2>
-          <p className="mt-7 max-w-[420px] text-lg font-medium leading-8 text-[#171826]">
+          <p className="mt-7 max-w-[460px] text-lg font-medium leading-8 text-[#171826]">
             Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle operacional.
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid min-h-[520px] content-center gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {beneficios.map((beneficio, indice) => {
             const visivel = indice < cardsVisiveis;
 

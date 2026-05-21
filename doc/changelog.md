@@ -26,6 +26,7 @@
 22 - Compactada a calculadora para ocupar 100vh com rolagem interna nos painéis.
 23 - Atualizado footer com grupos sociais separados para HSS e FIAP e modal de fontes.
 24 - Ajustado o scrollytelling de benefícios para iniciar apenas com texto fixo e revelar os cards 01 a 06 durante o scroll.
+25 - Reposicionada a seção de benefícios como palco fixo em tela cheia, mantendo texto centralizado e cards entrando à direita.
 
 ## v6 - Ajustes finais da landing light Figma + componentes animados
 
