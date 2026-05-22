@@ -333,11 +333,11 @@ function BlocoProcessoTravado({
     return (
       <div
         id={id}
-        className="scroll-mt-[74px] bg-[#eef0f7] px-4 py-14 sm:px-6 md:py-18"
+        className="max-w-full scroll-mt-[74px] overflow-hidden bg-[#eef0f7] px-3 py-14 sm:px-6 md:py-18"
       >
-        <div className="mx-auto grid max-w-[720px] gap-6">
-          <article>
-            <h2 className="whitespace-nowrap text-[1.45rem] font-black leading-tight text-[#070814] sm:text-[2rem]">
+        <div className="mx-auto grid w-full max-w-[720px] min-w-0 gap-6">
+          <article className="min-w-0">
+            <h2 className="text-[1.35rem] font-black leading-tight text-[#070814] sm:text-[2rem]">
               <TituloProcesso titulo={titulo} tema={tema} />
             </h2>
             <p className="mt-4 text-sm font-medium leading-7 text-slate-600 sm:text-base">
@@ -345,27 +345,27 @@ function BlocoProcessoTravado({
             </p>
           </article>
 
-          <div className="grid gap-3">
+          <div className="grid min-w-0 gap-3">
             {informacoes.map((item, indice) => (
               <article
                 key={item}
                 className={
                   tema === "sem"
-                    ? "rounded-2xl border border-[#fdba74] bg-white p-4 shadow-[0_14px_34px_rgba(249,115,22,0.10)]"
-                    : "rounded-2xl border border-[#93c5fd] bg-white p-4 shadow-[0_14px_34px_rgba(37,99,235,0.10)]"
+                    ? "min-w-0 max-w-full overflow-hidden rounded-2xl border border-[#fdba74] bg-white p-4 shadow-[0_14px_34px_rgba(249,115,22,0.10)]"
+                    : "min-w-0 max-w-full overflow-hidden rounded-2xl border border-[#93c5fd] bg-white p-4 shadow-[0_14px_34px_rgba(37,99,235,0.10)]"
                 }
               >
                 <span
                   className={
                     tema === "sem"
-                      ? "text-xs font-black uppercase tracking-[0.16em] text-[#ea580c]"
-                      : "text-xs font-black uppercase tracking-[0.16em] text-[#1d4ed8]"
+                      ? "block text-xs font-black uppercase tracking-[0.14em] text-[#ea580c]"
+                      : "block text-xs font-black uppercase tracking-[0.14em] text-[#1d4ed8]"
                   }
                 >
                   {etiqueta}{" "}
                   {String(indice + 1).padStart(2, "0")}
                 </span>
-                <p className="mt-2 text-sm font-black leading-6 text-[#070814] sm:text-base">
+                <p className="mt-2 min-w-0 max-w-full break-words text-sm font-black leading-6 text-[#070814] [overflow-wrap:anywhere] sm:text-base">
                   {item}
                 </p>
               </article>

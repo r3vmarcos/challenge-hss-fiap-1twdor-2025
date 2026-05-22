@@ -320,7 +320,7 @@ export function MenuAcessibilidade(): JSX.Element {
         className={[
           "fixed right-3 top-1/2 z-[120] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full shadow-[0_18px_42px_rgba(15,23,42,0.24)] transition md:right-5",
           menuAberto
-            ? "-translate-x-[23.5rem] bg-hss-roxo text-white max-sm:-translate-x-[calc(100vw-4.5rem)]"
+            ? "-translate-x-[23.5rem] bg-hss-roxo text-white max-sm:pointer-events-none max-sm:opacity-0 max-sm:-translate-x-[calc(100vw-4.5rem)]"
             : "bg-hss-roxo text-white",
           botaoAcessibilidadeVisivel
             ? "opacity-100"
@@ -373,8 +373,9 @@ export function MenuAcessibilidade(): JSX.Element {
               onClick={() =>
                 definirMenuAberto(false)
               }
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 text-sm font-black text-hss-roxo"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#2563eb] bg-[#2563eb] text-sm font-black text-white shadow-[0_10px_24px_rgba(37,99,235,0.28)] transition hover:bg-[#1d4ed8] focus:outline-none focus:ring-4 focus:ring-[#93c5fd]"
               aria-label="Fechar menu de acessibilidade"
+              title="Fechar"
             >
               x
             </button>

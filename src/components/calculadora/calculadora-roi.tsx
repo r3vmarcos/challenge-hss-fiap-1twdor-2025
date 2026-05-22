@@ -485,7 +485,7 @@ export function CalculadoraRoi({
   return (
     <section
       id="roi"
-      className="flex min-h-[95vh] w-full scroll-mt-[74px] items-center px-3 py-3 sm:px-4 lg:px-6"
+      className="flex min-h-[95vh] w-full max-w-full scroll-mt-[74px] items-center overflow-hidden px-3 py-3 sm:px-4 lg:px-6"
     >
       <div
         ref={painelCalculadoraRef}
@@ -521,12 +521,12 @@ export function CalculadoraRoi({
             </span>
           ) : null}
         </button>
-        <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.35rem] border border-hss-violeta/15 bg-white/90 p-2 pr-14 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-3 sm:pr-14">
-          <h3 className="inline-flex w-fit items-center rounded-full border border-hss-violeta/25 bg-hss-roxo px-3 py-1.5 text-lg font-black tracking-tight text-white shadow-[0_12px_28px_rgba(75,50,216,0.28)] dark:border-white/10 sm:text-xl">
+        <div className="revelar-scroll flex min-h-0 max-w-full flex-col overflow-hidden rounded-[1.35rem] border border-hss-violeta/15 bg-white/90 p-2 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-3 lg:pr-14">
+          <h3 className="inline-flex max-w-full items-center rounded-full border border-hss-violeta/25 bg-hss-roxo px-3 py-1.5 text-lg font-black tracking-tight text-white shadow-[0_12px_28px_rgba(75,50,216,0.28)] dark:border-white/10 sm:text-xl">
             Calcule agora o ROI
           </h3>
 
-          <div className="mt-1.5 grid gap-1.5 sm:grid-cols-2">
+          <div className="mt-1.5 grid min-w-0 gap-1.5 sm:grid-cols-2">
             <BotaoVisao
               ativo={
                 visao === "empresa"
@@ -547,7 +547,7 @@ export function CalculadoraRoi({
             />
           </div>
 
-          <div className="mt-1.5">
+          <div className="mt-1.5 min-w-0">
             <CampoSelectConfiguracao
               configuracoes={
                 visao === "empresa"
@@ -596,8 +596,8 @@ export function CalculadoraRoi({
             ))}
           </div>
 
-          <div className="mt-2 grid min-h-0 gap-2 pr-0 lg:grid-cols-[0.94fr_1.06fr]">
-            <div>
+          <div className="mt-2 grid min-h-0 min-w-0 gap-2 pr-0 lg:grid-cols-[0.94fr_1.06fr]">
+            <div className="min-w-0">
               {visao === "empresa" ? (
                 <FormularioEmpresa
                   etapaAtual={
@@ -626,7 +626,7 @@ export function CalculadoraRoi({
                 />
               )}
             </div>
-            <aside className="lg:h-fit">
+            <aside className="min-w-0 lg:h-fit">
               {visao === "empresa" ? (
                 <ResumoEmpresa
                   resultado={
@@ -1748,8 +1748,8 @@ function CampoSelectConfiguracao({
   ) => void;
 }): JSX.Element {
   return (
-    <label className="flex flex-col gap-2 rounded-2xl border border-hss-violeta/15 bg-white/85 p-3 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
-      <span className="shrink-0 text-sm font-extrabold text-slate-950 lg:w-[290px]">
+    <label className="flex min-w-0 max-w-full flex-col gap-2 overflow-hidden rounded-2xl border border-hss-violeta/15 bg-white/85 p-3 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
+      <span className="min-w-0 max-w-full break-words text-sm font-extrabold text-slate-950 lg:w-[290px] lg:shrink-0">
         Tipo de cenário configurado no ADM
       </span>
       <select
@@ -1762,7 +1762,7 @@ function CampoSelectConfiguracao({
             ),
           )
         }
-        className="w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
+        className="min-w-0 max-w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
       >
         {configuracoes.map(
           (configuracao) => (
@@ -1833,18 +1833,18 @@ function BotaoVisao({
       onClick={aoClicar}
       className={
         ativo
-          ? "rounded-[1rem] bg-hss-roxo p-2 text-left text-white shadow-neon transition hover:-translate-y-1"
-          : "rounded-[1rem] border border-hss-violeta/15 bg-white/80 p-2 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+          ? "min-w-0 rounded-[1rem] bg-hss-roxo p-2 text-left text-white shadow-neon transition hover:-translate-y-1"
+          : "min-w-0 rounded-[1rem] border border-hss-violeta/15 bg-white/80 p-2 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
       }
     >
-      <strong className="block text-sm font-black">
+      <strong className="block min-w-0 break-words text-sm font-black [overflow-wrap:anywhere]">
         {titulo}
       </strong>
       <span
         className={
           ativo
-            ? "mt-0.5 block text-[11px] leading-4 text-white/75"
-            : "mt-0.5 block text-[11px] leading-4 text-slate-500 dark:text-slate-400"
+            ? "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-white/75 [overflow-wrap:anywhere]"
+            : "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-slate-500 [overflow-wrap:anywhere] dark:text-slate-400"
         }
       >
         {subtitulo}

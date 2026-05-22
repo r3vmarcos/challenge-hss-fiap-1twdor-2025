@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-05-22 - Menu A11y mobile
+
+Pedido: no mobile, ao abrir o menu de acessibilidade, ocultar o SVG flutuante A11y e destacar o botão de fechar em azul.
+
+Aplicacao: o botão flutuante do menu A11y fica invisível e sem eventos no mobile quando o painel está aberto; o botão de fechar recebeu fundo azul, texto branco, sombra e foco visível.
+
+## 2026-05-22 - Reforco responsivo em celulares
+
+Pedido: verificar e ajustar itens que saem da tela em alguns celulares e elementos que nao redimensionam corretamente para 100vw.
+
+Aplicacao: os cards mobile do comparativo receberam limites e quebra de linha mais fortes, a calculadora deixou de reservar espaco lateral do pino no mobile, selects/botoes/wrappers ganharam `min-w-0` e limites de largura, e o formulario de lead foi compactado para telas estreitas.
+
 ## 2026-05-21 - Ajuste Samsung S24 e ritmo dos cards
 
 Pedido: corrigir exibição mobile no Samsung S24 em relação à largura da viewport, acelerar a entrada dos cards de "Benefícios da nossa solução" e destacar "Calcule agora o ROI" sem aumentar a fonte.

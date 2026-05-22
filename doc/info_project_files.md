@@ -52,9 +52,12 @@
 - [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona? e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar demonstração permanecem no header.
 - [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
+- [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em azul.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> no mobile, o comparativo exibe apenas os textos informativos.
 - [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta larguras e título do hero para telas estreitas como Samsung S24.
+- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> usa limites de largura e `min-w-0` para selects, cards e wrappers no mobile.
+- [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> reduz padding e limita largura dos campos no mobile.
 
 ## Textos Visíveis Do Site
 
@@ -116,6 +119,7 @@ Origem visual: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/c
 Origem dos cards laterais: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 Origem dos cards informativos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 Observação mobile: no layout compacto são exibidos apenas os cards informativos.
+Observação responsiva: os cards usam `min-w-0`, `overflow-hidden` e quebra de palavras para não ultrapassar 100vw.
 
 - Sem HSS - processo tradicional
 - O processo depende de e-mails, conferências manuais e cobranças recorrentes. Quanto mais lento o ciclo, maior o prejuízo por médico parado.
@@ -165,6 +169,7 @@ Origem: [`src/components/calculadora/calculadora-roi.tsx`](../src/components/cal
 
 - Calcule agora o ROI
 - Destaque visual do título "Calcule agora o ROI" sem aumento de fonte.
+- A calculadora compacta não reserva espaço lateral para o pino no mobile; o espaço extra fica apenas no desktop.
 - Empresa / Hospital / Clínica
 - Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos mais rápido.
 - Médico
@@ -220,6 +225,7 @@ Origem: [`src/components/formulario-lead.tsx`](../src/components/formulario-lead
 - Enviando...
 - Solicitar demonstração
 - Lead salvo com sucesso.
+- Layout mobile com padding reduzido e campos limitados ao container.
 
 ### Footer
 

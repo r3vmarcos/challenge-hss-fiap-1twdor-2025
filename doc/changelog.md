@@ -1,5 +1,17 @@
 # Changelog
 
+## v6.14 - Menu A11y mobile
+
+01 - Ocultado o botão SVG flutuante de acessibilidade quando o menu A11y está aberto no mobile.
+02 - Destacado o botão de fechar do menu A11y em azul, com sombra e foco visível.
+
+## v6.13 - Reforco responsivo em celulares
+
+01 - Reforcadas quebras de linha e limites de largura nos cards mobile do comparativo Sem HSS / Com HSS.
+02 - Ajustada a calculadora compacta para nao reservar espaco lateral do pino no mobile.
+03 - Reforcados `min-w-0`, `max-w-full` e `overflow-hidden` em selects, botoes, cards e wrappers da calculadora.
+04 - Ajustado o formulario de lead para reduzir padding e impedir vazamento horizontal em telas estreitas.
+
 ## v6.12 - Ajuste mobile S24 e ritmo visual
 
 01 - Ajustado o hero e o cabeçalho para reduzir pressão horizontal em telas estreitas como Samsung S24.

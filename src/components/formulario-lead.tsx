@@ -55,30 +55,30 @@ export function FormularioLead({ visaoPadrao }: FormularioLeadProps): JSX.Elemen
   }
 
   return (
-    <section id="lead" className="scroll-mt-28 bg-[#eef0f7] px-4 py-24 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-[1110px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="revelar-scroll rounded-[1.5rem] bg-hss-roxo p-8 text-white sm:p-12">
-          <h2 className="max-w-[340px] text-[2.55rem] font-black leading-[1.18] tracking-[0.02em] sm:text-[3.1rem]">
+    <section id="lead" className="max-w-full scroll-mt-28 overflow-hidden bg-[#eef0f7] px-3 py-20 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto grid w-full max-w-[1110px] min-w-0 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="revelar-scroll min-w-0 rounded-[1.5rem] bg-hss-roxo p-5 text-white sm:p-12">
+          <h2 className="max-w-full break-words text-[2rem] font-black leading-[1.18] tracking-normal sm:max-w-[340px] sm:text-[3.1rem] sm:tracking-[0.02em]">
             Transforme a simulação em conversa comercial.
           </h2>
-          <p className="mt-6 max-w-[430px] text-base font-medium leading-8 text-white/78">
+          <p className="mt-6 max-w-full break-words text-base font-medium leading-8 text-white/78 sm:max-w-[430px]">
             O formulário captura as informações principais da instituição para uma abordagem B2B consultiva sobre credenciamento médico, redução de tempo e ROI.
           </p>
         </div>
 
-        <form onSubmit={enviarLead} className="revelar-scroll rounded-[1.5rem] bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:p-9">
-          <div className="grid gap-x-4 gap-y-5 md:grid-cols-2">
+        <form onSubmit={enviarLead} className="revelar-scroll min-w-0 rounded-[1.5rem] bg-white p-5 shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:p-9">
+          <div className="grid min-w-0 gap-x-4 gap-y-5 md:grid-cols-2">
             <CampoTexto label="Nome" valor={lead.nome} obrigatorio aoMudar={(valor) => atualizarLead("nome", valor)} />
             <CampoTexto label="E-mail" tipo="email" valor={lead.email} obrigatorio aoMudar={(valor) => atualizarLead("email", valor)} />
             <CampoTexto label="Telefone" valor={lead.telefone} aoMudar={(valor) => atualizarLead("telefone", valor)} />
             <CampoTexto label="Instituição" valor={lead.instituicao} obrigatorio aoMudar={(valor) => atualizarLead("instituicao", valor)} />
             <CampoTexto label="Cargo" valor={lead.cargo} aoMudar={(valor) => atualizarLead("cargo", valor)} />
-            <label className="block">
+            <label className="block min-w-0">
               <span className="text-sm font-black text-[#070814]">Porte</span>
               <select
                 value={lead.porte}
                 onChange={(evento) => atualizarLead("porte", evento.target.value)}
-                className="mt-2 h-10 w-full rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 text-sm font-semibold text-[#070814] outline-none"
+                className="mt-2 h-10 w-full min-w-0 rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 text-sm font-semibold text-[#070814] outline-none"
               >
                 <option>Pequeno porte</option>
                 <option>Médio porte</option>
@@ -88,20 +88,20 @@ export function FormularioLead({ visaoPadrao }: FormularioLeadProps): JSX.Elemen
             </label>
           </div>
 
-          <label className="mt-5 block">
+          <label className="mt-5 block min-w-0">
             <span className="text-sm font-black text-[#070814]">Mensagem</span>
             <textarea
               value={lead.mensagem}
               onChange={(evento) => atualizarLead("mensagem", evento.target.value)}
               rows={6}
-              className="mt-2 w-full rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 py-3 text-sm font-semibold text-[#070814] outline-none"
+              className="mt-2 w-full min-w-0 rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 py-3 text-sm font-semibold text-[#070814] outline-none"
             />
           </label>
 
           <button
             type="submit"
             disabled={status === "enviando"}
-            className="mt-6 w-full rounded-[1rem] bg-hss-roxo px-7 py-4 text-sm font-black text-white shadow-[0_12px_28px_rgba(41,27,127,0.18)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-6 w-full min-w-0 rounded-[1rem] bg-hss-roxo px-5 py-4 text-sm font-black text-white shadow-[0_12px_28px_rgba(41,27,127,0.18)] disabled:cursor-not-allowed disabled:opacity-60 sm:px-7"
           >
             {status === "enviando" ? "Enviando..." : "Solicitar demonstração"}
           </button>
@@ -127,7 +127,7 @@ interface CampoTextoProps {
 
 function CampoTexto({ label, valor, tipo = "text", obrigatorio = false, aoMudar }: CampoTextoProps): JSX.Element {
   return (
-    <label className="block">
+    <label className="block min-w-0">
       <span className="text-sm font-black text-[#070814]">
         {label}
         {obrigatorio ? " *" : ""}
@@ -137,7 +137,7 @@ function CampoTexto({ label, valor, tipo = "text", obrigatorio = false, aoMudar 
         required={obrigatorio}
         value={valor}
         onChange={(evento) => aoMudar(evento.target.value)}
-        className="mt-2 h-10 w-full rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 text-sm font-semibold text-[#070814] outline-none"
+        className="mt-2 h-10 w-full min-w-0 rounded-[0.75rem] border border-[#d8dbea] bg-white px-3 text-sm font-semibold text-[#070814] outline-none"
       />
     </label>
   );

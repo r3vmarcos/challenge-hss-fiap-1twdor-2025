@@ -26,7 +26,7 @@ export function Cabecalho({
     <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
       <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
         <div className="flex min-w-0 items-center justify-between gap-1.5 sm:gap-2">
-          <a href="#topo" className="flex items-center" aria-label="Ir para o início">
+          <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
             <LogoOrigami />
           </a>
 

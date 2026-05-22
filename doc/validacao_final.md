@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.12, com ajuste de largura mobile para Samsung S24, entrada mais rápida dos cards de benefícios e destaque visual do título da calculadora.
+Validação atualizada para a versão v6.14, com reforço responsivo em celulares e ajuste do menu A11y mobile.
 
 ## Checklist Técnico
 
@@ -50,6 +50,10 @@ Validação atualizada para a versão v6.12, com ajuste de largura mobile para S
 42 - Deploy Cloudflare Pages após v6.12: aprovado com `npx wrangler pages deploy dist`.
 43 - Smoke HTTP remoto no preview `https://6f98c646.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
 44 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
+45 - `npm run build` após reforço responsivo v6.13: aprovado.
+46 - Smoke HTTP local após reforço responsivo v6.13 em `http://localhost:5196/`: aprovado com HTTP 200.
+47 - `npm run build` após ajuste A11y mobile v6.14: aprovado.
+48 - Smoke HTTP local após ajuste A11y mobile v6.14 em `http://localhost:5196/`: aprovado com HTTP 200.
 
 ## Observações
 

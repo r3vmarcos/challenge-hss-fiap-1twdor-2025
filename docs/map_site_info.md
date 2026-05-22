@@ -57,6 +57,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 | Textos dos cards "Com HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `ganhosComHss`. |
 | Textos informativos "Com HSS" | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `informacoesComHss`. |
 | Comparativo no mobile | [secao-processo-comparativo.tsx](../src/components/secoes/secao-processo-comparativo.tsx) | Renderiza apenas os arrays informativos no layout compacto. |
+| Quebra dos cards mobile | [secao-processo-comparativo.tsx](../src/components/secoes/secao-processo-comparativo.tsx) | `min-w-0`, `overflow-hidden`, `break-words` e `overflow-wrap` dos cards. |
 
 ## Depoimentos
 
@@ -70,7 +71,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
-| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, destaque do título, botão de travar, bloqueio de rolagem, abas, etapas, resumo e composição visual. |
+| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, destaque do título, limites responsivos, botão de travar, bloqueio de rolagem, abas, etapas, resumo e composição visual. |
 | Campos numéricos | [campo-numerico.tsx](../src/components/calculadora/campo-numerico.tsx) | Componente de input numérico reutilizável. |
 | Cards de resultado | [cartao-resultado.tsx](../src/components/calculadora/cartao-resultado.tsx) | Visual dos KPIs da calculadora. |
 | Regras de cálculo | [calculosRoi.ts](../src/services/calculosRoi.ts) | Fórmulas de ROI, payback, receita antecipada, economia e formatação. |
@@ -81,7 +82,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
-| Formulário de contato | [formulario-lead.tsx](../src/components/formulario-lead.tsx) | Campos, textos, CTA e payload local. |
+| Formulário de contato | [formulario-lead.tsx](../src/components/formulario-lead.tsx) | Campos, textos, CTA, payload local e padding responsivo mobile. |
 | API de leads Cloudflare | [leads.js](../functions/api/leads.js) | Endpoint preparado para gravação de leads. |
 
 ## Footer
