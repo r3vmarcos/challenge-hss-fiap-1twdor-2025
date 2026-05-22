@@ -4,7 +4,6 @@ import { HeroHss } from "@/components/hero-hss";
 import { SecaoBeneficios } from "@/components/secao-solucao";
 import { SecaoComoFunciona } from "@/components/secoes/secao-como-funciona";
 import { SecaoDepoimentos } from "@/components/secoes/secao-depoimentos";
-import { SecaoDiferencialAdm } from "@/components/secoes/secao-diferencial-adm";
 import { SecaoProcessoComparativo } from "@/components/secoes/secao-processo-comparativo";
 
 /* === PAGINA LANDING | inicio === */
@@ -26,7 +25,6 @@ export function PaginaLanding({
       <SecaoComoFunciona />
       <SecaoProcessoComparativo />
       <SecaoDepoimentos />
-      <SecaoDiferencialAdm />
       <CalculadoraRoi dicasHoverAtivas={dicasHoverAtivas} />
       <FormularioLead visaoPadrao="empresa" />
     </>

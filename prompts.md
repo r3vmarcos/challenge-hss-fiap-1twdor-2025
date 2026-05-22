@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-05-21 - Ajuste Samsung S24 e ritmo dos cards
+
+Pedido: corrigir exibição mobile no Samsung S24 em relação à largura da viewport, acelerar a entrada dos cards de "Benefícios da nossa solução" e destacar "Calcule agora o ROI" sem aumentar a fonte.
+
+Aplicacao: o hero e o cabeçalho receberam ajustes de largura, espaçamento e escala mobile; os cards de benefícios passaram a aparecer com menos scroll e animação mais rápida; o título da calculadora recebeu destaque visual em formato de pílula mantendo o tamanho de fonte.
+
+## 2026-05-21 - Remocao do bloco Diferencial ADM
+
+Pedido: retirar da landing o bloco Diferencial ADM indicado pelo usuario.
+
+Aplicacao: a secao do Diferencial ADM foi removida da landing, o link correspondente saiu do cabecalho, o componente do bloco foi excluido e a copia oculta do texto na calculadora tambem foi limpa.
+
 ## 2026-05-21 - Mobile informativo, bloqueio da calculadora, commits e deploy
 
 Pedido: no mobile exibir apenas `informacoesSemHss` e `informacoesComHss`; no PC/notebook, ao fixar a calculadora, impedir a rolagem da página; fazer commits e deploys.

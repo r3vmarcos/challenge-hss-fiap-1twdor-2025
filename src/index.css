@@ -28,6 +28,7 @@ body {
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
+  overflow-x: clip;
   background: #eef0f7;
   color: #070814;
 }
@@ -364,6 +365,25 @@ body::-webkit-scrollbar-thumb:hover,
     top: 0.15rem;
     height: 1rem;
     width: 3.8rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo-origami {
+    height: 1.45rem;
+    width: 4rem;
+  }
+
+  .logo-origami img {
+    max-height: 1.3rem;
+  }
+
+  .logo-origami-fiap img {
+    max-width: 3.05rem;
+  }
+
+  .logo-origami-sombra {
+    width: 3rem;
   }
 }
 

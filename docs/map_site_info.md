@@ -26,7 +26,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
-| Primeira dobra | [hero-hss.tsx](../src/components/hero-hss.tsx) | Título, subtítulo, métricas, CTAs, foto da médica e fundo azul claro. |
+| Primeira dobra | [hero-hss.tsx](../src/components/hero-hss.tsx) | Título, subtítulo, métricas, CTAs, foto da médica, fundo azul claro e ajuste de largura mobile. |
 | Foto da médica | [medica-hero-hss.png](../src/assets/medica-hero-hss.png) | Imagem principal do hero. |
 | Parallax de fundo | [camadas-parallax.tsx](../src/components/camadas-parallax.tsx) | Camadas visuais, profundidade e movimento do fundo. |
 | Dados base do hero | [dadosLanding.ts](../src/data/dadosLanding.ts) | Métricas e dados institucionais usados na landing. |
@@ -37,6 +37,7 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 | --- | --- | --- |
 | Seção "Benefícios da nossa solução" | [secao-solucao.tsx](../src/components/secao-solucao.tsx) | Texto fixo, cards 01 a 06, travamento na tela e ritmo de aparecimento no scroll. |
 | Cards de benefícios | [secao-solucao.tsx](../src/components/secao-solucao.tsx) | Array `beneficios`, títulos, descrições, ícones e ordem dos cards. |
+| Velocidade dos benefícios | [secao-solucao.tsx](../src/components/secao-solucao.tsx) | Constantes `PERCENTUAL_PASSO_BENEFICIO`, `PASSO_MINIMO_BENEFICIO`, duração e delay dos cards. |
 
 ## Como Funciona
 
@@ -65,18 +66,11 @@ Este arquivo indica onde encontrar e modificar cada área da landing page, do pa
 | Lista de depoimentos | [dadosLanding.ts](../src/data/dadosLanding.ts) | Array `depoimentos`, nomes, cargos, cores e textos. |
 | Movimento marquee | [marquee.tsx](../src/components/ui/marquee.tsx), [index.css](../src/index.css) | Velocidade, direção e repetição dos depoimentos. |
 
-## Diferencial ADM
-
-| Elemento | Arquivo | O que alterar |
-| --- | --- | --- |
-| Seção "Diferencial" | [secao-diferencial-adm.tsx](../src/components/secoes/secao-diferencial-adm.tsx) | Cards do ADM, chamada visual e conteúdo explicativo. |
-| Configurações base do ADM | [configuracoesCredenciamento.ts](../src/data/configuracoesCredenciamento.ts) | Cenários padrão, tempos, custos, percentuais e status ativo/inativo. |
-
 ## Calculadora ROI
 
 | Elemento | Arquivo | O que alterar |
 | --- | --- | --- |
-| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, botão de travar, bloqueio de rolagem, abas, etapas, resumo e composição visual. |
+| Calculadora pública | [calculadora-roi.tsx](../src/components/calculadora/calculadora-roi.tsx) | Layout, destaque do título, botão de travar, bloqueio de rolagem, abas, etapas, resumo e composição visual. |
 | Campos numéricos | [campo-numerico.tsx](../src/components/calculadora/campo-numerico.tsx) | Componente de input numérico reutilizável. |
 | Cards de resultado | [cartao-resultado.tsx](../src/components/calculadora/cartao-resultado.tsx) | Visual dos KPIs da calculadora. |
 | Regras de cálculo | [calculosRoi.ts](../src/services/calculosRoi.ts) | Fórmulas de ROI, payback, receita antecipada, economia e formatação. |

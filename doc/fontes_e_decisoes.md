@@ -18,7 +18,7 @@
 03 - A fonte padrão permanece Lexend.  
 04 - O header foi simplificado para destacar navegação, CTA e marca HSS.  
 05 - A imagem médica do hero foi criada a partir da referência visual enviada para manter proximidade com o layout.  
-06 - As seções do Figma foram preservadas: Hero, Benefícios, Como funciona, processo sem/com HSS, Depoimentos, Diferencial, Calculadora e formulário.
+06 - As seções principais preservadas são: Hero, Benefícios, Como funciona, processo sem/com HSS, Depoimentos, Calculadora e formulário.
 
 ## 03 - Decisxes de produto
 

@@ -13,27 +13,27 @@ export function HeroHss({ diasEconomizados, prejuizoEstimado }: HeroHssProps): J
   const prejuizoBase = Math.max(504000, Math.round(prejuizoEstimado));
 
   return (
-    <section className="relative isolate min-h-[calc(100vh-74px)] overflow-hidden bg-[#eef0f7]/92 px-4 pb-10 pt-10 sm:px-6 md:pb-12 md:pt-14 lg:px-8 lg:pb-14 lg:pt-20">
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-154px)] max-w-[1110px] items-center gap-8 md:gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12">
-        <div className="revelar-scroll relative z-20 max-w-[560px] max-lg:mx-auto max-lg:text-center">
-          <h1 className="text-[2.15rem] font-black leading-[1.05] tracking-[0.03em] text-[#070814] sm:text-[3.1rem] md:text-[3.45rem] lg:text-[4rem] xl:text-[4.28rem]">
+    <section className="relative isolate min-h-[calc(100vh-74px)] w-full max-w-full overflow-hidden bg-[#eef0f7]/92 px-3 pb-10 pt-10 sm:px-6 md:pb-12 md:pt-14 lg:px-8 lg:pb-14 lg:pt-20">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-154px)] w-full max-w-[1110px] items-center gap-8 md:gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12">
+        <div className="revelar-scroll relative z-20 w-full max-w-[560px] min-w-0 max-lg:mx-auto max-lg:text-center">
+          <h1 className="max-w-full text-[1.95rem] font-black leading-[1.05] tracking-normal text-[#070814] min-[380px]:text-[2.05rem] sm:text-[3.1rem] md:text-[3.45rem] lg:text-[4rem] lg:tracking-[0.03em] xl:text-[4.28rem]">
             Digitalize e simplifique o{" "}
-            <span className="block text-hss-violeta">CREDENCIAMENTO MÉDICO</span>
+            <span className="block max-w-full break-words text-hss-violeta">CREDENCIAMENTO MÉDICO</span>
           </h1>
-          <p className="mt-5 max-w-[520px] text-base font-medium leading-7 text-[#111827] max-lg:mx-auto sm:text-[1.08rem] md:text-[1.16rem] lg:mt-6 lg:text-[1.22rem] lg:leading-8">
+          <p className="mx-auto mt-5 max-w-[min(31rem,100%)] text-base font-medium leading-7 text-[#111827] sm:text-[1.08rem] md:text-[1.16rem] lg:mx-0 lg:mt-6 lg:text-[1.22rem] lg:leading-8">
             O credenciamento médico como você nunca viu - centralizado, econômico e confiável.
           </p>
 
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row lg:mt-7 lg:justify-start lg:gap-4">
-            <ShimmerButton href="#lead" className="min-w-[220px] px-8 py-4">
+          <div className="mt-6 flex w-full flex-col justify-center gap-3 sm:flex-row lg:mt-7 lg:justify-start lg:gap-4">
+            <ShimmerButton href="#lead" className="w-full px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
               Agendar demonstração
             </ShimmerButton>
-            <ShimmerButton href="#roi" variante="contorno" className="min-w-[220px] px-8 py-4">
+            <ShimmerButton href="#roi" variante="contorno" className="w-full px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
               Calcular ROI
             </ShimmerButton>
           </div>
 
-          <div className="mt-7 grid max-w-[600px] grid-cols-1 gap-3 rounded-[1.1rem] border border-[#d7d9e8] bg-white/70 px-5 py-3 shadow-[0_16px_36px_rgba(15,23,42,0.08)] backdrop-blur max-lg:mx-auto sm:grid-cols-3 lg:mt-9 lg:px-6 lg:py-4">
+          <div className="mt-7 grid w-full max-w-[600px] grid-cols-1 gap-3 rounded-[1.1rem] border border-[#d7d9e8] bg-white/70 px-5 py-3 shadow-[0_16px_36px_rgba(15,23,42,0.08)] backdrop-blur max-lg:mx-auto sm:grid-cols-3 lg:mt-9 lg:px-6 lg:py-4">
             <MetricaHero valor={<NumberTicker valor={diasBase} sufixo="+" />} texto="dias economizados por médico" />
             <MetricaHero valor={<NumberTicker valor={73} sufixo="%" />} texto="redução estimada do ciclo" />
             <MetricaHero valor={<NumberTicker valor={prejuizoBase} prefixo="R$ " />} texto="prejuízo mensal evitável" compacta />

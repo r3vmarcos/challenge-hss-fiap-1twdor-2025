@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.10, com comparativo mobile usando apenas textos informativos e bloqueio de rolagem quando a calculadora fica travada no PC/notebook.
+Validação atualizada para a versão v6.12, com ajuste de largura mobile para Samsung S24, entrada mais rápida dos cards de benefícios e destaque visual do título da calculadora.
 
 ## Checklist Técnico
 
@@ -35,6 +35,16 @@ Validação atualizada para a versão v6.10, com comparativo mobile usando apena
 27 - Deploy Cloudflare Pages após v6.10: aprovado com `npx wrangler pages deploy dist`.
 28 - Smoke HTTP remoto no preview `https://08d4f79d.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
 29 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
+30 - Busca pelos textos removidos após v6.11: aprovada, sem ocorrências atuais.
+31 - `npm install` após ajuste v6.11: aprovado, sem vulnerabilidades.
+32 - `npm run build` após ajuste v6.11: aprovado.
+33 - Smoke HTTP local após v6.11 em `http://localhost:5196/`: aprovado com HTTP 200.
+34 - `npm run build` após ajuste v6.12: aprovado.
+35 - Smoke HTTP local após v6.12 em `http://localhost:5196/`: aprovado com HTTP 200.
+36 - `npm install` após ajuste v6.12: aprovado, sem vulnerabilidades.
+37 - Revalidação após reconectar o drive E: `npm install`: aprovado, sem vulnerabilidades.
+38 - Revalidação após reconectar o drive E: `npm run build`: aprovado.
+39 - Revalidação após reconectar o drive E: smoke HTTP local em `http://localhost:5196/`: aprovado com HTTP 200.
 
 ## Observações
 

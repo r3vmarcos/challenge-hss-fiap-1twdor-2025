@@ -521,39 +521,8 @@ export function CalculadoraRoi({
             </span>
           ) : null}
         </button>
-        <div className="hidden">
-          <div className="w-full">
-            <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">
-              Calculadora de ROI por
-              cenário
-            </span>
-            <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-3xl">
-              O ADM define as premissas,
-              o usuário informa os
-              valores e o ROI - 
-              calculado por tempo.
-            </h2>
-            <p className="mt-3 max-w-5xl text-sm font-medium leading-6 text-slate-600 dark:text-slate-300">
-              A calculadora considera
-              cenários como empresa
-              contratando HSS, hospital
-              credenciando médico,
-              médico atendendo em
-              clínica, médico atendendo
-              em hospital e consultório
-              próprio.
-            </p>
-          </div>
-          <a
-            href="#adm"
-            className="inline-flex rounded-full border border-hss-violeta/20 bg-white/80 px-6 py-3 text-sm font-black text-hss-roxo shadow-sm transition hover:-translate-y-1 hover:shadow-neon dark:bg-white/10 dark:text-white"
-          >
-            Configurar cenários no ADM
-          </a>
-        </div>
-
         <div className="revelar-scroll flex min-h-0 flex-col overflow-visible rounded-[1.35rem] border border-hss-violeta/15 bg-white/90 p-2 pr-14 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-3 sm:pr-14">
-          <h3 className="text-lg font-black tracking-tight text-slate-950 dark:text-white sm:text-xl">
+          <h3 className="inline-flex w-fit items-center rounded-full border border-hss-violeta/25 bg-hss-roxo px-3 py-1.5 text-lg font-black tracking-tight text-white shadow-[0_12px_28px_rgba(75,50,216,0.28)] dark:border-white/10 sm:text-xl">
             Calcule agora o ROI
           </h3>
 

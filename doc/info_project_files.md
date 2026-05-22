@@ -30,7 +30,6 @@
 - [`src/components/secoes/secao-como-funciona.tsx`](../src/components/secoes/secao-como-funciona.tsx) -> etapas do credenciamento.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> comparação sem HSS x com HSS.
 - [`src/components/secoes/secao-depoimentos.tsx`](../src/components/secoes/secao-depoimentos.tsx) -> depoimentos em marquee.
-- [`src/components/secoes/secao-diferencial-adm.tsx`](../src/components/secoes/secao-diferencial-adm.tsx) -> diferencial do ADM.
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> formulário de contato e demonstração.
 
 ## UI Reutilizável
@@ -50,11 +49,12 @@
 
 ## Ajustes Responsivos Atuais
 
-- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona?, Diferencial e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar demonstração permanecem no header.
+- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona? e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar demonstração permanecem no header.
 - [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> no mobile, o comparativo exibe apenas os textos informativos.
+- [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta larguras e título do hero para telas estreitas como Samsung S24.
 
 ## Textos Visíveis Do Site
 
@@ -64,7 +64,6 @@ Origem: [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx)
 
 - Benefícios
 - Como funciona?
-- Diferencial
 - Depoimentos
 - Calculadora ROI
 - Agendar demonstração
@@ -89,6 +88,7 @@ Origem: [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx
 
 - Benefícios da nossa solução
 - Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle operacional.
+- Ritmo de entrada dos cards no desktop: controlado por `PERCENTUAL_PASSO_BENEFICIO` e `PASSO_MINIMO_BENEFICIO` em [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx).
 - 01 - Fluxo 100% digital: Menos papel e contratações muito mais rápidas.
 - 02 - Cadastro único: O fornecedor preenche uma vez; a empresa acessa sempre atualizado.
 - 03 - Status em tempo real: Transparência total para os dois lados acompanharem o processo.
@@ -159,21 +159,12 @@ Origem dos depoimentos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts
 - A leitura de payback e ROI facilita priorizar a contratação da solução. - Diretor administrativo, Hospital privado.
 - A HSS transforma credenciamento em uma jornada mensurável. - Product owner, Saúde digital.
 
-### Diferencial
-
-Origem: [`src/components/secoes/secao-diferencial-adm.tsx`](../src/components/secoes/secao-diferencial-adm.tsx)
-
-- O ADM define as premissas, o usuário informa os valores e o ROI é calculado por tempo.
-- Tipos ativos: O ADM ativa ou desativa cenários exibidos no site.
-- Tempo sem HSS: Define o ciclo tradicional por credenciamento.
-- Tempo com HSS: Define o ganho estimado do fluxo digital.
-- ROI automático: A calculadora transforma tempo economizado em valor.
-
 ### Calculadora ROI
 
 Origem: [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx)
 
 - Calcule agora o ROI
+- Destaque visual do título "Calcule agora o ROI" sem aumento de fonte.
 - Empresa / Hospital / Clínica
 - Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos mais rápido.
 - Médico

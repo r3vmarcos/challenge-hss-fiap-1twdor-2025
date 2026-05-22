@@ -12,7 +12,6 @@ interface CabecalhoProps {
 const links = [
   { href: "#beneficios", label: "Benefícios" },
   { href: "#como-funciona", label: "Como funciona?" },
-  { href: "#diferencial", label: "Diferencial" },
   { href: "#depoimentos", label: "Depoimentos" },
   { href: "#roi", label: "Calculadora ROI", destaque: true },
 ];
@@ -25,8 +24,8 @@ export function Cabecalho({
 
   return (
     <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
-      <div className="mx-auto max-w-[1110px] px-3 py-2 sm:px-6 lg:px-0 lg:py-3">
-        <div className="flex items-center justify-between gap-2">
+      <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
+        <div className="flex min-w-0 items-center justify-between gap-1.5 sm:gap-2">
           <a href="#topo" className="flex items-center" aria-label="Ir para o início">
             <LogoOrigami />
           </a>
@@ -37,18 +36,18 @@ export function Cabecalho({
             linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] hover:text-hss-violeta"
           />
 
-          <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-3">
             {!paginaAdm ? (
               <ShimmerButton
                 href="#roi"
                 variante="contorno"
-                className="px-2.5 py-2 text-[10px] leading-none sm:px-4 sm:text-xs lg:hidden"
+                className="shrink-0 whitespace-nowrap px-2 py-2 text-[9px] leading-none min-[390px]:px-2.5 min-[390px]:text-[10px] sm:px-4 sm:text-xs lg:hidden"
               >
                 Calculadora ROI
               </ShimmerButton>
             ) : null}
 
-            <ShimmerButton href="#lead" className="px-2.5 py-2 text-[10px] leading-none sm:px-4 sm:text-xs lg:px-6 lg:py-3 lg:text-[13px]">
+            <ShimmerButton href="#lead" className="shrink-0 whitespace-nowrap px-2 py-2 text-[9px] leading-none min-[390px]:px-2.5 min-[390px]:text-[10px] sm:px-4 sm:text-xs lg:px-6 lg:py-3 lg:text-[13px]">
               Agendar demonstração
             </ShimmerButton>
 
@@ -65,7 +64,7 @@ export function Cabecalho({
               <button
                 type="button"
                 onClick={() => definirMenuMobileAberto((aberto) => !aberto)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm lg:hidden"
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm lg:hidden"
                 aria-label={menuMobileAberto ? "Fechar menu" : "Abrir menu"}
                 aria-expanded={menuMobileAberto}
                 aria-controls="menu-mobile-principal"

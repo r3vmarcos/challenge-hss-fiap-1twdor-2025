@@ -1,5 +1,19 @@
 # Changelog
 
+## v6.12 - Ajuste mobile S24 e ritmo visual
+
+01 - Ajustado o hero e o cabeçalho para reduzir pressão horizontal em telas estreitas como Samsung S24.
+02 - Reduzido o ritmo de scroll necessário para carregar os 6 cards de "Benefícios da nossa solução".
+03 - Diminuída a duração e o delay da animação dos cards de benefícios.
+04 - Reforçado o destaque visual de "Calcule agora o ROI" sem aumentar o tamanho da fonte.
+
+## v6.11 - Remocao do bloco Diferencial ADM
+
+01 - Removida a secao visivel do bloco Diferencial ADM.
+02 - Removido o link "Diferencial" do cabecalho para evitar ancora inexistente.
+03 - Removida a copia oculta desse texto dentro da calculadora.
+04 - Atualizada a documentacao atual do projeto para nao listar mais o bloco Diferencial ADM.
+
 ## v6.10 - Mobile informativo e calculadora travada
 
 01 - Ajustado o comparativo Sem HSS / Com HSS no mobile para exibir apenas os arrays `informacoesSemHss` e `informacoesComHss`.

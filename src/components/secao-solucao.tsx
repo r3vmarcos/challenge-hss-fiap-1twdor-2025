@@ -61,6 +61,8 @@ const beneficios: Beneficio[] = [
 /* === CONSTANTES DE LAYOUT | inicio === */
 const ALTURA_CABECALHO = 74;
 const OFFSET_ENTRADA_SECAO = 0;
+const PERCENTUAL_PASSO_BENEFICIO = 0.24;
+const PASSO_MINIMO_BENEFICIO = 165;
 /* === CONSTANTES DE LAYOUT | fim === */
 
 /* === COMPONENTE BENEFICIOS | inicio === */
@@ -113,8 +115,9 @@ export function SecaoBeneficios(): JSX.Element {
   useEffect(() => {
     function atualizarAlturaScrollInterno(): void {
       const passoPorCard = Math.max(
-        window.innerHeight * 0.42,
-        280,
+        window.innerHeight *
+          PERCENTUAL_PASSO_BENEFICIO,
+        PASSO_MINIMO_BENEFICIO,
       );
       const folgaFinal = Math.max(
         window.innerHeight * 0.24,
@@ -170,8 +173,9 @@ export function SecaoBeneficios(): JSX.Element {
       const scrollAtual =
         window.scrollY;
       const passoPorCard = Math.max(
-        window.innerHeight * 0.42,
-        280,
+        window.innerHeight *
+          PERCENTUAL_PASSO_BENEFICIO,
+        PASSO_MINIMO_BENEFICIO,
       );
       const progresso = Math.max(
         scrollAtual - inicioTravamento,
@@ -407,7 +411,7 @@ export function SecaoBeneficios(): JSX.Element {
                     className={[
                       "rounded-2xl border border-[#d8dbea] bg-white p-6",
                       "shadow-[0_16px_34px_rgba(15,23,42,0.07)]",
-                      "transition-[opacity,transform] duration-700 ease-out",
+                      "transition-[opacity,transform] duration-500 ease-out",
                       visivel
                         ? "translate-x-0 opacity-100"
                         : "translate-x-[140px] opacity-0",
@@ -415,8 +419,8 @@ export function SecaoBeneficios(): JSX.Element {
                     style={{
                       transitionDelay:
                         visivel
-                          ? `${indice * 80}ms`
-                          : `${(beneficios.length - indice) * 45}ms`,
+                          ? `${indice * 45}ms`
+                          : `${(beneficios.length - indice) * 24}ms`,
                     }}
                   >
                     <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-hss-violeta/10 text-[#070814]">
