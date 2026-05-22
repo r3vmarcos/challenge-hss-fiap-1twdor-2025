@@ -45,6 +45,11 @@ Validação atualizada para a versão v6.12, com ajuste de largura mobile para S
 37 - Revalidação após reconectar o drive E: `npm install`: aprovado, sem vulnerabilidades.
 38 - Revalidação após reconectar o drive E: `npm run build`: aprovado.
 39 - Revalidação após reconectar o drive E: smoke HTTP local em `http://localhost:5196/`: aprovado com HTTP 200.
+40 - Commit local após ajustes v6.11/v6.12: aprovado em `ccc3157`.
+41 - Push para GitHub `origin/main`: aprovado.
+42 - Deploy Cloudflare Pages após v6.12: aprovado com `npx wrangler pages deploy dist`.
+43 - Smoke HTTP remoto no preview `https://6f98c646.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
+44 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
 
 ## Observações
 
