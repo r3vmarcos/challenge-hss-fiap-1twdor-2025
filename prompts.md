@@ -4,7 +4,7 @@
 
 Pedido: fazer um check de ortografia e mojibakes, criar branch no GitHub e fazer deploy no Cloudflare.
 
-Aplicação: a documentação recebeu correções pontuais de acentuação, o README foi alinhado ao projeto Cloudflare configurado e a checagem de mojibake comum foi preparada para a validação final antes de branch, push e deploy.
+Aplicação: a documentação recebeu correções pontuais de acentuação, o README foi alinhado ao projeto Cloudflare configurado, a checagem de mojibake comum foi aprovada e a branch `ajustes-ortografia-hero-comparativo-v6` foi publicada com deploy de preview no Cloudflare.
 
 ## 2026-05-22 - Cards completos no comparativo em 100vh
 

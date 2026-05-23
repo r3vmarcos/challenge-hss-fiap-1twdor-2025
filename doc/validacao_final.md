@@ -86,6 +86,12 @@ Validação atualizada para a versão v6.21, com revisão de ortografia, checage
 78 - Busca por sequências comuns de mojibake em UTF-8 após revisão v6.21: aprovada, sem ocorrências atuais.
 79 - `npm run build` após revisão v6.21: aprovado.
 80 - Smoke HTTP local após revisão v6.21 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+81 - Branch GitHub `ajustes-ortografia-hero-comparativo-v6`: criada e enviada para `origin`.
+82 - Commit da revisão visual, textual e documental: aprovado em `9a686c5`.
+83 - Deploy Cloudflare Pages da branch: aprovado com `npx wrangler pages deploy dist --project-name hssfiap-chalange-1twdor-2025`.
+84 - Smoke HTTP remoto no preview `https://8f571eb8.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
+85 - Smoke HTTP remoto no alias da branch `https://ajustes-ortografia-hero-comp.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
+86 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
 
 ## Observações
 
