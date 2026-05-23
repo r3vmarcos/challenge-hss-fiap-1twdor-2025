@@ -1,5 +1,11 @@
 # Histórico de prompts do projeto
 
+## 2026-05-22 - Alinhamento da produção Cloudflare
+
+Pedido: informar que `https://hssfiap-chalange-1twdor-2025.pages.dev/` estava diferente do preview `https://8f571eb8.hssfiap-chalange-1twdor-2025.pages.dev`.
+
+Aplicação: a branch `main` recebeu os commits da branch de ajuste para que o deploy de produção da URL principal fique alinhado ao preview validado.
+
 ## 2026-05-22 - Revisão de ortografia, branch e deploy
 
 Pedido: fazer um check de ortografia e mojibakes, criar branch no GitHub e fazer deploy no Cloudflare.

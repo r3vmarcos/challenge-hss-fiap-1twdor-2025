@@ -92,6 +92,8 @@ Validação atualizada para a versão v6.21, com revisão de ortografia, checage
 84 - Smoke HTTP remoto no preview `https://8f571eb8.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
 85 - Smoke HTTP remoto no alias da branch `https://ajustes-ortografia-hero-comp.hssfiap-chalange-1twdor-2025.pages.dev`: aprovado com HTTP 200.
 86 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
+87 - Branch `main` atualizada com os commits da branch `ajustes-ortografia-hero-comparativo-v6`.
+88 - Push para GitHub `origin/main` após alinhamento de produção: aprovado.
 
 ## Observações
 

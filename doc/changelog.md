@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.22 - Produção alinhada ao preview
+
+01 - Avançada a branch `main` com os commits da branch `ajustes-ortografia-hero-comparativo-v6`.
+02 - Preparado novo deploy Cloudflare de produção para alinhar a URL principal ao preview validado.
+
 ## v6.21 - Revisão de ortografia e publicação
 
 01 - Revisados termos sem acento em registros recentes de documentação.
