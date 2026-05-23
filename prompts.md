@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-05-22 - Commit main e deploy Cloudflare
+
+Pedido: fazer os commits, publicar na branch `main` do GitHub e fazer deploy `main` no Cloudflare.
+
+Aplicação: a rodada incluiu validação com `npm install`, TypeScript estrito, build, commit na `main`, push para GitHub e deploy de produção no Cloudflare Pages.
+
+## 2026-05-22 - Link Diferencial no cabeçalho
+
+Pedido: colocar no header o item "Diferencial" levando para "Sem HSS • processos tradicionais".
+
+Aplicação: o cabeçalho recebeu o link `Diferencial` apontando para `#processo-sem-hss`, mantendo a ordem Benefícios, Como funciona?, Diferencial e Depoimentos.
+
 ## 2026-05-22 - Alinhamento da produção Cloudflare
 
 Pedido: informar que `https://hssfiap-chalange-1twdor-2025.pages.dev/` estava diferente do preview `https://8f571eb8.hssfiap-chalange-1twdor-2025.pages.dev`.

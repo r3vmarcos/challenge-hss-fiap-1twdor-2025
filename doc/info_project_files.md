@@ -49,7 +49,7 @@
 
 ## Ajustes Responsivos Atuais
 
-- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona? e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar
+- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona?, Diferencial e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar
   demonstração permanecem no header.
 - [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
@@ -57,8 +57,8 @@
   azul.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> no mobile, o comparativo exibe apenas os textos informativos.
-- [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta largura, título em três linhas e imagem do hero; no desktop, a médica fica posicionada no lado direito e
-  centralizada verticalmente.
+- [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta largura, título em três linhas e imagem do hero; no desktop, a médica fica posicionada no lado direito,
+  centralizada verticalmente e com degradê transparente na base.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> usa limites de largura e `min-w-0` para selects, cards e wrappers no
   mobile.
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> reduz padding e limita largura dos campos no mobile.
@@ -71,6 +71,7 @@ Origem: [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx)
 
 - Benefícios
 - Como funciona?
+- Diferencial
 - Depoimentos
 - Calculadora ROI
 - Agendar demonstração

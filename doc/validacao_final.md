@@ -94,6 +94,9 @@ Validação atualizada para a versão v6.21, com revisão de ortografia, checage
 86 - Smoke HTTP remoto em `https://hssfiap-chalange-1twdor-2025.pages.dev/`: aprovado com HTTP 200.
 87 - Branch `main` atualizada com os commits da branch `ajustes-ortografia-hero-comparativo-v6`.
 88 - Push para GitHub `origin/main` após alinhamento de produção: aprovado.
+89 - `npm install` após ajuste de gradiente no hero e link Diferencial: aprovado, sem vulnerabilidades.
+90 - Checagem TypeScript após ajuste de gradiente no hero e link Diferencial com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+91 - `npm run build` após ajuste de gradiente no hero e link Diferencial: aprovado.
 
 ## Observações
 

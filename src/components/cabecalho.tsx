@@ -12,6 +12,7 @@ interface CabecalhoProps {
 const links = [
   { href: "#beneficios", label: "Benefícios" },
   { href: "#como-funciona", label: "Como funciona?" },
+  { href: "#processo-sem-hss", label: "Diferencial" },
   { href: "#depoimentos", label: "Depoimentos" },
   { href: "#roi", label: "Calculadora ROI", destaque: true },
 ];

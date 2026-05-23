@@ -13,7 +13,7 @@ export function HeroHss(_props: HeroHssProps): JSX.Element {
     <section className="relative isolate mx-auto min-h-[calc(100vh-74px)] w-full max-w-[1320px] overflow-hidden bg-[#eef0f7]/92 px-4 pb-10 pt-10 sm:px-8 md:pb-12 md:pt-14 lg:px-12 lg:pb-10 lg:pt-8 xl:px-16">
       <div className="relative z-10 mx-auto grid min-h-[calc(100vh-132px)] w-full max-w-[1240px] items-center gap-7 md:gap-8 lg:grid-cols-[minmax(680px,0.58fr)_minmax(0,0.42fr)] lg:gap-8">
         <div className="revelar-scroll relative z-20 w-full max-w-[720px] min-w-0 max-lg:mx-auto max-lg:text-center">
-          <h1 className="max-w-full text-[1.35rem] font-black leading-[1.05] tracking-normal text-[#070814] min-[380px]:text-[1.65rem] sm:text-[2.55rem] md:text-[3.15rem] lg:text-[3.05rem] xl:text-[3.25rem]">
+          <h1 className="max-w-full text-[1.35rem] font-black leading-[1.15] tracking-normal text-[#070814] min-[380px]:text-[1.65rem] sm:text-[2.55rem] md:text-[3.15rem] lg:text-[3.05rem] xl:text-[3.25rem]">
             <span className="block whitespace-nowrap">Digitalize e simplifique</span>
             <span className="block whitespace-nowrap">
               o <span className="text-hss-violeta">CREDENCIAMENTO</span>
@@ -40,11 +40,15 @@ export function HeroHss(_props: HeroHssProps): JSX.Element {
           </div>
         </div>
 
-        <div className="revelar-scroll relative z-10 flex min-h-[330px] items-center justify-center overflow-visible sm:min-h-[430px] md:min-h-[530px] lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:min-h-0 lg:w-[58%] lg:justify-center xl:right-[-6rem]">
+        <div className="revelar-scroll relative z-10 flex min-h-[330px] items-center justify-center overflow-visible sm:min-h-[430px] md:min-h-[530px] lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:min-h-0 lg:w-[58%] lg:justify-center xl:right-[-4rem]">
           <img
             src={medicaHero}
             alt="Médica representando o credenciamento digital da Health Sync Solutions"
             className="relative z-10 w-full max-w-[430px] object-contain sm:max-w-[540px] md:max-w-[650px] lg:max-w-[760px] xl:max-w-[820px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-b from-transparent via-[#eef0f7]/75 to-[#eef0f7] sm:h-32 lg:h-40"
           />
         </div>
       </div>

@@ -1,5 +1,16 @@
 # Changelog
 
+## v6.24 - Gradiente do hero e deploy main
+
+01 - Adicionado degradê transparente na base da imagem da médica no hero.
+02 - Mantido o link "Diferencial" no cabeçalho apontando para o bloco "Sem HSS • processos tradicionais".
+03 - Preparado commit na branch `main` e deploy de produção no Cloudflare Pages.
+
+## v6.23 - Link Diferencial no cabeçalho
+
+01 - Adicionado o link "Diferencial" ao cabeçalho da landing.
+02 - O link aponta para `#processo-sem-hss`, bloco "Sem HSS • processos tradicionais".
+
 ## v6.22 - Produção alinhada ao preview
 
 01 - Avançada a branch `main` com os commits da branch `ajustes-ortografia-hero-comparativo-v6`.
