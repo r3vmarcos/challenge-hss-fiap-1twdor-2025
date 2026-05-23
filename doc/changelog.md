@@ -1,16 +1,62 @@
 # Changelog
 
+## v6.21 - Revisão de ortografia e publicação
+
+01 - Revisados termos sem acento em registros recentes de documentação.
+02 - Corrigidos links e caminhos do README para refletir `doc/`, `docs/` e o projeto Cloudflare configurado.
+03 - Reexecutada a checagem de mojibake comum antes da validação, branch e deploy.
+
+## v6.20 - Cards completos no comparativo em 100vh
+
+01 - Atualizados os cards laterais do comparativo para exibir título e descrição completos nos quatro itens.
+02 - Compactados padding, espaçamentos e tipografia dos cards animados e informativos para os quatro caberem no palco desktop de 100vh.
+03 - Adicionado tratamento de título e descrição nos cards a partir do texto de `src/data/dadosLanding.ts`.
+
+## v6.19 - Reposicionamento da médica no hero
+
+01 - Corrigido o posicionamento da médica no desktop para ela não ficar pequena e presa no rodapé do hero.
+02 - A imagem da médica passou a ficar posicionada no lado direito do hero, centralizada verticalmente e com escala maior.
+03 - Mantido o comportamento responsivo no mobile, com a imagem ainda participando do fluxo normal.
+
+## v6.18 - Hero com médica e métricas no padrão Figma
+
+01 - Aumentada e reposicionada a imagem da médica no hero para aproximar a composição da referência do Figma.
+02 - Ajustado o card de métricas para exibir `33+`, `73%` e `R$ 504.000` sem truncamento.
+03 - Mantidos os rótulos `Dias economizados`, `Redução estimada` e `Prejuízo mensal evitável`.
+
+## v6.17 - Quebra fixa do título do hero
+
+01 - Ajustada a coluna de texto do hero para manter a quebra em três linhas: "Digitalize e simplifique", "o CREDENCIAMENTO" e "MÉDICO".
+02 - Aplicado `whitespace-nowrap` nas duas linhas longas do título para evitar quebras internas no desktop.
+03 - Reduzida a escala do título em telas estreitas para preservar a quebra sem vazamento horizontal.
+
+## v6.16 - Textos do comparativo Sem HSS e Com HSS
+
+01 - Atualizados os textos do bloco "Sem HSS • processos tradicionais" conforme a referência enviada.
+02 - Atualizados os textos do bloco "Com HSS • processo digital" conforme a referência enviada.
+03 - Mantidas as cores, estilos, estrutura e animações atuais do projeto.
+04 - Atualizado o inventário de textos visíveis em `doc/info_project_files.md`.
+
+## v6.15 - Hero ajustado e revisão de textos visíveis
+
+01 - Ajustado o hero para seguir a referência visual enviada, com a quebra "Digitalize e simplifique / o CREDENCIAMENTO / MÉDICO".
+02 - Removida a camada azul artificial atrás da médica, pois `src/assets/medica-hero-hss.png` já contém o fundo azul.
+03 - Removida a máscara aplicada na imagem da médica para preservar o fundo original do PNG.
+04 - Corrigida a classe Tailwind do grid do hero que estava com `max-w-[calc(100vw-20px)` sem fechamento.
+05 - Removidos prefixos internos `sem S`, `sem R`, `com S` e `com R` dos textos visíveis do comparativo Sem HSS / Com HSS.
+06 - Revalidados npm install, TypeScript estrito, build e smoke HTTP local.
+
 ## v6.14 - Menu A11y mobile
 
 01 - Ocultado o botão SVG flutuante de acessibilidade quando o menu A11y está aberto no mobile.
 02 - Destacado o botão de fechar do menu A11y em azul, com sombra e foco visível.
 
-## v6.13 - Reforco responsivo em celulares
+## v6.13 - Reforço responsivo em celulares
 
 01 - Reforcadas quebras de linha e limites de largura nos cards mobile do comparativo Sem HSS / Com HSS.
-02 - Ajustada a calculadora compacta para nao reservar espaco lateral do pino no mobile.
-03 - Reforcados `min-w-0`, `max-w-full` e `overflow-hidden` em selects, botoes, cards e wrappers da calculadora.
-04 - Ajustado o formulario de lead para reduzir padding e impedir vazamento horizontal em telas estreitas.
+02 - Ajustada a calculadora compacta para não reservar espaço lateral do pino no mobile.
+03 - Reforçados `min-w-0`, `max-w-full` e `overflow-hidden` em selects, botões, cards e wrappers da calculadora.
+04 - Ajustado o formulário de lead para reduzir padding e impedir vazamento horizontal em telas estreitas.
 
 ## v6.12 - Ajuste mobile S24 e ritmo visual
 
@@ -19,26 +65,26 @@
 03 - Diminuída a duração e o delay da animação dos cards de benefícios.
 04 - Reforçado o destaque visual de "Calcule agora o ROI" sem aumentar o tamanho da fonte.
 
-## v6.11 - Remocao do bloco Diferencial ADM
+## v6.11 - Remoção do bloco Diferencial ADM
 
-01 - Removida a secao visivel do bloco Diferencial ADM.
-02 - Removido o link "Diferencial" do cabecalho para evitar ancora inexistente.
-03 - Removida a copia oculta desse texto dentro da calculadora.
-04 - Atualizada a documentacao atual do projeto para nao listar mais o bloco Diferencial ADM.
+01 - Removida a seção visível do bloco Diferencial ADM.
+02 - Removido o link "Diferencial" do cabeçalho para evitar âncora inexistente.
+03 - Removida a cópia oculta desse texto dentro da calculadora.
+04 - Atualizada a documentação atual do projeto para não listar mais o bloco Diferencial ADM.
 
 ## v6.10 - Mobile informativo e calculadora travada
 
 01 - Ajustado o comparativo Sem HSS / Com HSS no mobile para exibir apenas os arrays `informacoesSemHss` e `informacoesComHss`.
-02 - Reforcado o bloqueio de rolagem da pagina quando a calculadora fica fixada no PC/notebook.
-03 - O travamento da calculadora agora bloqueia wheel, touch, teclas de rolagem e mantem a posicao da pagina ate destravar.
-04 - Atualizada a documentacao do projeto com o comportamento novo.
+02 - Reforçado o bloqueio de rolagem da página quando a calculadora fica fixada no PC/notebook.
+03 - O travamento da calculadora agora bloqueia wheel, touch, teclas de rolagem e mantém a posição da página até destravar.
+04 - Atualizada a documentação do projeto com o comportamento novo.
 
-## v6.9 - Conteudos distintos no comparativo
+## v6.9 - Conteúdos distintos no comparativo
 
 01 - Separados os textos dos cards laterais e dos cards informativos do bloco "Sem HSS - processo tradicional".
 02 - Criados os arrays `informacoesSemHss` e `informacoesComHss` em `src/data/dadosLanding.ts`.
-03 - Atualizado o componente de processo comparativo para renderizar cada lado com sua propria fonte de conteudo.
-04 - Atualizada a documentacao de mapa e inventario de textos do projeto.
+03 - Atualizado o componente de processo comparativo para renderizar cada lado com sua própria fonte de conteúdo.
+04 - Atualizada a documentação de mapa e inventário de textos do projeto.
 
 ## v6.8 - Header mobile e refinamentos A11y
 

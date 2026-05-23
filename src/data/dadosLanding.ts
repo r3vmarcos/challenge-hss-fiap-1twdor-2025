@@ -57,32 +57,22 @@ export const etapasProcesso = [
   },
 ];
 
-export const problemasSemHss = [
-  "sem S Arquivos espalhados em e-mails, planilhas e pastas internas dificultam o controle do processo.",
-  "sem S A equipe perde tempo cobrando documentos, conferindo anexos e atualizando status manualmente.",
-  "sem S A ausência de premissas de tempo por cenário torna o prazo pouco previsível para a operação.",
-  "sem S Quanto mais lenta a liberação, maior o impacto de médicos parados, agendas vazias e receita postergada.",
-];
+export const problemasSemHss = ["ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO", "VALIDAÇÃO ARTESANAL E RETRABALHO", "INTEGRAÇÃO LIMITADA", "GESTÃO CAÓTICA E VULNERABILIDADE"];
 
 export const informacoesSemHss = [
-  "sem R Documentos ficam fora de um fluxo único, o que dificulta auditoria, rastreabilidade e priorização.",
-  "sem R A rotina administrativa vira acompanhamento manual, com retrabalho para lembrar pendências e atualizar controles.",
-  "sem R A operação perde previsibilidade porque cada credenciamento depende de validações dispersas e sem padrão claro.",
-  "sem R O atraso deixa profissionais sem atuar, reduz capacidade de agenda e posterga receita da instituição.",
+  "ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO. A ausência de leitura automática — no papel ou em sistemas limitados — abre brechas para o erro humano e aprovações irregulares.",
+  "VALIDAÇÃO ARTESANAL E RETRABALHO. O eterno vai-e-vem de e-mails cobrando anexos frustra o corpo clínico e atrasa o início dos plantões.",
+  "INTEGRAÇÃO LIMITADA. Softwares que não conectam ao CRM ou bases federais tornam o preenchimento de dados repetitivo e lento.",
+  "GESTÃO CAÓTICA E VULNERABILIDADE. Sem rastreabilidade clara, comprovar o compliance durante uma auditoria vira uma operação de resgate estressante.",
 ];
 
-export const ganhosComHss = [
-  "com S O fluxo digital centraliza etapas, documentos e premissas por tipo de credenciamento configurado no ADM.",
-  "com S A instituição define tempo sem HSS, tempo com HSS, percentuais e custos para cada cenário ativo.",
-  "com S A calculadora converte dias economizados em receita antecipada, economia operacional e ROI estimado.",
-  "com S O painel ADM ativa ou desativa cenários, mantendo o site alinhado ao processo comercial da HSS.",
-];
+export const ganhosComHss = ["IA DE ALTA PRECISÃO", "SEGURANÇA BLINDADA", "ECOSSISTEMA INTEROPERÁVEL", "FOCO EM COMPLIANCE"];
 
 export const informacoesComHss = [
-  "com R O processo ganha uma trilha organizada para acompanhar documentos, etapas e responsáveis com mais clareza.",
-  "com R As premissas configuradas no ADM deixam a simulação alinhada ao tipo real de credenciamento analisado.",
-  "com R O ganho de tempo passa a ser traduzido em indicadores financeiros fáceis de apresentar para decisão.",
-  "com R A equipe comercial mantém a calculadora atualizada sem depender de alteração direta no código da landing.",
+  "IA DE ALTA PRECISÃO. Antecipa erros e inconsistências, acelerando drasticamente aprovações e eliminando falhas humanas.",
+  "SEGURANÇA BLINDADA. Camadas de validação rigorosas que garantem a autenticidade documental e total conformidade com as normas do setor.",
+  "ECOSSISTEMA INTEROPERÁVEL. Conecte-se aos principais sistemas hospitalares e bases regulatórias sem trabalho manual e silos de informação.",
+  "FOCO EM COMPLIANCE. Trilhas de auditoria automáticas e arquitetura focada em compliance para fiscalizações sem estresse.",
 ];
 
 export const depoimentos = [

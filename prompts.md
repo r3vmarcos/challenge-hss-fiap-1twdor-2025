@@ -1,40 +1,88 @@
 # Histórico de prompts do projeto
 
+## 2026-05-22 - Revisão de ortografia, branch e deploy
+
+Pedido: fazer um check de ortografia e mojibakes, criar branch no GitHub e fazer deploy no Cloudflare.
+
+Aplicação: a documentação recebeu correções pontuais de acentuação, o README foi alinhado ao projeto Cloudflare configurado e a checagem de mojibake comum foi preparada para a validação final antes de branch, push e deploy.
+
+## 2026-05-22 - Cards completos no comparativo em 100vh
+
+Pedido: aumentar/ajustar os cards do comparativo para caberem os quatro em 100vh, usando os textos completos de Etapa tradicional 01 a 04 e Ganho digital 01 a 04.
+
+Aplicação: os cards laterais passaram a usar título e descrição completos, o componente separa título/descrição automaticamente e os cards animados/informativos foram compactados para caber no palco desktop de 100vh.
+
+## 2026-05-22 - Reposicionamento da médica no hero
+
+Pedido: corrigir a imagem da médica, que estava errada no hero.
+
+Aplicação: no desktop, a imagem saiu do alinhamento inferior do grid e passou a ficar posicionada no lado direito do hero, centralizada verticalmente e com escala maior; no mobile, a imagem continua no fluxo normal.
+
+## 2026-05-22 - Hero com médica e métricas no padrão Figma
+
+Pedido: arrumar a imagem da médica e as informações do hero para ficar como a imagem do Figma, usando `33+`, `Dias economizados`, `73%`, `Redução estimada`, `R$ 504.000` e `Prejuízo mensal evitável`.
+
+Aplicação: a imagem da médica foi ampliada e deslocada no bloco direito; o card de métricas passou a usar valores fixos e removeu truncamento para mostrar `R$ 504.000` por completo.
+
+## 2026-05-22 - Quebra fixa do título do hero
+
+Pedido: garantir que o título do hero fique com a quebra exata em três linhas: "Digitalize e simplifique", "o CREDENCIAMENTO" e "MÉDICO".
+
+Aplicação: a coluna do texto foi ampliada no desktop, as linhas longas receberam `whitespace-nowrap` e a escala em telas pequenas foi reduzida para evitar quebras internas.
+
+## 2026-05-22 - Textos do comparativo Sem HSS e Com HSS
+
+Pedido: usar os textos das imagens enviadas nas partes Sem HSS e Com HSS, mantendo apenas os textos e preservando as cores e estilos atuais.
+
+Aplicação: os títulos, descrições e itens dos arrays `problemasSemHss`, `informacoesSemHss`, `ganhosComHss` e `informacoesComHss` foram atualizados sem alterar a estrutura visual dos componentes.
+
+## 2026-05-22 - Hero igual à referência visual
+
+Pedido: ajustar o hero para ficar igual à imagem enviada, usando o fundo azul já existente em `medica-hero-hss.png` e quebrando o título em "Digitalize e simplifique / o CREDENCIAMENTO / MÉDICO".
+
+Aplicação: o título do hero passou a ter três linhas controladas, a camada azul artificial foi removida, a máscara da imagem foi retirada e a escala do grid/imagem foi ajustada para preservar o PNG original.
+
+## 2026-05-22 - Revisão de referências, mojibake e pt-BR
+
+Pedido: verificar se havia algo errado no código, algo sem referência, mojibake e problemas de ortografia em pt-BR.
+
+Aplicação: a checagem de imports e variáveis sem uso passou limpa; a classe Tailwind quebrada do hero foi corrigida; os prefixos internos dos textos do comparativo foram removidos; a codificação UTF-8 e a ortografia dos trechos alterados foram revalidadas.
+
 ## 2026-05-22 - Menu A11y mobile
 
 Pedido: no mobile, ao abrir o menu de acessibilidade, ocultar o SVG flutuante A11y e destacar o botão de fechar em azul.
 
-Aplicacao: o botão flutuante do menu A11y fica invisível e sem eventos no mobile quando o painel está aberto; o botão de fechar recebeu fundo azul, texto branco, sombra e foco visível.
+Aplicação: o botão flutuante do menu A11y fica invisível e sem eventos no mobile quando o painel está aberto; o botão de fechar recebeu fundo azul, texto branco, sombra e foco visível.
 
-## 2026-05-22 - Reforco responsivo em celulares
+## 2026-05-22 - Reforço responsivo em celulares
 
-Pedido: verificar e ajustar itens que saem da tela em alguns celulares e elementos que nao redimensionam corretamente para 100vw.
+Pedido: verificar e ajustar itens que saem da tela em alguns celulares e elementos que não redimensionam corretamente para 100vw.
 
-Aplicacao: os cards mobile do comparativo receberam limites e quebra de linha mais fortes, a calculadora deixou de reservar espaco lateral do pino no mobile, selects/botoes/wrappers ganharam `min-w-0` e limites de largura, e o formulario de lead foi compactado para telas estreitas.
+Aplicação: os cards mobile do comparativo receberam limites e quebra de linha mais fortes, a calculadora deixou de reservar espaço lateral do pino no mobile, selects/botões/wrappers ganharam `min-w-0` e limites de largura, e o formulário de lead foi compactado para telas estreitas.
 
 ## 2026-05-21 - Ajuste Samsung S24 e ritmo dos cards
 
 Pedido: corrigir exibição mobile no Samsung S24 em relação à largura da viewport, acelerar a entrada dos cards de "Benefícios da nossa solução" e destacar "Calcule agora o ROI" sem aumentar a fonte.
 
-Aplicacao: o hero e o cabeçalho receberam ajustes de largura, espaçamento e escala mobile; os cards de benefícios passaram a aparecer com menos scroll e animação mais rápida; o título da calculadora recebeu destaque visual em formato de pílula mantendo o tamanho de fonte.
+Aplicação: o hero e o cabeçalho receberam ajustes de largura, espaçamento e escala mobile; os cards de benefícios passaram a aparecer com menos scroll e animação mais rápida; o título da calculadora recebeu destaque visual em formato de pílula mantendo o tamanho de fonte.
 
-## 2026-05-21 - Remocao do bloco Diferencial ADM
+## 2026-05-21 - Remoção do bloco Diferencial ADM
 
-Pedido: retirar da landing o bloco Diferencial ADM indicado pelo usuario.
+Pedido: retirar da landing o bloco Diferencial ADM indicado pelo usuário.
 
-Aplicacao: a secao do Diferencial ADM foi removida da landing, o link correspondente saiu do cabecalho, o componente do bloco foi excluido e a copia oculta do texto na calculadora tambem foi limpa.
+Aplicação: a seção do Diferencial ADM foi removida da landing, o link correspondente saiu do cabeçalho, o componente do bloco foi excluído e a cópia oculta do texto na calculadora também foi limpa.
 
 ## 2026-05-21 - Mobile informativo, bloqueio da calculadora, commits e deploy
 
 Pedido: no mobile exibir apenas `informacoesSemHss` e `informacoesComHss`; no PC/notebook, ao fixar a calculadora, impedir a rolagem da página; fazer commits e deploys.
 
-Aplicacao: o layout compacto do comparativo passou a renderizar apenas `informacoes`, o travamento da calculadora passou a congelar a posição da página e bloquear wheel, touch e teclas de rolagem, e a documentação foi atualizada antes da validação, commit e deploy.
+Aplicação: o layout compacto do comparativo passou a renderizar apenas `informacoes`, o travamento da calculadora passou a congelar a posição da página e bloquear wheel, touch e teclas de rolagem, e a documentação foi atualizada antes da validação, commit e deploy.
 
-## 2026-05-21 - Conteudos distintos no comparativo Sem HSS
+## 2026-05-21 - Conteúdos distintos no comparativo Sem HSS
 
-Pedido: no bloco "Sem HSS - processo tradicional", separar o conteudo exibido no lado dos cards do conteudo exibido no lado da informacao, pois os dois lados estavam iguais.
+Pedido: no bloco "Sem HSS - processo tradicional", separar o conteúdo exibido no lado dos cards do conteúdo exibido no lado da informação, pois os dois lados estavam iguais.
 
-Aplicacao: foram criados textos informativos separados em `dadosLanding.ts`, o componente `secao-processo-comparativo.tsx` passou a receber `itens` e `informacoes`, e a documentacao foi atualizada para indicar os arrays corretos de cada lado.
+Aplicação: foram criados textos informativos separados em `dadosLanding.ts`, o componente `secao-processo-comparativo.tsx` passou a receber `itens` e `informacoes`, e a documentação foi atualizada para indicar os arrays corretos de cada lado.
 
 ## 2026-05-21 - Revisão estrutural e publicação
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.14, com reforço responsivo em celulares e ajuste do menu A11y mobile.
+Validação atualizada para a versão v6.21, com revisão de ortografia, checagem de mojibake, TypeScript, build e smoke HTTP local.
 
 ## Checklist Técnico
 
@@ -54,6 +54,38 @@ Validação atualizada para a versão v6.14, com reforço responsivo em celulare
 46 - Smoke HTTP local após reforço responsivo v6.13 em `http://localhost:5196/`: aprovado com HTTP 200.
 47 - `npm run build` após ajuste A11y mobile v6.14: aprovado.
 48 - Smoke HTTP local após ajuste A11y mobile v6.14 em `http://localhost:5196/`: aprovado com HTTP 200.
+49 - Checagem TypeScript de imports e variáveis sem uso com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+50 - Busca por prefixos internos `sem S`, `sem R`, `com S` e `com R`: aprovada, sem ocorrências atuais.
+51 - Busca por sequências comuns de mojibake em UTF-8 nos arquivos do projeto: aprovada, sem ocorrências atuais.
+52 - `npm install` após ajuste v6.15: aprovado, sem vulnerabilidades.
+53 - `npm run build` após ajuste v6.15: aprovado.
+54 - Smoke HTTP local após ajuste v6.15 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+55 - `npm install` após ajuste v6.16: aprovado, sem vulnerabilidades.
+56 - Checagem TypeScript após ajuste v6.16 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+57 - Busca pelos novos textos do comparativo Sem HSS / Com HSS: aprovada.
+58 - `npm run build` após ajuste v6.16: aprovado.
+59 - Smoke HTTP local após ajuste v6.16 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+60 - Checagem TypeScript após ajuste v6.17 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+61 - `npm run build` após ajuste v6.17: aprovado.
+62 - `npm install` após ajuste v6.17: aprovado, sem vulnerabilidades.
+63 - Smoke HTTP local após ajuste v6.17 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+64 - Checagem TypeScript após ajuste v6.18 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+65 - `npm run build` após ajuste v6.18: aprovado.
+66 - `npm install` após ajuste v6.18: aprovado, sem vulnerabilidades.
+67 - Smoke HTTP local após ajuste v6.18 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+68 - Checagem TypeScript após ajuste v6.19 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+69 - `npm run build` após ajuste v6.19: aprovado.
+70 - `npm install` após ajuste v6.19: aprovado, sem vulnerabilidades.
+71 - Smoke HTTP local após ajuste v6.19 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+72 - Checagem TypeScript após ajuste v6.20 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+73 - `npm run build` após ajuste v6.20: aprovado.
+74 - `npm install` após ajuste v6.20: aprovado, sem vulnerabilidades.
+75 - Smoke HTTP local após ajuste v6.20 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+76 - `npm install` após revisão v6.21: aprovado, sem vulnerabilidades.
+77 - Checagem TypeScript após revisão v6.21 com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+78 - Busca por sequências comuns de mojibake em UTF-8 após revisão v6.21: aprovada, sem ocorrências atuais.
+79 - `npm run build` após revisão v6.21: aprovado.
+80 - Smoke HTTP local após revisão v6.21 em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
 
 ## Observações
 

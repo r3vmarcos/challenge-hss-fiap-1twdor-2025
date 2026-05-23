@@ -49,14 +49,18 @@
 
 ## Ajustes Responsivos Atuais
 
-- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona? e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar demonstração permanecem no header.
+- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona? e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar
+  demonstração permanecem no header.
 - [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
-- [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em azul.
+- [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em
+  azul.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> no mobile, o comparativo exibe apenas os textos informativos.
-- [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta larguras e título do hero para telas estreitas como Samsung S24.
-- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> usa limites de largura e `min-w-0` para selects, cards e wrappers no mobile.
+- [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta largura, título em três linhas e imagem do hero; no desktop, a médica fica posicionada no lado direito e
+  centralizada verticalmente.
+- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> usa limites de largura e `min-w-0` para selects, cards e wrappers no
+  mobile.
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> reduz padding e limita largura dos campos no mobile.
 
 ## Textos Visíveis Do Site
@@ -77,21 +81,28 @@ Origem: [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx)
 
 Origem: [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx)
 
-- Digitalize e simplifique o CREDENCIAMENTO MÉDICO
+- Digitalize e simplifique
+- o CREDENCIAMENTO
+- MÉDICO
 - O credenciamento médico como você nunca viu - centralizado, econômico e confiável.
 - Agendar demonstração
 - Calcular ROI
-- dias economizados por médico
-- redução estimada do ciclo
-- prejuízo mensal evitável
+- 33+
+- Dias economizados
+- 73%
+- Redução estimada
+- R$ 504.000
+- Prejuízo mensal evitável
 
 ### Benefícios
 
 Origem: [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx)
 
 - Benefícios da nossa solução
-- Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle operacional.
-- Ritmo de entrada dos cards no desktop: controlado por `PERCENTUAL_PASSO_BENEFICIO` e `PASSO_MINIMO_BENEFICIO` em [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx).
+- Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle
+  operacional.
+- Ritmo de entrada dos cards no desktop: controlado por `PERCENTUAL_PASSO_BENEFICIO` e `PASSO_MINIMO_BENEFICIO` em
+  [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx).
 - 01 - Fluxo 100% digital: Menos papel e contratações muito mais rápidas.
 - 02 - Cadastro único: O fornecedor preenche uma vez; a empresa acessa sempre atualizado.
 - 03 - Status em tempo real: Transparência total para os dois lados acompanharem o processo.
@@ -101,11 +112,12 @@ Origem: [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx
 
 ### Como Funciona
 
-Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/components/secoes/secao-como-funciona.tsx)
-Origem dos cards: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
+Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/components/secoes/secao-como-funciona.tsx) Origem dos cards:
+[`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 
 - Como funciona?
-- A Health Sync estrutura cada etapa do credenciamento médico em uma plataforma digital única, auditável e rastreável - para que instituições e médicos assumam o controle do processo, economizando tempo e com menos burocracia.
+- A Health Sync estrutura cada etapa do credenciamento médico em uma plataforma digital única, auditável e rastreável - para que instituições e médicos assumam o controle do
+  processo, economizando tempo e com menos burocracia.
 - Etapas do processo de credenciamento
 - Pré-cadastro do médico: Instituição ou médico inicia o fluxo com dados básicos, vínculo desejado e tipo de credenciamento.
 - Envio e triagem documental: Documentos obrigatórios são reunidos, classificados e conferidos conforme o perfil do cenário.
@@ -115,37 +127,39 @@ Origem dos cards: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 
 ### Processo Comparativo
 
-Origem visual: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx)
-Origem dos cards laterais: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
-Origem dos cards informativos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
-Observação mobile: no layout compacto são exibidos apenas os cards informativos.
-Observação responsiva: os cards usam `min-w-0`, `overflow-hidden` e quebra de palavras para não ultrapassar 100vw.
+Origem visual: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) Origem dos cards laterais:
+[`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) Origem dos cards informativos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) Observação mobile: no layout
+compacto são exibidos apenas os cards informativos. Observação responsiva: os cards usam `min-w-0`, `overflow-hidden` e quebra de palavras para não ultrapassar 100vw. Observação de
+conteúdo: os textos em `dadosLanding.ts` devem ser frases finais de UI, sem prefixos internos como `sem S`, `sem R`, `com S` ou `com R`. Observação desktop: os quatro cards
+laterais e os quatro cards informativos foram compactados para caber no palco de `100vh`.
 
-- Sem HSS - processo tradicional
-- O processo depende de e-mails, conferências manuais e cobranças recorrentes. Quanto mais lento o ciclo, maior o prejuízo por médico parado.
-- Etapa tradicional 01: Arquivos espalhados em e-mails, planilhas e pastas internas dificultam o controle do processo.
-- Etapa tradicional 02: A equipe perde tempo cobrando documentos, conferindo anexos e atualizando status manualmente.
-- Etapa tradicional 03: A ausência de premissas de tempo por cenário torna o prazo pouco previsível para a operação.
-- Etapa tradicional 04: Quanto mais lenta a liberação, maior o impacto de médicos parados, agendas vazias e receita postergada.
-- Informação tradicional 01: Documentos ficam fora de um fluxo único, o que dificulta auditoria, rastreabilidade e priorização.
-- Informação tradicional 02: A rotina administrativa vira acompanhamento manual, com retrabalho para lembrar pendências e atualizar controles.
-- Informação tradicional 03: A operação perde previsibilidade porque cada credenciamento depende de validações dispersas e sem padrão claro.
-- Informação tradicional 04: O atraso deixa profissionais sem atuar, reduz capacidade de agenda e posterga receita da instituição.
-- Com HSS - processo digital
-- O ADM define os tempos por cenário e a calculadora usa essas premissas para estimar economia, receita antecipada e ROI.
-- Ganho digital 01: O fluxo digital centraliza etapas, documentos e premissas por tipo de credenciamento configurado no ADM.
-- Ganho digital 02: A instituição define tempo sem HSS, tempo com HSS, percentuais e custos para cada cenário ativo.
-- Ganho digital 03: A calculadora converte dias economizados em receita antecipada, economia operacional e ROI estimado.
-- Ganho digital 04: O painel ADM ativa ou desativa cenários, mantendo o site alinhado ao processo comercial da HSS.
-- Informação digital 01: O processo ganha uma trilha organizada para acompanhar documentos, etapas e responsáveis com mais clareza.
-- Informação digital 02: As premissas configuradas no ADM deixam a simulação alinhada ao tipo real de credenciamento analisado.
-- Informação digital 03: O ganho de tempo passa a ser traduzido em indicadores financeiros fáceis de apresentar para decisão.
-- Informação digital 04: A equipe comercial mantém a calculadora atualizada sem depender de alteração direta no código da landing.
+- Sem HSS • processos tradicionais
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+- Etapa tradicional 01: ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO. A ausência de leitura automática — no papel ou em sistemas limitados — abre brechas para o erro humano e aprovações
+  irregulares.
+- Etapa tradicional 02: VALIDAÇÃO ARTESANAL E RETRABALHO. O eterno vai-e-vem de e-mails cobrando anexos frustra o corpo clínico e atrasa o início dos plantões.
+- Etapa tradicional 03: INTEGRAÇÃO LIMITADA. Softwares que não conectam ao CRM ou bases federais tornam o preenchimento de dados repetitivo e lento.
+- Etapa tradicional 04: GESTÃO CAÓTICA E VULNERABILIDADE. Sem rastreabilidade clara, comprovar o compliance durante uma auditoria vira uma operação de resgate estressante.
+- Informação tradicional 01: ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO. A ausência de leitura automática — no papel ou em sistemas limitados — abre brechas para o erro humano e
+  aprovações irregulares.
+- Informação tradicional 02: VALIDAÇÃO ARTESANAL E RETRABALHO. O eterno vai-e-vem de e-mails cobrando anexos frustra o corpo clínico e atrasa o início dos plantões.
+- Informação tradicional 03: INTEGRAÇÃO LIMITADA. Softwares que não conectam ao CRM ou bases federais tornam o preenchimento de dados repetitivo e lento.
+- Informação tradicional 04: GESTÃO CAÓTICA E VULNERABILIDADE. Sem rastreabilidade clara, comprovar o compliance durante uma auditoria vira uma operação de resgate estressante.
+- Com HSS • processo digital
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+- Ganho digital 01: IA DE ALTA PRECISÃO. Antecipa erros e inconsistências, acelerando drasticamente aprovações e eliminando falhas humanas.
+- Ganho digital 02: SEGURANÇA BLINDADA. Camadas de validação rigorosas que garantem a autenticidade documental e total conformidade com as normas do setor.
+- Ganho digital 03: ECOSSISTEMA INTEROPERÁVEL. Conecte-se aos principais sistemas hospitalares e bases regulatórias sem trabalho manual e silos de informação.
+- Ganho digital 04: FOCO EM COMPLIANCE. Trilhas de auditoria automáticas e arquitetura focada em compliance para fiscalizações sem estresse.
+- Informação digital 01: IA DE ALTA PRECISÃO. Antecipa erros e inconsistências, acelerando drasticamente aprovações e eliminando falhas humanas.
+- Informação digital 02: SEGURANÇA BLINDADA. Camadas de validação rigorosas que garantem a autenticidade documental e total conformidade com as normas do setor.
+- Informação digital 03: ECOSSISTEMA INTEROPERÁVEL. Conecte-se aos principais sistemas hospitalares e bases regulatórias sem trabalho manual e silos de informação.
+- Informação digital 04: FOCO EM COMPLIANCE. Trilhas de auditoria automáticas e arquitetura focada em compliance para fiscalizações sem estresse.
 
 ### Depoimentos
 
-Origem visual: [`src/components/secoes/secao-depoimentos.tsx`](../src/components/secoes/secao-depoimentos.tsx)
-Origem dos depoimentos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
+Origem visual: [`src/components/secoes/secao-depoimentos.tsx`](../src/components/secoes/secao-depoimentos.tsx) Origem dos depoimentos:
+[`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts)
 
 - A simulação deixou claro o custo de manter médicos aguardando liberação. - Gestora hospitalar, Operações em saúde.
 - O painel ADM permite ajustar tempos e percentuais por tipo de credenciamento. - Coordenador médico, Corpo clínico.
@@ -229,8 +243,7 @@ Origem: [`src/components/formulario-lead.tsx`](../src/components/formulario-lead
 
 ### Footer
 
-Origem visual: [`src/components/layout/rodape.tsx`](../src/components/layout/rodape.tsx)
-Origem das fontes: [`src/data/conteudoHss.ts`](../src/data/conteudoHss.ts)
+Origem visual: [`src/components/layout/rodape.tsx`](../src/components/layout/rodape.tsx) Origem das fontes: [`src/data/conteudoHss.ts`](../src/data/conteudoHss.ts)
 
 - Health Sync Solutions - FIAP MedTech Challenge - Landing light com calculadora de ROI por tempo de credenciamento.
 - © 2026 Health Sync Solutions. Todos os direitos reservados.
