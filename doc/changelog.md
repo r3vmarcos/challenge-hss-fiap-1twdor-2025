@@ -7,6 +7,7 @@
 03 - Refinados cabeçalho, Portal ADM, cards de depoimentos com fotos, comparativos Sem HSS/Com HSS e cards de benefícios.
 04 - Atualizada a calculadora com botões laranja, etapas maiores, campos cinza claro com área de valor branca e resultados com fundo azul claro.
 05 - Revisados textos ativos em pt-BR e busca por mojibakes nos arquivos alterados.
+06 - Commit enviado para `origin/main`; deploy Cloudflare Pages bloqueado por falha de `fetch`/certificado de proxy no Wrangler.
 
 ## v6.26 - Cards de benefícios compactos
 

@@ -115,6 +115,13 @@ Validação atualizada para a versão v6.26, com ajuste visual dos cards de bene
 107 - `npm run dev` após ajuste visual: bloqueado porque a porta 5196 já estava em uso por servidor local ativo.
 108 - Smoke HTTP local após ajuste visual em `http://localhost:5196/`: aprovado com HTTP 200 e conteúdo do projeto.
 109 - `npm run build` após ajuste visual dos cards de benefícios: aprovado.
+110 - `npm install` após ajustes finais de interface e footer: aprovado, sem vulnerabilidades.
+111 - Checagem TypeScript estrita após ajustes finais: aprovada.
+112 - `npm run build` após ajustes finais: aprovado.
+113 - `npm run dev` após ajustes finais: bloqueado porque a porta 5196 já estava em uso por servidor Vite ativo.
+114 - Smoke HTTP local após ajustes finais em `http://localhost:5196/`: aprovado com HTTP 200.
+115 - GitHub CLI autenticado para `r3vmarcos`; commit `0d07ebb` enviado para `origin/main`.
+116 - Deploy Cloudflare Pages na branch `main` com `npx wrangler pages deploy dist --project-name challenge-hss-fiap-1twdor-2025 --branch main`: bloqueado por falha de `fetch`/certificado de proxy no Wrangler.
 
 ## Observações
 

@@ -6,7 +6,7 @@ Eu: adicionar GitHub no footer, corrigir o destravamento da calculadora, revisar
 
 Codex: adicionou o link GitHub no rodapé, removeu o reposicionamento que causava rolagem ao destravar a calculadora, preservou os ajustes visuais recentes e preparou validação/publicação.
 
-Validações: `npm install`, TypeScript estrito, `npm run build` e smoke HTTP local aprovados; Cloudflare verificado com Wrangler antes da tentativa de deploy.
+Validações: `npm install`, TypeScript estrito, `npm run build` e smoke HTTP local aprovados. O commit `0d07ebb` foi enviado para `origin/main`; o deploy Cloudflare Pages ficou bloqueado por falha de `fetch`/certificado de proxy no Wrangler.
 
 ## 2026-06-08 - Cards de benefícios sem números
 
