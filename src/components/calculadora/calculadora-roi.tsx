@@ -907,7 +907,7 @@ function FormularioEmpresa({
 
   if (etapaAtual === 4) {
     return (
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-2 md:grid-cols-2">
         <CampoNumerico
           id="custoMensalHss"
           label="Custo mensal HSS"

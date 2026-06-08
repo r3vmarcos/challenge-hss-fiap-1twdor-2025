@@ -26,7 +26,7 @@ export function CampoNumerico({
   return (
     <label
       htmlFor={id}
-      className="block rounded-2xl border border-hss-violeta/15 bg-[#f3f4f6] p-2.5 shadow-sm dark:border-white/10 dark:bg-white/5"
+      className="block rounded-2xl border border-hss-vioeta/1 bg-[#f3f4f6] p-2 shadow-sm dark:border-white/10 dark:bg-white/5"
     >
       <span className="block text-xs font-extrabold text-slate-800 dark:text-white">
         {label}
@@ -36,7 +36,7 @@ export function CampoNumerico({
           {ajuda}
         </span>
       ) : null}
-      <div className="mt-1.5 flex items-center gap-1.5 rounded-xl border border-transparent bg-white px-2 py-1.5 dark:border-white/10 dark:bg-hss-tinta/70">
+      <div className="mt-1 flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2 py-1.5 dark:border-white/20 dark:bg-white/5">
         {prefixo ? (
           <span className="text-xs font-bold text-slate-400">
             {prefixo}
