@@ -23,44 +23,59 @@ export function Cabecalho({
   const [menuMobileAberto, definirMenuMobileAberto] = useState(false);
   const linksMobile = links.filter((link) => !link.destaque);
 
+  if (paginaAdm) {
+    return (
+      <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
+        <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
+          <div className="flex min-w-0 items-center justify-between gap-2">
+            <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
+              <LogoOrigami />
+            </a>
+
+            <ShimmerButton
+              href="#topo"
+              variante="contorno"
+              className="h-10 shrink-0 whitespace-nowrap px-5 text-xs leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-11 lg:text-[13px]"
+            >
+              Sair
+            </ShimmerButton>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
       <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
-        <div className="flex min-w-0 items-center justify-between gap-1.5 sm:gap-2">
+        <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-1.5 sm:gap-2">
           <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
             <LogoOrigami />
           </a>
 
-          <NavPrincipal
-            paginaAdm={paginaAdm}
-            className="hidden items-center gap-6 lg:flex"
-            linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] hover:text-hss-violeta"
-          />
-
-          <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-3">
+          <div className="flex min-w-0 items-center justify-center gap-1 sm:gap-3 lg:gap-6">
+            <NavPrincipal
+              paginaAdm={paginaAdm}
+              className="hidden items-center gap-6 lg:flex"
+              linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] transition-[color,transform] duration-200 hover:scale-[1.06] hover:text-hss-violeta"
+            />
             {!paginaAdm ? (
               <ShimmerButton
                 href="#roi"
                 variante="contorno"
-                className="shrink-0 whitespace-nowrap px-2 py-2 text-[9px] leading-none min-[390px]:px-2.5 min-[390px]:text-[10px] sm:px-4 sm:text-xs lg:hidden"
+                className="h-9 shrink-0 whitespace-nowrap px-2 text-[9px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-2.5 min-[390px]:text-[10px] sm:h-10 sm:px-4 sm:text-xs lg:h-11 lg:px-5 lg:text-[13px]"
               >
                 Calculadora ROI
               </ShimmerButton>
             ) : null}
 
-            <ShimmerButton href="#lead" className="shrink-0 whitespace-nowrap px-2 py-2 text-[9px] leading-none min-[390px]:px-2.5 min-[390px]:text-[10px] sm:px-4 sm:text-xs lg:px-6 lg:py-3 lg:text-[13px]">
+            <ShimmerButton href="#lead" className="h-9 shrink-0 whitespace-nowrap px-2 text-[9px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-2.5 min-[390px]:text-[10px] sm:h-10 sm:px-4 sm:text-xs lg:h-11 lg:px-6 lg:text-[13px]">
               Agendar demonstração
             </ShimmerButton>
 
-            <a
-              href="#adm"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon sm:inline-flex"
-              aria-label="Abrir portal ADM"
-              title="Portal ADM"
-            >
-              <IconePortalAdm />
-            </a>
+          </div>
 
+          <div className="flex items-center justify-end gap-1 sm:gap-3">
             {!paginaAdm ? (
               <button
                 type="button"
@@ -73,6 +88,14 @@ export function Cabecalho({
                 <IconeMenu aberto={menuMobileAberto} />
               </button>
             ) : null}
+            <a
+            href="#adm"
+            className="hidden h-10 w-10 items-center justify-center justify-self-end rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon sm:inline-flex"
+            aria-label="Abrir portal ADM"
+            title="Portal ADM"
+          >
+            <IconePortalAdm />
+          </a>
           </div>
         </div>
 
@@ -136,14 +159,7 @@ function NavPrincipal({
     <nav className={className} aria-label="Navegação principal">
       {links.map((link) =>
         link.destaque ? (
-          <ShimmerButton
-            key={link.href}
-            href={link.href}
-            variante="contorno"
-            className="shrink-0 px-5 py-2 text-[13px]"
-          >
-            {link.label}
-          </ShimmerButton>
+          null
         ) : (
           <a key={link.href} href={link.href} className={linkClassName}>
             {link.label}

@@ -16,7 +16,7 @@ export function CartaoResultado({
       className={
         destaque
           ? "rounded-[1.1rem] bg-hss-roxo p-3 text-white shadow-neon"
-          : "rounded-[1.1rem] border border-hss-violeta/15 bg-white/80 p-3 shadow-sm dark:border-white/10 dark:bg-white/10"
+          : "rounded-[1.1rem] border border-[#c7d2fe] bg-[#eef4ff] p-3 shadow-sm dark:border-white/10 dark:bg-white/10"
       }
     >
       <p

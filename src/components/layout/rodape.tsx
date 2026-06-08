@@ -72,13 +72,24 @@ export function Rodape(): JSX.Element {
           <GrupoRedes titulo="Health Sync Solutions" redes={redesHss} />
           <GrupoRedes titulo="FIAP" redes={redesFiap} />
 
-          <button
-            type="button"
-            onClick={() => definirModalFontesAberto(true)}
-            className="w-fit rounded-full border border-hss-violeta/20 bg-white px-5 py-3 text-sm font-black text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon sm:col-span-2"
-          >
-            Fontes e referências
-          </button>
+          <div className="flex flex-wrap gap-3 sm:col-span-2">
+            <button
+              type="button"
+              onClick={() => definirModalFontesAberto(true)}
+              className="w-fit rounded-full border border-hss-violeta/20 bg-white px-5 py-3 text-sm font-black text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
+            >
+              Fontes e referências
+            </button>
+
+            <a
+              href="https://github.com/r3vmarcos/challenge-hss-fiap-1twdor-2025"
+              target="_blank"
+              rel="noreferrer"
+              className="w-fit rounded-full border border-hss-violeta/20 bg-white px-5 py-3 text-sm font-black text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
       </div>
 

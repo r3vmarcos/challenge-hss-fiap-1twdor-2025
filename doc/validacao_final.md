@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.25, com leads no ADM, revisão de ortografia, checagem de mojibake, TypeScript, build e smoke HTTP local.
+Validação atualizada para a versão v6.26, com ajuste visual dos cards de benefícios, TypeScript, build e smoke HTTP local.
 
 ## Checklist Técnico
 
@@ -110,6 +110,11 @@ Validação atualizada para a versão v6.25, com leads no ADM, revisão de ortog
 102 - Push da branch `main` para o novo `origin`: aprovado.
 103 - Tentativa de aplicar migrations D1 remotas com `npx wrangler d1 migrations apply hss_roi_db --remote`: bloqueada por autenticação/certificado do Wrangler.
 104 - Tentativa de deploy Cloudflare: bloqueada porque o ambiente não possui `CLOUDFLARE_API_TOKEN` e o `wrangler whoami` retornou `Not logged in`.
+105 - `npm install` após ajuste visual dos cards de benefícios: aprovado, sem vulnerabilidades.
+106 - Checagem TypeScript estrita com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+107 - `npm run dev` após ajuste visual: bloqueado porque a porta 5196 já estava em uso por servidor local ativo.
+108 - Smoke HTTP local após ajuste visual em `http://localhost:5196/`: aprovado com HTTP 200 e conteúdo do projeto.
+109 - `npm run build` após ajuste visual dos cards de benefícios: aprovado.
 
 ## Observações
 

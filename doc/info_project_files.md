@@ -103,14 +103,15 @@ Origem: [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx
 - Benefícios da nossa solução
 - Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle
   operacional.
+- Os cards exibem ícones no topo direito como marca d'água translúcida, sem numeração visível.
 - Ritmo de entrada dos cards no desktop: controlado por `PERCENTUAL_PASSO_BENEFICIO` e `PASSO_MINIMO_BENEFICIO` em
   [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx).
-- 01 - Fluxo 100% digital: Menos papel e contratações muito mais rápidas.
-- 02 - Cadastro único: O fornecedor preenche uma vez; a empresa acessa sempre atualizado.
-- 03 - Status em tempo real: Transparência total para os dois lados acompanharem o processo.
-- 04 - Fim do retrabalho: Filtros automáticos eliminam vai e vem de documentos errados.
-- 05 - Segurança e compliance: Histórico imutável e auditável para segurança jurídica e fiscal.
-- 06 - Proteção contra riscos: Dados protegidos pela LGPD e segurança corporativa contra fraudes.
+- Fluxo 100% digital: Menos papel e contratações muito mais rápidas.
+- Cadastro único: O fornecedor preenche uma vez; a empresa acessa sempre atualizado.
+- Status em tempo real: Transparência total para os dois lados acompanharem o processo.
+- Fim do retrabalho: Filtros automáticos eliminam vai e vem de documentos errados.
+- Segurança e compliance: Histórico imutável e auditável para segurança jurídica e fiscal.
+- Proteção contra riscos: Dados protegidos pela LGPD e segurança corporativa contra fraudes.
 
 ### Como Funciona
 
@@ -273,6 +274,7 @@ Origem visual: [`src/components/layout/rodape.tsx`](../src/components/layout/rod
 - Health Sync Solutions
 - FIAP
 - Fontes e referências
+- GitHub
 - Site Health Sync Solutions
 - LinkedIn Health Sync Solutions
 - Facebook Health Sync Solutions

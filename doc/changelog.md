@@ -1,5 +1,19 @@
 # Changelog
 
+## v6.27 - Ajustes finais de interface, footer e calculadora
+
+01 - Adicionado link `GitHub` no rodapé ao lado de `Fontes e referências`, apontando para o repositório público do projeto.
+02 - Ajustado o travamento da calculadora para bloquear a rolagem sem reposicionar a página ao destravar.
+03 - Refinados cabeçalho, Portal ADM, cards de depoimentos com fotos, comparativos Sem HSS/Com HSS e cards de benefícios.
+04 - Atualizada a calculadora com botões laranja, etapas maiores, campos cinza claro com área de valor branca e resultados com fundo azul claro.
+05 - Revisados textos ativos em pt-BR e busca por mojibakes nos arquivos alterados.
+
+## v6.26 - Cards de benefícios compactos
+
+01 - Removida a numeração visível dos cards da seção "Benefícios da nossa solução".
+02 - Reposicionados os ícones dos benefícios no topo direito dos cards como marca d'água translúcida.
+03 - Compactada a altura visual dos cards em desktop e mobile com redução de padding vertical e layout mais enxuto.
+
 ## v6.25 - Leads no ADM e deploy preparado
 
 01 - Adicionado `GET /api/leads` para listar contatos ativos salvos na tabela D1 `leads_roi`.

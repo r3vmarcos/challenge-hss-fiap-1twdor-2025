@@ -42,7 +42,7 @@ export function PainelAdmCredenciamento(): JSX.Element {
   const [usuario, definirUsuario] = useState('');
   const [senha, definirSenha] = useState('');
   const [erroLogin, definirErroLogin] = useState('');
-  const [abaAtual, definirAbaAtual] = useState<AbaAdm>('contatos');
+  const [abaAtual, definirAbaAtual] = useState<AbaAdm>('calculadora');
   const [configuracoesSalvas, definirConfiguracoes] = useLocalStorage<ConfiguracaoCredenciamento[]>(
     'hss_adm_configuracoes_credenciamento',
     CONFIGURACOES_CREDENCIAMENTO_PADRAO,
@@ -61,11 +61,6 @@ export function PainelAdmCredenciamento(): JSX.Element {
     }
 
     definirErroLogin('Usuário ou senha inválidos para o ambiente demo.');
-  }
-
-  function sair(): void {
-    definirAutenticado(false);
-    definirSenha('');
   }
 
   function atualizarConfiguracao<K extends keyof ConfiguracaoCredenciamento>(campo: K, valor: ConfiguracaoCredenciamento[K]): void {
@@ -139,11 +134,6 @@ export function PainelAdmCredenciamento(): JSX.Element {
               <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300">
                 Consulte as pessoas que solicitaram contato e ajuste os cenários, tempos, custos e percentuais usados na calculadora pública.
               </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <button type="button" onClick={sair} className="rounded-full border border-red-300/40 px-5 py-3 text-sm font-black text-red-600 transition hover:-translate-y-1 dark:text-red-300">
-                Sair
-              </button>
             </div>
           </div>
 

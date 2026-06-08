@@ -44,6 +44,13 @@ function separarTituloDescricao(texto: string): { titulo: string; descricao: str
     descricao: texto.slice(indiceSeparador + 2),
   };
 }
+
+function obterEtiquetaVisivel(etiqueta: string, indice: number, tema: TemaProcesso): string {
+  void indice;
+  void tema;
+
+  return etiqueta;
+}
 /* === FUNÇÕES AUXILIARES | fim === */
 
 /* === SEÇÃO PROCESSO COMPARATIVO | inicio === */
@@ -53,7 +60,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
       <BlocoProcessoTravado
         id="processo-sem-hss"
         titulo="Sem HSS • processos tradicionais"
-        descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+        descricao="Processos descentralizados tornam o credenciamento lento, manual e difícil de auditar."
         etiqueta="Etapa tradicional"
         itens={problemasSemHss}
         informacoes={informacoesSemHss}
@@ -63,7 +70,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
       <BlocoProcessoTravado
         id="processo-com-hss"
         titulo="Com HSS • processo digital"
-        descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+        descricao="O fluxo digital centraliza a operação, calcula impacto financeiro e dá autonomia para ajustar cenários em tempo real."
         etiqueta="Ganho digital"
         itens={ganhosComHss}
         informacoes={informacoesComHss}
@@ -239,7 +246,7 @@ function BlocoProcessoTravado({ id, titulo, descricao, etiqueta, itens, informac
                       tema === "sem" ? "block text-xs font-black uppercase tracking-[0.14em] text-[#ea580c]" : "block text-xs font-black uppercase tracking-[0.14em] text-[#1d4ed8]"
                     }
                   >
-                    {etiqueta} {String(indice + 1).padStart(2, "0")}
+                    {obterEtiquetaVisivel(etiqueta, indice, tema)}
                   </span>
                   <strong className="mt-2 block min-w-0 max-w-full break-words text-sm font-black leading-5 text-[#070814] [overflow-wrap:anywhere] sm:text-base">{conteudo.titulo}</strong>
                   {conteudo.descricao ? <p className="mt-1 text-sm font-semibold leading-6 text-slate-600">{conteudo.descricao}</p> : null}
@@ -256,7 +263,7 @@ function BlocoProcessoTravado({ id, titulo, descricao, etiqueta, itens, informac
     estadoTravamento === "travado"
       ? "fixed left-0 right-0 top-[74px] z-30"
       : estadoTravamento === "depois"
-        ? "absolute bottom-0 left-0 right-0 z-20"
+        ? "absolute bottom-[74px] left-0 right-0 z-20"
         : "absolute left-0 right-0 top-0 z-20";
   /* === CLASSES DE POSIÇÃO | fim === */
 
@@ -270,69 +277,49 @@ function BlocoProcessoTravado({ id, titulo, descricao, etiqueta, itens, informac
       }}
     >
       <div className={classeConteudoTravado}>
-        <div className="mx-auto grid h-[calc(100vh-74px)] max-w-[1160px] items-center gap-5 overflow-hidden px-4 py-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          {/* === LISTA ANIMADA | inicio === */}
-          <div className={invertido ? "order-2 space-y-2 lg:order-2" : "order-2 space-y-2 lg:order-1"}>
-            {itens.map((item, indice) => {
-              const visivel = indice < cardsVisiveis;
+        <div className="mx-auto flex h-[calc(100vh-74px)] max-w-[1160px] flex-col justify-center overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
+          {/* === CABECALHO DO BLOCO | inicio === */}
+          <div className="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] gap-x-3">
+            <article className={invertido ? "col-start-3 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur" : "col-start-1 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur"}>
+              <h2 className="whitespace-nowrap text-[1.25rem] font-black leading-tight text-[#070814] sm:text-[1.5rem] xl:text-[1.7rem]">
+                <TituloProcesso titulo={titulo} tema={tema} />
+              </h2>
 
-              return <CartaoPassoAnimado key={item} etiqueta={etiqueta} item={item} indice={indice} visivel={visivel} totalItens={itens.length} tema={tema} />;
+              <p className="mt-5 max-w-[500px] text-sm font-medium leading-6 text-slate-600">{descricao}</p>
+            </article>
+          </div>
+          {/* === CABECALHO DO BLOCO | fim === */}
+
+          {/* === PARES ALINHADOS | inicio === */}
+          <div className="mt-3 grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] items-stretch gap-x-3 gap-y-2">
+            {itens.map((item, indice) => {
+              const carregado = indice < cardsVisiveis;
+              const ativo = cardsVisiveis > 0 ? indice === Math.min(cardsVisiveis - 1, itens.length - 1) : false;
+              const textoEsquerda = invertido ? informacoes[indice] : item;
+              const textoDireita = invertido ? item : informacoes[indice];
+              const esquerdaCarregada = invertido ? carregado : true;
+              const direitaCarregada = invertido ? true : carregado;
+              const esquerdaAtiva = invertido ? ativo : false;
+              const direitaAtiva = invertido ? false : ativo;
+
+              return (
+                <div key={`${item}-${informacoes[indice]}`} className="contents">
+                  <CartaoComparativoAlinhado texto={textoEsquerda} etiqueta={etiqueta} indice={indice} tema={tema} ativo={esquerdaAtiva} carregado={esquerdaCarregada} />
+                  <span
+                    className={[
+                      "self-center text-center text-2xl font-black transition-[opacity,transform] duration-300",
+                      tema === "sem" ? "text-[#f97316]" : "text-[#2563eb]",
+                      carregado ? "scale-100 opacity-60" : "scale-75 opacity-0",
+                    ].join(" ")}
+                  >
+                    {invertido ? "<" : ">"}
+                  </span>
+                  <CartaoComparativoAlinhado texto={textoDireita} etiqueta={etiqueta} indice={indice} tema={tema} ativo={direitaAtiva} carregado={direitaCarregada} />
+                </div>
+              );
             })}
           </div>
-          {/* === LISTA ANIMADA | fim === */}
-
-          {/* === TEXTO E CARDS DE STATUS | inicio === */}
-          <article className={invertido ? "order-1 rounded-2xl bg-[#eef0f7]/70 p-5 backdrop-blur lg:order-1" : "order-1 rounded-2xl bg-[#eef0f7]/70 p-5 backdrop-blur lg:order-2"}>
-            <h2 className="whitespace-nowrap text-[1.25rem] font-black leading-tight text-[#070814] sm:text-[1.5rem] xl:text-[1.7rem]">
-              <TituloProcesso titulo={titulo} tema={tema} />
-            </h2>
-
-            <p className="mt-3 max-w-[500px] text-sm font-medium leading-6 text-slate-600">{descricao}</p>
-
-            <div className="mt-4 space-y-2">
-              {informacoes.map((item, indice) => {
-                const carregado = indice < cardsVisiveis;
-                const ativo = cardsVisiveis > 0 ? indice === Math.min(cardsVisiveis - 1, informacoes.length - 1) : false;
-                const conteudo = separarTituloDescricao(item);
-
-                return (
-                  <div
-                    key={item}
-                    className={
-                      ativo
-                        ? tema === "sem"
-                          ? "rounded-2xl border border-[#f97316] bg-[#f97316] px-4 py-2.5 text-[0.78rem] font-bold leading-5 text-white shadow-[0_18px_42px_rgba(249,115,22,0.22)] transition"
-                          : "rounded-2xl border border-[#2563eb] bg-[#2563eb] px-4 py-2.5 text-[0.78rem] font-bold leading-5 text-white shadow-[0_18px_42px_rgba(37,99,235,0.22)] transition"
-                        : carregado
-                          ? tema === "sem"
-                            ? "rounded-2xl border border-[#fed7aa] bg-white px-4 py-2.5 text-[0.78rem] font-bold leading-5 text-[#070814] shadow-[0_12px_28px_rgba(249,115,22,0.10)] transition"
-                            : "rounded-2xl border border-[#bfdbfe] bg-white px-4 py-2.5 text-[0.78rem] font-bold leading-5 text-[#070814] shadow-[0_12px_28px_rgba(37,99,235,0.10)] transition"
-                          : tema === "sem"
-                            ? "rounded-2xl border border-[#fed7aa] bg-[#ffedd5]/85 px-4 py-2.5 text-[0.78rem] font-semibold leading-5 text-slate-600 transition"
-                            : "rounded-2xl border border-[#bfdbfe] bg-[#dbeafe]/85 px-4 py-2.5 text-[0.78rem] font-semibold leading-5 text-slate-600 transition"
-                    }
-                  >
-                    <span
-                      className={
-                        ativo
-                          ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-white/70"
-                          : carregado
-                            ? tema === "sem"
-                              ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#ea580c]"
-                              : "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#1d4ed8]"
-                            : "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-slate-500"
-                      }
-                    >
-                      {etiqueta} {String(indice + 1).padStart(2, "0")}
-                    </span>
-                    <strong className="block text-[0.82rem] font-black leading-5">{conteudo.titulo}</strong>
-                    {conteudo.descricao ? <span className="mt-0.5 block font-semibold leading-5">{conteudo.descricao}</span> : null}
-                  </div>
-                );
-              })}
-            </div>
-          </article>
-          {/* === TEXTO E CARDS DE STATUS | fim === */}
+          {/* === PARES ALINHADOS | fim === */}
         </div>
       </div>
     </div>
@@ -352,49 +339,57 @@ function TituloProcesso({ titulo, tema }: { titulo: string; tema: TemaProcesso }
 }
 /* === TITULO PROCESSO | fim === */
 
-/* === CARTÃO PASSO ANIMADO | inicio === */
-function CartaoPassoAnimado({
+/* === CARTAO COMPARATIVO ALINHADO | inicio === */
+function CartaoComparativoAlinhado({
   etiqueta,
-  item,
+  texto,
   indice,
-  visivel,
-  totalItens,
   tema,
+  ativo,
+  carregado,
 }: {
   etiqueta: string;
-  item: string;
+  texto: string;
   indice: number;
-  visivel: boolean;
-  totalItens: number;
   tema: TemaProcesso;
+  ativo: boolean;
+  carregado: boolean;
 }): JSX.Element {
-  const conteudo = separarTituloDescricao(item);
+  const conteudo = separarTituloDescricao(texto);
 
   return (
     <article
       className={[
-        "rounded-2xl border bg-white p-4",
-        tema === "sem" ? "shadow-[0_18px_42px_rgba(249,115,22,0.10)]" : "shadow-[0_18px_42px_rgba(37,99,235,0.10)]",
-        "transition-[opacity,transform,filter] duration-500 ease-out",
-        visivel
+        "h-full rounded-2xl border px-4 py-3 text-[0.78rem] leading-5",
+        "transition-[opacity,transform,background-color,border-color,color] duration-500 ease-out",
+        ativo
           ? tema === "sem"
-            ? "translate-x-0 border-[#fdba74] opacity-100 blur-0"
-            : "translate-x-0 border-[#93c5fd] opacity-100 blur-0"
-          : tema === "sem"
-            ? "translate-x-[130px] border-[#fed7aa] opacity-0 blur-[2px]"
-            : "translate-x-[130px] border-[#bfdbfe] opacity-0 blur-[2px]",
+            ? "border-[#f97316] bg-[#f97316] text-white shadow-[0_18px_42px_rgba(249,115,22,0.22)]"
+            : "border-[#2563eb] bg-[#2563eb] text-white shadow-[0_18px_42px_rgba(37,99,235,0.22)]"
+          : carregado
+            ? tema === "sem"
+              ? "border-[#fdba74] bg-white text-[#070814] shadow-[0_12px_28px_rgba(249,115,22,0.10)]"
+              : "border-[#93c5fd] bg-white text-[#070814] shadow-[0_12px_28px_rgba(37,99,235,0.10)]"
+            : tema === "sem"
+              ? "border-[#fed7aa] bg-[#ffedd5]/85 text-slate-600"
+              : "border-[#bfdbfe] bg-[#dbeafe]/85 text-slate-600",
+        carregado ? "translate-y-0 opacity-100 blur-0" : "translate-y-4 opacity-0 blur-[2px]",
       ].join(" ")}
-      style={{
-        transitionDelay: visivel ? `${indice * 55}ms` : `${(totalItens - indice) * 35}ms`,
-      }}
     >
-      <span className={tema === "sem" ? "text-xs font-black text-[#ea580c]" : "text-xs font-black text-[#1d4ed8]"}>
-        {etiqueta} {String(indice + 1).padStart(2, "0")}
+      <span
+        className={
+          ativo
+            ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-white/70"
+            : tema === "sem"
+              ? "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#ea580c]"
+              : "mb-1 block text-xs font-black uppercase tracking-[0.16em] text-[#1d4ed8]"
+        }
+      >
+        {obterEtiquetaVisivel(etiqueta, indice, tema)}
       </span>
-
-      <strong className="mt-1.5 block text-sm font-black leading-5 text-[#070814]">{conteudo.titulo}</strong>
-      {conteudo.descricao ? <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">{conteudo.descricao}</p> : null}
+      <strong className={ativo ? "block text-sm font-black leading-5 text-white" : "block text-sm font-black leading-5 text-[#070814]"}>{conteudo.titulo}</strong>
+      {conteudo.descricao ? <p className={ativo ? "mt-1 text-xs font-semibold leading-5 text-white" : "mt-1 text-xs font-semibold leading-5 text-slate-600"}>{conteudo.descricao}</p> : null}
     </article>
   );
 }
-/* === CARTÃO PASSO ANIMADO | fim === */
+/* === CARTAO COMPARATIVO ALINHADO | fim === */

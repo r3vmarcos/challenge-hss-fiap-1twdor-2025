@@ -15,8 +15,8 @@ export function SecaoDepoimentos(): JSX.Element {
           <article key={`${depoimento.nome}-${depoimento.cargo}`} className="w-[330px] shrink-0 rounded-lg bg-white p-8 shadow-[0_16px_38px_rgba(15,23,42,0.08)]">
             <p className="min-h-[112px] text-base font-medium leading-7 text-[#070814]">{depoimento.texto}</p>
             <div className="mt-10 flex items-center gap-4">
-              <span className="flex h-11 w-11 items-center justify-center rounded-md" style={{ backgroundColor: depoimento.cor }}>
-                <span className="h-5 w-5 rounded-full border-2 border-current text-hss-roxo" />
+              <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full p-1 shadow-[0_10px_24px_rgba(15,23,42,0.10)]" style={{ backgroundColor: depoimento.cor }}>
+                <img src={depoimento.foto} alt="" className="h-full w-full rounded-full object-cover" loading="lazy" />
               </span>
               <div>
                 <strong className="block text-sm font-black text-[#070814]">{depoimento.nome}</strong>

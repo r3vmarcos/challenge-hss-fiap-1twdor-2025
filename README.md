@@ -75,7 +75,7 @@ O projeto foi estruturado em:
 - Landing page responsiva baseada na referência visual do Figma
 - Hero section com métricas animadas e imagem institucional
 - Seções independentes para:
-  - benefícios
+  - benefícios com cards compactos e ícones em marca d'água
   - processo
   - comparativo Sem HSS / Com HSS
   - depoimentos

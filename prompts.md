@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-06-08 - Ajustes finais de interface, GitHub e deploy
+
+Pedido: adicionar GitHub no footer, corrigir o destravamento da calculadora para não rolar do topo, revisar ortografia/mojibakes, publicar no GitHub na main e fazer deploy Cloudflare main.
+
+Aplicação: o footer recebeu link para o repositório GitHub, a calculadora deixou de usar reposicionamento via `body: fixed` no travamento, os ajustes visuais recentes foram preservados e a validação local foi executada antes da publicação.
+
+## 2026-06-08 - Cards de benefícios sem números
+
+Pedido: remover a numeração dos cards de benefícios, colocar os ícones no topo direito como marca d'água translúcida e diminuir 20% da altura dos cards.
+
+Aplicação: a seção de benefícios foi ajustada para exibir os ícones como marca d'água translúcida no canto superior direito, retirar os números visíveis e compactar o padding/altura dos cards em desktop e mobile.
+
 ## 2026-05-22 - Commit main e deploy Cloudflare
 
 Pedido: fazer os commits, publicar na branch `main` do GitHub e fazer deploy `main` no Cloudflare.

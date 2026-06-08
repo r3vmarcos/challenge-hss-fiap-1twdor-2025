@@ -225,18 +225,10 @@ export function CalculadoraRoi({
       return;
     }
 
-    const posicaoScrollTravada =
-      window.scrollY;
     const overflowHtmlOriginal =
       document.documentElement.style.overflow;
     const overflowBodyOriginal =
       document.body.style.overflow;
-    const positionBodyOriginal =
-      document.body.style.position;
-    const topBodyOriginal =
-      document.body.style.top;
-    const widthBodyOriginal =
-      document.body.style.width;
     document.body.classList.add(
       "calculadora-travada",
     );
@@ -275,17 +267,9 @@ export function CalculadoraRoi({
       }
     }
 
-    function manterPosicaoTravada(): void {
-      window.scrollTo(0, posicaoScrollTravada);
-    }
-
     document.documentElement.style.overflow =
       "hidden";
     document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top =
-      `-${posicaoScrollTravada}px`;
-    document.body.style.width = "100%";
     window.addEventListener(
       "wheel",
       bloquearRolagem,
@@ -301,23 +285,12 @@ export function CalculadoraRoi({
       bloquearRolagem,
       { passive: false },
     );
-    window.addEventListener(
-      "scroll",
-      manterPosicaoTravada,
-      { passive: true },
-    );
 
     return () => {
       document.documentElement.style.overflow =
         overflowHtmlOriginal;
       document.body.style.overflow =
         overflowBodyOriginal;
-      document.body.style.position =
-        positionBodyOriginal;
-      document.body.style.top =
-        topBodyOriginal;
-      document.body.style.width =
-        widthBodyOriginal;
       document.body.classList.remove(
         "calculadora-travada",
       );
@@ -333,11 +306,6 @@ export function CalculadoraRoi({
         "keydown",
         bloquearRolagem,
       );
-      window.removeEventListener(
-        "scroll",
-        manterPosicaoTravada,
-      );
-      window.scrollTo(0, posicaoScrollTravada);
     };
   }, [calculadoraTravada]);
 
@@ -526,13 +494,13 @@ export function CalculadoraRoi({
             Calcule agora o ROI
           </h3>
 
-          <div className="mt-1.5 grid min-w-0 gap-1.5 sm:grid-cols-2">
+          <div className="mt-1.5 grid min-w-0 gap-1.5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,0.82fr)_minmax(0,1.36fr)]">
             <BotaoVisao
               ativo={
                 visao === "empresa"
               }
               titulo="Empresa / Hospital / Clínica"
-              subtitulo="Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos mais rápido."
+              subtitulo="Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos."
               aoClicar={() =>
                 definirVisao("empresa")
               }
@@ -545,9 +513,6 @@ export function CalculadoraRoi({
                 definirVisao("medico")
               }
             />
-          </div>
-
-          <div className="mt-1.5 min-w-0">
             <CampoSelectConfiguracao
               configuracoes={
                 visao === "empresa"
@@ -1556,11 +1521,11 @@ function NavegacaoEtapas({
                 aria-describedby={`descricao-etapa-${etapa.numero}`}
                 className={
                   ativo
-                    ? "h-7 w-full rounded-full border-2 border-hss-violeta bg-hss-lavanda px-2 text-[11px] font-black text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
-                    : "h-7 w-full rounded-full border border-hss-violeta/15 bg-white px-2 text-[11px] font-bold text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "h-9 w-full rounded-md border-2 border-hss-violeta bg-hss-lavanda px-2.5 text-[13px] font-semibold text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
+                    : "h-9 w-full rounded-md border border-hss-violeta/15 bg-hss-violeta/10 px-2.5 text-[13px] font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/15 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }
               >
-                {etapa.nome.toUpperCase()}
+                {etapa.numero}º {etapa.nome.toUpperCase()}
               </button>
 
               <button
@@ -1690,7 +1655,7 @@ function CampoTexto({
   aoMudar: (valor: string) => void;
 }): JSX.Element {
   return (
-    <label className="block rounded-3xl border border-hss-violeta/15 bg-white/75 p-4 dark:border-white/10 dark:bg-white/5">
+    <label className="block rounded-3xl border border-hss-violeta/15 bg-[#f3f4f6] p-4 dark:border-white/10 dark:bg-white/5">
       <span className="text-sm font-extrabold text-slate-800 dark:text-white">
         {label}
       </span>
@@ -1699,7 +1664,7 @@ function CampoTexto({
         onChange={(evento) =>
           aoMudar(evento.target.value)
         }
-        className="mt-3 w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
+        className="mt-3 w-full rounded-2xl border border-transparent bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
       />
     </label>
   );
@@ -1717,14 +1682,14 @@ function CampoSelectTexto({
   aoMudar: (valor: string) => void;
 }): JSX.Element {
   return (
-    <label className="block rounded-3xl border border-hss-violeta/15 bg-white/75 p-4 dark:border-white/10 dark:bg-white/5">
+    <label className="block rounded-3xl border border-hss-violeta/15 bg-[#f3f4f6] p-4 dark:border-white/10 dark:bg-white/5">
       <span className="text-sm font-extrabold text-slate-800 dark:text-white">
         {label}
       </span>
       <select
         value={valor}
         onChange={(evento) => aoMudar(evento.target.value)}
-        className="mt-3 w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
+        className="mt-3 w-full rounded-2xl border border-transparent bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
       >
         {opcoes.map((opcao) => (
           <option key={opcao} value={opcao}>
@@ -1748,9 +1713,9 @@ function CampoSelectConfiguracao({
   ) => void;
 }): JSX.Element {
   return (
-    <label className="flex min-w-0 max-w-full flex-col gap-2 overflow-hidden rounded-2xl border border-hss-violeta/15 bg-white/85 p-3 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
-      <span className="min-w-0 max-w-full break-words text-sm font-extrabold text-slate-950 lg:w-[290px] lg:shrink-0">
-        Tipo de cenário configurado no ADM
+    <label className="flex min-w-0 max-w-full flex-col gap-2 overflow-hidden rounded-[1rem] border border-hss-violeta/15 bg-[#f3f4f6] p-2 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:h-full lg:flex-row lg:items-center lg:justify-between">
+      <span className="min-w-0 max-w-full break-words text-sm font-semibold text-slate-950 lg:w-[8.8rem] lg:shrink-0">
+        Tipo de cenário →
       </span>
       <select
         value={valor}
@@ -1762,7 +1727,7 @@ function CampoSelectConfiguracao({
             ),
           )
         }
-        className="min-w-0 max-w-full rounded-2xl border border-hss-violeta/20 bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
+        className="min-w-0 max-w-full rounded-xl border border-transparent bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
       >
         {configuracoes.map(
           (configuracao) => (
@@ -1833,18 +1798,18 @@ function BotaoVisao({
       onClick={aoClicar}
       className={
         ativo
-          ? "min-w-0 rounded-[1rem] bg-hss-roxo p-2 text-left text-white shadow-neon transition hover:-translate-y-1"
-          : "min-w-0 rounded-[1rem] border border-hss-violeta/15 bg-white/80 p-2 text-left text-slate-700 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:shadow-suave dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+          ? "min-w-0 rounded-[1rem] bg-[#f97316] p-2 text-left text-[#070814] shadow-[0_14px_32px_rgba(249,115,22,0.24)] transition hover:-translate-y-1"
+          : "min-w-0 rounded-[1rem] border border-[#fdba74] bg-[#ffedd5] p-2 text-left text-[#070814] transition hover:-translate-y-1 hover:border-[#fb923c] hover:bg-[#fed7aa] hover:shadow-suave"
       }
     >
-      <strong className="block min-w-0 break-words text-sm font-black [overflow-wrap:anywhere]">
+      <strong className="block min-w-0 break-words text-sm font-semibold uppercase [overflow-wrap:anywhere]">
         {titulo}
       </strong>
       <span
         className={
           ativo
-            ? "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-white/75 [overflow-wrap:anywhere]"
-            : "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-slate-500 [overflow-wrap:anywhere] dark:text-slate-400"
+            ? "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-[#070814] [overflow-wrap:anywhere]"
+            : "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-[#070814] [overflow-wrap:anywhere]"
         }
       >
         {subtitulo}
