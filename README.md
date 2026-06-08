@@ -230,7 +230,7 @@ npm run d1:migrar:remoto
 Projeto configurado no arquivo `wrangler.toml`:
 
 ```txt
-hssfiap-chalange-1twdor-2025
+challenge-hss-fiap-1twdor-2025
 ```
 
 Deploy:
@@ -254,7 +254,7 @@ npm run wrangler:deploy
 ## Melhorias Futuras
 
 - Adicionar autenticação real ao painel administrativo
-- Persistir leads, simulações e configurações no D1 em produção
+- Ampliar relatórios comerciais dos leads salvos no D1
 - Exportar simulações em PDF
 - Criar dashboard comercial para histórico de leads e ROI
 - Adicionar testes automatizados para cálculos e fluxos principais

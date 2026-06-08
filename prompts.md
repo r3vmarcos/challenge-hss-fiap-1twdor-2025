@@ -143,3 +143,8 @@ Aplicação: o cabeçalho mobile passou a exibir CTAs diretos e menu sanduíche 
 Pedido: remover rolagem do menu A11y, manter o botão fixo no meio da tela, corrigir Protanopia, trocar o ícone pelo SVG de acessibilidade, posicionar melhor o botão com menu aberto, iniciar sempre no topo ao atualizar, reforçar 100vw no mobile, alinhar abas da calculadora no tablet e revisar mojibake/pt-BR.
 
 Aplicação: o menu A11y foi compactado sem rolagem interna, o filtro de daltonismo deixou de afetar o botão fixo, o ícone foi atualizado, a página passa a iniciar no topo, o mobile foi protegido contra overflow horizontal, as abas aparecem lado a lado em tablet e a codificação dos arquivos alterados foi revisada.
+## 2026-06-08 - Contatos no ADM, calculadora em aba, commit e deploy
+
+Pedido: certificar que o banco de dados armazena os dados de contato do formulário, criar uma aba para mostrar as pessoas que preencheram o formulário e querem contato, criar outra aba para configurar a calculadora, checar ortografia pt-BR e mojibakes, fazer primeiro commit, criar repositório público `challenge-hss-fiap-1twdor-2025` na `main` e fazer deploy no Cloudflare com o mesmo nome.
+
+Aplicação: a API `/api/leads` passou a listar leads ativos do D1 por `GET`, o painel ADM ganhou abas `Contatos` e `Calculadora`, os textos pontuais com erro real foram corrigidos, o projeto foi revalidado com instalação, build e smoke HTTP local, a configuração Cloudflare foi renomeada para `challenge-hss-fiap-1twdor-2025`, o repositório público GitHub foi criado e o deploy Cloudflare ficou bloqueado por ausência de autenticação/token no ambiente.

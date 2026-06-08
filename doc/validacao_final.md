@@ -2,7 +2,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.21, com revisão de ortografia, checagem de mojibake, TypeScript, build e smoke HTTP local.
+Validação atualizada para a versão v6.25, com leads no ADM, revisão de ortografia, checagem de mojibake, TypeScript, build e smoke HTTP local.
 
 ## Checklist Técnico
 
@@ -97,11 +97,25 @@ Validação atualizada para a versão v6.21, com revisão de ortografia, checage
 89 - `npm install` após ajuste de gradiente no hero e link Diferencial: aprovado, sem vulnerabilidades.
 90 - Checagem TypeScript após ajuste de gradiente no hero e link Diferencial com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
 91 - `npm run build` após ajuste de gradiente no hero e link Diferencial: aprovado.
+92 - `npm install` após criação das abas ADM e API de contatos: aprovado, sem vulnerabilidades.
+93 - `npm run build` após criação das abas ADM e API de contatos: aprovado.
+94 - Smoke HTTP local após criação das abas ADM em `http://localhost:5196/`: aprovado com HTTP 200 usando o Vite já aberto na porta 5196 deste projeto.
+95 - Busca por erros pontuais de ortografia `inxcio` e `cobranxa`: aprovada, sem ocorrências atuais.
+96 - Checagem visual de mojibake por sequências comuns nos arquivos alterados: aprovada, sem ocorrências reais; ocorrências com acentos válidos em pt-BR foram preservadas.
+97 - Checagem TypeScript final com `npx tsc --noEmit --noUnusedLocals --noUnusedParameters --pretty false`: aprovada.
+98 - `npm run build` final após documentação e renomeação Cloudflare: aprovado.
+99 - Smoke HTTP local final em `http://localhost:5196/`: aprovado com HTTP 200.
+100 - Commit local na `main`: aprovado no commit atual desta entrega.
+101 - Repositório público GitHub `https://github.com/r3vmarcos/challenge-hss-fiap-1twdor-2025`: criado.
+102 - Push da branch `main` para o novo `origin`: aprovado.
+103 - Tentativa de aplicar migrations D1 remotas com `npx wrangler d1 migrations apply hss_roi_db --remote`: bloqueada por autenticação/certificado do Wrangler.
+104 - Tentativa de deploy Cloudflare: bloqueada porque o ambiente não possui `CLOUDFLARE_API_TOKEN` e o `wrangler whoami` retornou `Not logged in`.
 
 ## Observações
 
 01 - Porta mantida em `5196`, conforme `config/servidor_dev.env` e scripts do projeto.
-02 - Nome Cloudflare configurado em `wrangler.toml`: `hssfiap-chalange-1twdor-2025`.
+02 - Nome Cloudflare configurado em `wrangler.toml`: `challenge-hss-fiap-1twdor-2025`.
 03 - `node_modules` e `dist` foram protegidos no `.gitignore`.
 04 - O primeiro deploy retornou projeto inexistente; o projeto Pages foi criado e o deploy foi repetido com sucesso.
 05 - O script `npm run wrangler:deploy` executou o build, mas o deploy falhou porque `wrangler` não estava no PATH do terminal; a publicação foi concluída com `npx wrangler pages deploy dist`.
+06 - Nesta execução, o Cloudflare não pôde ser publicado sem autenticação/token no ambiente local.

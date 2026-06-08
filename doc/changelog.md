@@ -1,5 +1,16 @@
 # Changelog
 
+## v6.25 - Leads no ADM e deploy preparado
+
+01 - Adicionado `GET /api/leads` para listar contatos ativos salvos na tabela D1 `leads_roi`.
+02 - Criada a aba `Contatos` no Painel ADM para visualizar pessoas que preencheram o formulário e solicitaram contato.
+03 - Separada a configuração da calculadora na aba `Calculadora`, preservando os controles de cenários, tempos, custos, percentuais e ativo/inativo.
+04 - Corrigidos textos pontuais com erro ortográfico real em cenários da calculadora.
+05 - Atualizado `wrangler.toml` para o projeto Cloudflare `challenge-hss-fiap-1twdor-2025`.
+06 - Revalidados `npm install`, `npm run build`, smoke HTTP local e checagem de mojibake.
+07 - Criado e enviado o repositório público GitHub `r3vmarcos/challenge-hss-fiap-1twdor-2025` na branch `main`.
+08 - Deploy Cloudflare preparado, mas bloqueado no ambiente local por ausência de `CLOUDFLARE_API_TOKEN` e falha de certificado do Wrangler.
+
 ## v6.24 - Gradiente do hero e deploy main
 
 01 - Adicionado degradê transparente na base da imagem da médica no hero.

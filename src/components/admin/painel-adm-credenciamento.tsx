@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { PainelAdmContatos } from '@/components/admin/painel-adm-contatos';
 import { CampoNumerico } from '@/components/calculadora/campo-numerico';
 import {
   CONFIGURACOES_CREDENCIAMENTO_PADRAO,
@@ -12,6 +13,10 @@ import type { CenarioRoi, ConfiguracaoCredenciamento, PublicoAlvoConfiguracao } 
 /* === CONSTANTES ADM | inicio === */
 const USUARIO_DEMO = 'hssadmin';
 const SENHA_DEMO = 'hss2026';
+const abasAdm = [
+  { id: 'contatos', label: 'Contatos' },
+  { id: 'calculadora', label: 'Calculadora' },
+] as const;
 const opcoesPublico: { valor: PublicoAlvoConfiguracao; label: string }[] = [
   { valor: 'empresa', label: 'Empresa / Hospital / Clínica' },
   { valor: 'medico', label: 'Médico' },
@@ -28,6 +33,7 @@ const opcoesCenario: { valor: CenarioRoi; label: string }[] = [
   { valor: 'recredenciamento', label: 'Recredenciamento anual' },
   { valor: 'alta_complexidade', label: 'Alta complexidade' },
 ];
+type AbaAdm = (typeof abasAdm)[number]['id'];
 /* === CONSTANTES ADM | fim === */
 
 /* === COMPONENTE PAINEL ADM | inicio === */
@@ -36,6 +42,7 @@ export function PainelAdmCredenciamento(): JSX.Element {
   const [usuario, definirUsuario] = useState('');
   const [senha, definirSenha] = useState('');
   const [erroLogin, definirErroLogin] = useState('');
+  const [abaAtual, definirAbaAtual] = useState<AbaAdm>('contatos');
   const [configuracoesSalvas, definirConfiguracoes] = useLocalStorage<ConfiguracaoCredenciamento[]>(
     'hss_adm_configuracoes_credenciamento',
     CONFIGURACOES_CREDENCIAMENTO_PADRAO,
@@ -127,33 +134,61 @@ export function PainelAdmCredenciamento(): JSX.Element {
             <div>
               <span className="text-sm font-black uppercase tracking-[0.26em] text-hss-violeta dark:text-hss-lavanda">Painel ADM</span>
               <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-                Configurações de cenários, tempos, custos e percentuais.
+                Gestão de contatos e calculadora ROI.
               </h1>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300">
-                Todos os tipos de credenciamento e cenários de ROI ficam aqui. A caixa ativo/desativo controla se o cenário aparece na calculadora pública do site.
+                Consulte as pessoas que solicitaram contato e ajuste os cenários, tempos, custos e percentuais usados na calculadora pública.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <button type="button" onClick={adicionarConfiguracao} className="rounded-full bg-hss-roxo px-5 py-3 text-sm font-black text-white shadow-neon transition hover:-translate-y-1">
-                Adicionar cenário
-              </button>
-              <button type="button" onClick={restaurarPadrao} className="rounded-full border border-hss-violeta/20 px-5 py-3 text-sm font-black text-hss-roxo transition hover:-translate-y-1 dark:text-white">
-                Restaurar padrões
-              </button>
               <button type="button" onClick={sair} className="rounded-full border border-red-300/40 px-5 py-3 text-sm font-black text-red-600 transition hover:-translate-y-1 dark:text-red-300">
                 Sair
               </button>
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-4">
-            <ResumoAdm titulo="Cenários totais" valor={String(configuracoes.length)} detalhe="Inclui ativos e inativos." />
-            <ResumoAdm titulo="Ativos no site" valor={String(totalAtivos)} detalhe="Aparecem na calculadora pública." />
-            <ResumoAdm titulo="Tempo economizado" valor={`${formatarNumero(simulacao.tempoEconomizadoPorMedicoDias)} dias`} detalhe="No cenário selecionado." />
-            <ResumoAdm titulo="ROI simulado" valor={`${formatarNumero(simulacao.roiPercentual)}%`} detalhe="Com parâmetros atuais." />
-          </div>
+          <nav className="mt-7 flex flex-wrap gap-2 rounded-[1.25rem] bg-hss-violeta/10 p-2 dark:bg-white/5" aria-label="Abas do painel administrativo">
+            {abasAdm.map((aba) => (
+              <button
+                key={aba.id}
+                type="button"
+                onClick={() => definirAbaAtual(aba.id)}
+                className={
+                  abaAtual === aba.id
+                    ? 'rounded-full bg-hss-roxo px-5 py-3 text-sm font-black text-white shadow-neon'
+                    : 'rounded-full px-5 py-3 text-sm font-black text-hss-roxo transition hover:bg-white/80 dark:text-white dark:hover:bg-white/10'
+                }
+              >
+                {aba.label}
+              </button>
+            ))}
+          </nav>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+          {abaAtual === 'contatos' ? (
+            <div className="mt-8">
+              <PainelAdmContatos />
+            </div>
+          ) : null}
+
+          {abaAtual === 'calculadora' ? (
+            <>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button type="button" onClick={adicionarConfiguracao} className="rounded-full bg-hss-roxo px-5 py-3 text-sm font-black text-white shadow-neon transition hover:-translate-y-1">
+                  Adicionar cenário
+                </button>
+                <button type="button" onClick={restaurarPadrao} className="rounded-full border border-hss-violeta/20 px-5 py-3 text-sm font-black text-hss-roxo transition hover:-translate-y-1 dark:text-white">
+                  Restaurar padrões
+                </button>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-4">
+                <ResumoAdm titulo="Cenários totais" valor={String(configuracoes.length)} detalhe="Inclui ativos e inativos." />
+                <ResumoAdm titulo="Ativos no site" valor={String(totalAtivos)} detalhe="Aparecem na calculadora pública." />
+                <ResumoAdm titulo="Tempo economizado" valor={`${formatarNumero(simulacao.tempoEconomizadoPorMedicoDias)} dias`} detalhe="No cenário selecionado." />
+                <ResumoAdm titulo="ROI simulado" valor={`${formatarNumero(simulacao.roiPercentual)}%`} detalhe="Com parâmetros atuais." />
+              </div>
+
+              <div className="mt-8 grid gap-6 lg:grid-cols-[0.82fr_1.18fr]">
             <aside className="space-y-4">
               <div className="rounded-[1.75rem] border border-hss-violeta/15 bg-white/75 p-4 dark:border-white/10 dark:bg-white/5">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Tipos cadastrados</p>
@@ -176,7 +211,7 @@ export function PainelAdmCredenciamento(): JSX.Element {
                         </span>
                       </span>
                       <span className="mt-1 block text-xs opacity-70">
-                        {configuracao.tempoSemHssDias} dias ? {configuracao.tempoComHssDias} dias - {configuracao.categoria}
+                        {configuracao.tempoSemHssDias} dias para {configuracao.tempoComHssDias} dias - {configuracao.categoria}
                       </span>
                     </button>
                   ))}
@@ -265,7 +300,9 @@ export function PainelAdmCredenciamento(): JSX.Element {
                 <CampoNumerico id="admInvestimentoMedico" label="Investimento inicial médico" prefixo="R$" valor={configuracaoAtual.investimentoInicialMedico} aoMudar={(valor) => atualizarConfiguracao('investimentoInicialMedico', valor)} />
               </div>
             </div>
-          </div>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </section>

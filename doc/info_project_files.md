@@ -8,7 +8,8 @@
 - [`src/data/configuracoesCredenciamento.ts`](../src/data/configuracoesCredenciamento.ts) -> base padrão dos cenários do ADM.
 - [`src/services/calculosRoi.ts`](../src/services/calculosRoi.ts) -> regras de cálculo de ROI, payback, receita antecipada e prejuízo evitado.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> calculadora pública por etapas e cenários ativos.
-- [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) -> painel administrativo de cenários, tempos, custos e percentuais.
+- [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) -> painel administrativo com abas de contatos e configuração da calculadora.
+- [`src/components/admin/painel-adm-contatos.tsx`](../src/components/admin/painel-adm-contatos.tsx) -> aba ADM que lista pessoas que preencheram o formulário e solicitaram contato.
 - [`wrangler.toml`](../wrangler.toml) -> configuração Cloudflare Pages e D1.
 
 ## Páginas
@@ -42,7 +43,7 @@
 
 ## Cloudflare
 
-- [`functions/api/leads.js`](../functions/api/leads.js) -> endpoint de leads.
+- [`functions/api/leads.js`](../functions/api/leads.js) -> endpoint de leads com gravação via `POST` e listagem administrativa via `GET`.
 - [`functions/api/configuracoes-credenciamento.js`](../functions/api/configuracoes-credenciamento.js) -> endpoint de configurações do ADM.
 - [`functions/api/simulacoes-roi.js`](../functions/api/simulacoes-roi.js) -> endpoint de simulações.
 - [`migrations/`](../migrations) -> migrations D1 preparadas.
@@ -219,6 +220,27 @@ Origem: [`src/components/calculadora/calculadora-roi.tsx`](../src/components/cal
 - Travar calculadora na tela
 - Destravar calculadora
 - Quando travada no PC/notebook, a calculadora bloqueia a rolagem da página até ser destravada.
+
+### Painel ADM
+
+Origem principal: [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) Origem dos contatos: [`src/components/admin/painel-adm-contatos.tsx`](../src/components/admin/painel-adm-contatos.tsx)
+
+- Gestão de contatos e calculadora ROI.
+- Contatos
+- Calculadora
+- Contatos recebidos
+- Empresa / Hospital / Clínica
+- Médicos
+- Buscar contato
+- Carregando contatos...
+- Nenhum contato encontrado no banco ou fallback local.
+- Adicionar cenário
+- Restaurar padrões
+- Cenários totais
+- Ativos no site
+- Tempo economizado
+- ROI simulado
+- Mostrar este cenário no site
 
 ### Formulário De Lead
 
