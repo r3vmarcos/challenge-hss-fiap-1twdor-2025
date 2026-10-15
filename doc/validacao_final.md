@@ -2,10 +2,11 @@
 
 ## Status
 
-Validação atualizada para a versão v6.26, com ajuste visual dos cards de benefícios, TypeScript, build e smoke HTTP local.
+Validação atualizada para a versão v6.28, com correção dos links do menu mobile e build TypeScript.
 
 ## Checklist Técnico
 
+00 - `npm run build` após correção dos links de navegação mobile da v6.28: aprovado; HTTP local em `http://localhost:5196/`: HTTP 200. `npm run dev` não iniciou porque a porta 5196 já estava ocupada pelo servidor local existente.
 01 - `npm install`: aprovado.
 02 - `npm run dev`: aprovado na porta 5196.
 03 - Teste HTTP local em `http://localhost:5196/`: aprovado com HTTP 200.

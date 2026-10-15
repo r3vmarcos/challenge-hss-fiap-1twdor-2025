@@ -277,7 +277,7 @@ function BlocoProcessoTravado({ id, titulo, descricao, etiqueta, itens, informac
       }}
     >
       <div className={classeConteudoTravado}>
-        <div className="mx-auto flex h-[calc(100vh-74px)] max-w-[1160px] flex-col justify-center overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[calc(100vh-74px)] max-w-[1200px] flex-col justify-center overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
           {/* === CABECALHO DO BLOCO | inicio === */}
           <div className="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] gap-x-3">
             <article className={invertido ? "col-start-3 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur" : "col-start-1 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur"}>

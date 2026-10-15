@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.28 - Correção dos links no menu mobile
+
+01 - Corrigido o filtro dos links da navegação mobile, que removia todos os itens do menu.
+02 - O menu sanduíche agora exibe as mesmas opções de navegação da versão desktop.
+
 ## v6.27 - Ajustes finais de interface, footer e calculadora
 
 01 - Adicionado link `GitHub` no rodapé ao lado de `Fontes e referências`, apontando para o repositório público do projeto.

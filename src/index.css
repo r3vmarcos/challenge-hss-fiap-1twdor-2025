@@ -450,7 +450,7 @@ body::-webkit-scrollbar-thumb:hover,
   position: absolute;
   inset: -2px;
   z-index: 0;
-  background: conic-gradient(from 0deg, transparent 0deg, transparent 65deg, rgba(255, 255, 255, 0.95) 82deg, transparent 105deg, transparent 360deg);
+  /* background: conic-gradient(from 0deg, transparent 0deg, transparent 65deg, rgba(255, 255, 255, 0.95) 82deg, transparent 105deg, transparent 360deg); */
   animation: shimmer-girar 2.8s linear infinite;
 }
 
@@ -463,12 +463,13 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 .shimmer-button-primario {
-  border: 1px solid rgba(41, 27, 127, 0.12);
+  /* border: 1px solid rgba(41, 27, 127, 0.12); */
+  border: none;
   background: #291b7f;
   color: white;
 }
 
-.shimmer-button-primario::after {
+/* .shimmer-button-primario::after {
   background: linear-gradient(135deg, #291b7f, #4b32d8);
 }
 
@@ -477,15 +478,15 @@ body::-webkit-scrollbar-thumb:hover,
   background: transparent;
   color: #291b7f;
   box-shadow: none;
-}
+} */
 
-.shimmer-button-contorno::before {
+/* .shimmer-button-contorno::before {
   background: conic-gradient(from 0deg, transparent 0deg, transparent 60deg, rgba(75, 50, 216, 0.95) 84deg, transparent 108deg, transparent 360deg);
-}
+} */
 
-.shimmer-button-contorno::after {
+/* .shimmer-button-contorno::after {
   background: #eef0f7;
-}
+} */
 
 @keyframes shimmer-girar {
   to {
@@ -558,7 +559,7 @@ body::-webkit-scrollbar-thumb:hover,
   height: 100vh;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.84;
+  opacity: 0.6;
 }
 
 .parallax-profundidade {

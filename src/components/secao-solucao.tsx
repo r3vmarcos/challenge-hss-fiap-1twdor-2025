@@ -371,7 +371,7 @@ export function SecaoBeneficios(): JSX.Element {
           classeConteudoTravado
         }
       >
-        <div className="mx-auto grid h-[calc(100vh-74px)] max-w-[1110px] items-center gap-12 overflow-hidden px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-2">
+        <div className="mx-auto grid h-[calc(100vh-74px)] max-w-[1200px] items-center gap-12 overflow-hidden px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-2">
           {/* === TEXTO TRAVADO NO MEIO DA TELA | inicio === */}
           <div className="self-center">
             <h2 className="max-w-[450px] text-[2.5rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[3.1rem]">
