@@ -13,7 +13,9 @@ export function SecaoComoFunciona(): JSX.Element {
           <span>As instituições e médicos têm o controle do processo, economizando tempo e com menos burocracia.</span>
         </p>
 
-        <div className="revelar-scroll mt-6 rounded-2xl border-2 border-[#b3b3b3] bg-[#d9dadd]/85 px-6 py-6 text-center backdrop-blur">
+
+
+        {/* <div className="revelar-scroll mt-6 rounded-2xl border-2 border-[#b3b3b3] bg-[#d9dadd]/85 px-6 py-6 text-center backdrop-blur">
           <h3 className="text-[2rem] font-medium tracking-[0.02em] text-[#070814] rounded-2xl ">Etapas do processo de credenciamento</h3>
           <div className="mt-10 grid items-stretch gap-4 md:grid-cols-5">
             {etapasProcesso.map((etapa, indice) => (
@@ -31,6 +33,14 @@ export function SecaoComoFunciona(): JSX.Element {
               </div>
             ))}
           </div>
+        </div> */}
+
+        <div>
+          <div className="como-funciona__step"></div>
+          <div className="como-funciona__step"></div>
+          <div className="como-funciona__step"></div>
+          <div className="como-funciona__step"></div>
+          <div className="como-funciona__step"></div>
         </div>
       </div>
     </section>
