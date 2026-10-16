@@ -28,7 +28,7 @@
 
 - [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> primeira dobra com métricas e CTA.
 - [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx) -> benefícios da solução.
-- [`src/components/secoes/secao-como-funciona.tsx`](../src/components/secoes/secao-como-funciona.tsx) -> etapas do credenciamento.
+- [`src/components/secoes/secao-como-funciona.tsx`](../src/components/secoes/secao-como-funciona.tsx) -> etapas do credenciamento com estilos responsivos em Tailwind CSS.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> comparação sem HSS x com HSS.
 - [`src/components/secoes/secao-depoimentos.tsx`](../src/components/secoes/secao-depoimentos.tsx) -> depoimentos em marquee.
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> formulário de contato e demonstração.

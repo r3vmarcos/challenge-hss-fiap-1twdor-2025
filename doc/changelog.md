@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.29 - Estilos Tailwind na seção Como funciona
+
+01 - Migrados para classes Tailwind os estilos responsivos da seção "Como funciona?".
+02 - Removidas do CSS separado as regras específicas da seção, preservando a âncora `#como-funciona`.
+
 ## v6.28 - Correção dos links no menu mobile
 
 01 - Corrigido o filtro dos links da navegação mobile, que removia todos os itens do menu.

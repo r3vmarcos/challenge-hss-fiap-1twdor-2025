@@ -1,5 +1,11 @@
 # Histórico de prompts do projeto
 
+## 2026-10-16 - Estilos Tailwind na seção Como funciona
+
+Pedido: configurar a seção "Como funciona?" com os estilos de `styles.css`, convertendo-os para classes Tailwind e removendo os seletores específicos do CSS separado.
+
+Aplicação: regras visuais e responsivas da seção foram migradas para o componente, mantendo a âncora `#como-funciona` e removendo suas regras do CSS separado.
+
 ## 2026-10-15 - Correção das opções do menu mobile
 
 Pedido: corrigir o desaparecimento das opções de navegação no menu mobile.

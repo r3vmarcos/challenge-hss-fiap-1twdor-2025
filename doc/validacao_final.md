@@ -1,5 +1,9 @@
 # Validação Final
 
+## Alteração v6.29
+
+- Seção "Como funciona?" com estilos migrados para classes Tailwind responsivas; `npm install` e `npm run build` aprovados.
+
 ## Status
 
 Validação atualizada para a versão v6.28, com correção dos links do menu mobile e build TypeScript.

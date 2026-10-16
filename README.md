@@ -76,7 +76,7 @@ O projeto foi estruturado em:
 - Hero section com métricas animadas e imagem institucional
 - Seções independentes para:
   - benefícios com cards compactos e ícones em marca d'água
-  - processo
+  - processo de credenciamento com estilos responsivos aplicados via Tailwind CSS
   - comparativo Sem HSS / Com HSS
   - depoimentos
   - calculadora ROI
