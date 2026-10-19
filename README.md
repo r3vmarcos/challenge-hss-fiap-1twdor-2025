@@ -77,7 +77,7 @@ O projeto foi estruturado em:
 - Seções independentes para:
   - benefícios com cards compactos e ícones em marca d'água
   - processo de credenciamento com estilos responsivos aplicados via Tailwind CSS
-  - comparativo Sem HSS / Com HSS
+  - comparativo Sem HSS / Com HSS em painéis responsivos com Tailwind CSS e ícones SVG
   - depoimentos
   - calculadora ROI
   - formulário

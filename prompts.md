@@ -1,5 +1,11 @@
 # Histórico de prompts do projeto
 
+## 2026-10-16 - Estilos Tailwind no comparativo Sem HSS / Com HSS
+
+Pedido: converter os estilos e classes CSS do componente comparativo conforme `styles.css`.
+
+Aplicação: os painéis Sem HSS / Com HSS e seus itens receberam classes Tailwind responsivas com reutilização dos ícones SVG locais; o tablist sem interação foi eliminado e os cartões empilham em telas menores.
+
 ## 2026-10-16 - Estilos Tailwind na seção Como funciona
 
 Pedido: configurar a seção "Como funciona?" com os estilos de `styles.css`, convertendo-os para classes Tailwind e removendo os seletores específicos do CSS separado.

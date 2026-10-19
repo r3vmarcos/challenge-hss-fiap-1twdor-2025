@@ -1,5 +1,11 @@
 # Changelog
 
+## v6.30 - Estilos Tailwind no comparativo Sem HSS / Com HSS
+
+01 - Migrados para classes Tailwind os estilos responsivos dos painéis e itens do comparativo Sem HSS / Com HSS.
+02 - Reutilizados os ícones SVG locais; `src/components/secoes/styles.css` foi preservado porque seus seletores não estilizam estes painéis.
+03 - Removido o tablist sem comportamento funcional; os dois painéis ficam lado a lado em telas médias ou maiores e empilham em telas menores.
+
 ## v6.29 - Estilos Tailwind na seção Como funciona
 
 01 - Migrados para classes Tailwind os estilos responsivos da seção "Como funciona?".

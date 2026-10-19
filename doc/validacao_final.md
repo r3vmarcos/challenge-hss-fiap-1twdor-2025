@@ -1,16 +1,28 @@
 # Validação Final
 
+## Alteração v6.30
+
+- Estilos responsivos dos painéis comparativos migrados para Tailwind CSS; `styles.css` foi preservado porque não contém seletores aplicáveis a esses painéis.
+- `npm install`: concluído, dependências já estavam atualizadas; npm reportou 13 vulnerabilidades (1 baixa, 2 moderadas e 10 altas).
+- `npm run dev`: a porta padrão 5196 já estava ocupada; o servidor Vite existente respondeu HTTP 200 na landing e no módulo do componente.
+- `npm run dev -- --port 5197`: iniciado para validação alternativa; smoke HTTP da landing e transformação do componente pelo Vite responderam HTTP 200.
+- `npm run build`: aprovado.
+- Checagem adicional de símbolos não utilizados: reportou itens em `hero-hss.tsx` e `secao-como-funciona.tsx`; sem apontamentos em `secao-processo-comparativo.tsx`.
+
 ## Alteração v6.29
 
 - Seção "Como funciona?" com estilos migrados para classes Tailwind responsivas; `npm install` e `npm run build` aprovados.
 
 ## Status
 
-Validação atualizada para a versão v6.28, com correção dos links do menu mobile e build TypeScript.
+Validação atualizada para a versão v6.30, com os painéis do comparativo Sem HSS / Com HSS estilizados em Tailwind CSS.
 
 ## Checklist Técnico
 
 00 - `npm run build` após correção dos links de navegação mobile da v6.28: aprovado; HTTP local em `http://localhost:5196/`: HTTP 200. `npm run dev` não iniciou porque a porta 5196 já estava ocupada pelo servidor local existente.
+00a - `npm install` após migração v6.30: concluído; npm reportou 13 vulnerabilidades existentes no conjunto de dependências (1 baixa, 2 moderadas e 10 altas).
+00b - `npm run dev -- --port 5197` após migração v6.30: iniciado; smoke HTTP e transformação do componente comparativo pelo Vite: HTTP 200.
+00c - `npm run build` após migração v6.30: aprovado; diagnósticos do componente no VS Code: sem erros.
 01 - `npm install`: aprovado.
 02 - `npm run dev`: aprovado na porta 5196.
 03 - Teste HTTP local em `http://localhost:5196/`: aprovado com HTTP 200.
