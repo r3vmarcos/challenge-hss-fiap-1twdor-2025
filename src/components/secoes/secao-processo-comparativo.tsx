@@ -1,14 +1,14 @@
 /* === IMPORTAÇÕES | inicio === */
 import iconeBarChart from "@/assets/icons/bar-chart-2.svg";
+import iconeArrowRight from "@/assets/icons/arrow-right.svg";
 import iconeCheck from "@/assets/icons/check.svg";
 import iconeClock from "@/assets/icons/clock.svg";
-import iconeEye from "@/assets/icons/eye.svg";
 import iconeEyeOff from "@/assets/icons/eye-off.svg";
 import iconeFileText from "@/assets/icons/file-text.svg";
 import iconeFolder from "@/assets/icons/folder.svg";
-import iconeMessageSquare from "@/assets/icons/message-square.svg";
+import iconeLock from "@/assets/icons/lock.svg";
+import iconeShield from "@/assets/icons/shield.svg";
 import iconeUsers from "@/assets/icons/users.svg";
-import iconeX from "@/assets/icons/x.svg";
 import iconeZap from "@/assets/icons/zap.svg";
 /* === IMPORTAÇÕES | fim === */
 
@@ -64,70 +64,125 @@ import iconeZap from "@/assets/icons/zap.svg";
 
 // /* === SEÇÃO PROCESSO COMPARATIVO | inicio === */
 export function SecaoProcessoComparativo(): JSX.Element {
+  const duvidas = [
+    {
+      icone: iconeFileText,
+      titulo: '"A implementacao vai ser complicada."',
+      descricao: "Medo de interromper a operação e exigir muitos recursos da equipe.",
+    },
+    {
+      icone: iconeClock,
+      titulo: '"Já usamos outros sistemas."',
+      descricao: "Preocupação com integração e adaptação aos processos existentes.",
+    },
+    {
+      icone: iconeEyeOff,
+      titulo: '"Sera que o investimento compensa?"',
+      descricao: "Dúvida sobre os custos e o retorno real da solução.",
+    },
+    {
+      icone: iconeShield,
+      titulo: '"Nossos dados estarão seguros?"',
+      descricao: "Risco de vazamentos e acesso indevido às informações.",
+    },
+    {
+      icone: iconeUsers,
+      titulo: '"Minha equipe terá dificuldade para usar."',
+      descricao: "Receio de baixa adesão e necessidade de longos treinamentos.",
+    },
+  ];
+  const beneficios = [
+    {
+      icone: iconeFolder,
+      titulo: "Implantação simples e acompanhada",
+      descricao: "Processo estruturado, com suporte especializado e sem interromper a sua operação.",
+    },
+    {
+      icone: iconeZap,
+      titulo: "Integração facilitada",
+      descricao: "Conecte-se aos sistemas que sua instituição ja utiliza de forma segura e interoperável.",
+    },
+    {
+      icone: iconeBarChart,
+      titulo: "Retorno comprovado",
+      descricao: "Redução de tempo e retrabalho, com mais eficiencia e melhor uso dos recursos.",
+    },
+    {
+      icone: iconeLock,
+      titulo: "Segurança e conformidade",
+      descricao: "Dados protegidos, com controle de acesso, rastreabilidade e conformidade com as normas do setor.",
+    },
+    {
+      icone: iconeUsers,
+      titulo: "Uso intuitivo e suporte continuo",
+      descricao: "Interface simples, treinamento e equipe de suporte para garantir a adesão da sua equipe.",
+    },
+  ];
+
   return (
     <section id="como-funciona" lang="pt-BR" aria-labelledby="diferenciais-title" className="scroll-mt-28 bg-[#e9eaf2] px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="mb-8 sm:mb-10">
           <h2 id="diferenciais-title" className="text-[clamp(32px,4.2vw,48px)] font-black leading-[1.15] tracking-[-1.5px] text-[#080b15]">Diferenciais</h2>
+          <p className="mx-auto mt-3 max-w-[620px] text-sm leading-6 text-slate-600 sm:text-base">
+            Entenda as principais dúvidas dos gestores e veja como a HSS torna a implementação segura, viável e eficiente.
+          </p>
         </div>
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1200px] gap-5 md:grid-cols-2 md:gap-6">
-        <article id="comparison-without" className="overflow-hidden rounded-3xl border border-orange-200 bg-white shadow-[0_16px_42px_rgba(15,23,42,0.07)]" aria-labelledby="comparison-without-title">
-            <div className="flex items-center gap-4 border-b border-orange-100 bg-orange-50/70 px-5 py-5 sm:px-7">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100"><img src={iconeX} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div><h3 id="comparison-without-title" className="text-xl font-black text-[#17223f] sm:text-2xl">Sem HSS</h3><p className="mt-1 text-sm leading-6 text-slate-600">Etapas manuais e informações dispersas.</p></div>
+      <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] md:gap-3">
+        <article id="comparison-without" className="rounded-2xl bg-[#f0f3f8] p-4 sm:p-5" aria-labelledby="comparison-without-title">
+          <div className="flex min-h-[72px] items-center gap-3 px-1">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
+            <div>
+              <h3 id="comparison-without-title" className="text-lg font-black text-[#17223f]">Dúvidas comuns</h3>
+              <p className="mt-0.5 text-sm leading-5 text-slate-600">O que costuma preocupar os gestores</p>
             </div>
-            <div className="divide-y divide-slate-100 px-5 sm:px-7">
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50"><img src={iconeFileText} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Documentos dispersos</h4><p className="mt-1 text-sm leading-6 text-slate-600">Arquivos espalhados em e-mails, planilhas e pastas.</p></div>
+          </div>
+          <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
+            {duvidas.map(({ icone, titulo, descricao }) => (
+              <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/75 px-3 py-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8edf3]">
+                  <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
+                </span>
+                <div className="min-w-0">
+                  <h4 className="text-sm font-bold leading-5 text-[#17223f]">{titulo}</h4>
+                  <p className="mt-1 text-sm leading-5 text-slate-600">{descricao}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+        <div aria-hidden="true" className="hidden grid-rows-[repeat(5,minmax(112px,auto))] gap-2.5 pt-[100px] md:grid">
+          {duvidas.map(({ titulo }) => (
+            <span key={titulo} className="flex items-center justify-center">
+              <img src={iconeArrowRight} alt="" className="h-6 w-6 opacity-60" />
+            </span>
+          ))}
+        </div>
+        <article id="comparison-with" className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title">
+          <div className="flex min-h-[72px] items-center gap-3 px-1">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#079879]">
+              <img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5 brightness-0 invert" />
+            </span>
+            <div>
+              <h3 id="comparison-with-title" className="text-lg font-black text-[#075f50]">Com a HSS</h3>
+              <p className="mt-0.5 text-sm leading-5 text-[#47756d]">Implementação segura, prática e com suporte em todas as etapas</p>
             </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50"><img src={iconeClock} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Rotina manual</h4><p className="mt-1 text-sm leading-6 text-slate-600">Validações e atualizações feitas uma a uma.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50"><img src={iconeEyeOff} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Pouca visibilidade</h4><p className="mt-1 text-sm leading-6 text-slate-600">Dificuldade para acompanhar o status e as pendências.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50"><img src={iconeUsers} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Comunicação fragmentada</h4><p className="mt-1 text-sm leading-6 text-slate-600">Informações distribuídas entre áreas e canais.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50"><img src={iconeBarChart} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Resultados pouco claros</h4><p className="mt-1 text-sm leading-6 text-slate-600">Dados consolidados manualmente para avaliar os atrasos.</p></div>
-            </div>
-            </div>
-          </article>
-          <article id="comparison-with" className="overflow-hidden rounded-3xl border border-blue-200 bg-white shadow-[0_16px_42px_rgba(15,23,42,0.07)]" aria-labelledby="comparison-with-title">
-            <div className="flex items-center gap-4 border-b border-blue-100 bg-blue-50/70 px-5 py-5 sm:px-7">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100"><img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div><h3 id="comparison-with-title" className="text-xl font-black text-[#17223f] sm:text-2xl">Com HSS</h3><p className="mt-1 text-sm leading-6 text-slate-600">Um fluxo digital, organizado e transparente.</p></div>
-            </div>
-            <div className="divide-y divide-slate-100 px-5 sm:px-7">
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50"><img src={iconeFolder} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Documentos centralizados</h4><p className="mt-1 text-sm leading-6 text-slate-600">Documentos e histórico reunidos em um só lugar.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50"><img src={iconeZap} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Fluxo organizado</h4><p className="mt-1 text-sm leading-6 text-slate-600">Etapas e pendências organizadas em uma única jornada.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50"><img src={iconeEye} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Mais visibilidade</h4><p className="mt-1 text-sm leading-6 text-slate-600">Visão clara de cada etapa do credenciamento.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50"><img src={iconeMessageSquare} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Comunicação integrada</h4><p className="mt-1 text-sm leading-6 text-slate-600">Informações do processo compartilhadas entre as áreas.</p></div>
-            </div>
-            <div className="flex gap-4 py-4 sm:py-[18px]">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50"><img src={iconeBarChart} alt="" aria-hidden="true" className="h-5 w-5" /></span>
-              <div className="min-w-0"><h4 className="font-bold leading-6 text-[#17223f]">Dados para decidir</h4><p className="mt-1 text-sm leading-6 text-slate-600">Simulações de tempo, custos e esforço por cenário.</p></div>
-            </div>
-            </div>
+          </div>
+          <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
+            {beneficios.map(({ icone, titulo, descricao }) => (
+              <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/65 px-3 py-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d5eee8]">
+                  <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
+                </span>
+                <div className="min-w-0">
+                  <h4 className="text-sm font-bold leading-5 text-[#075f50]">{titulo}</h4>
+                  <p className="mt-1 text-sm leading-5 text-[#47756d]">{descricao}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </article>
       </div>
     </section>
@@ -321,64 +376,64 @@ export function SecaoProcessoComparativo(): JSX.Element {
 //         : "absolute left-0 right-0 top-0 z-20";
 //   /* === CLASSES DE POSIÇÃO | fim === */
 
-  // return (
+// return (
 
 
-    //   <div
-    //     ref={blocoRef}
-    //     id={id}
-    //     className="relative scroll-mt-[74px] bg-[#eef0f7] px-4 sm:px-6 lg:px-8"
-    //     style={{
-    //       minHeight: `calc(100vh + ${alturaScrollInterno}px)`,
-    //     }}
-    //   >
-    //     <div className={classeConteudoTravado}>
-    //       <div className="mx-auto flex h-[calc(100vh-74px)] max-w-[1200px] flex-col justify-center overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
-    //         {/* === CABECALHO DO BLOCO | inicio === */}
-    //         <div className="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] gap-x-3">
-    //           <article className={invertido ? "col-start-3 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur" : "col-start-1 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur"}>
-    //             <h2 className="whitespace-nowrap text-[1.25rem] font-black leading-tight text-[#070814] sm:text-[1.5rem] xl:text-[1.7rem]">
-    //               <TituloProcesso titulo={titulo} tema={tema} />
-    //             </h2>
+//   <div
+//     ref={blocoRef}
+//     id={id}
+//     className="relative scroll-mt-[74px] bg-[#eef0f7] px-4 sm:px-6 lg:px-8"
+//     style={{
+//       minHeight: `calc(100vh + ${alturaScrollInterno}px)`,
+//     }}
+//   >
+//     <div className={classeConteudoTravado}>
+//       <div className="mx-auto flex h-[calc(100vh-74px)] max-w-[1200px] flex-col justify-center overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
+//         {/* === CABECALHO DO BLOCO | inicio === */}
+//         <div className="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] gap-x-3">
+//           <article className={invertido ? "col-start-3 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur" : "col-start-1 rounded-2xl bg-[#eef0f7]/70 p-4 backdrop-blur"}>
+//             <h2 className="whitespace-nowrap text-[1.25rem] font-black leading-tight text-[#070814] sm:text-[1.5rem] xl:text-[1.7rem]">
+//               <TituloProcesso titulo={titulo} tema={tema} />
+//             </h2>
 
-    //             <p className="mt-5 max-w-[500px] text-sm font-medium leading-6 text-slate-600">{descricao}</p>
-    //           </article>
-    //         </div>
-    //         {/* === CABECALHO DO BLOCO | fim === */}
+//             <p className="mt-5 max-w-[500px] text-sm font-medium leading-6 text-slate-600">{descricao}</p>
+//           </article>
+//         </div>
+//         {/* === CABECALHO DO BLOCO | fim === */}
 
-    //         {/* === PARES ALINHADOS | inicio === */}
-    //         <div className="mt-3 grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] items-stretch gap-x-3 gap-y-2">
-    //           {itens.map((item, indice) => {
-    //             const carregado = indice < cardsVisiveis;
-    //             const ativo = cardsVisiveis > 0 ? indice === Math.min(cardsVisiveis - 1, itens.length - 1) : false;
-    //             const textoEsquerda = invertido ? informacoes[indice] : item;
-    //             const textoDireita = invertido ? item : informacoes[indice];
-    //             const esquerdaCarregada = invertido ? carregado : true;
-    //             const direitaCarregada = invertido ? true : carregado;
-    //             const esquerdaAtiva = invertido ? ativo : false;
-    //             const direitaAtiva = invertido ? false : ativo;
+//         {/* === PARES ALINHADOS | inicio === */}
+//         <div className="mt-3 grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] items-stretch gap-x-3 gap-y-2">
+//           {itens.map((item, indice) => {
+//             const carregado = indice < cardsVisiveis;
+//             const ativo = cardsVisiveis > 0 ? indice === Math.min(cardsVisiveis - 1, itens.length - 1) : false;
+//             const textoEsquerda = invertido ? informacoes[indice] : item;
+//             const textoDireita = invertido ? item : informacoes[indice];
+//             const esquerdaCarregada = invertido ? carregado : true;
+//             const direitaCarregada = invertido ? true : carregado;
+//             const esquerdaAtiva = invertido ? ativo : false;
+//             const direitaAtiva = invertido ? false : ativo;
 
-    //             return (
-    //               <div key={`${item}-${informacoes[indice]}`} className="contents">
-    //                 <CartaoComparativoAlinhado texto={textoEsquerda} etiqueta={etiqueta} indice={indice} tema={tema} ativo={esquerdaAtiva} carregado={esquerdaCarregada} />
-    //                 <span
-    //                   className={[
-    //                     "self-center text-center text-2xl font-black transition-[opacity,transform] duration-300",
-    //                     tema === "sem" ? "text-[#f97316]" : "text-[#2563eb]",
-    //                     carregado ? "scale-100 opacity-60" : "scale-75 opacity-0",
-    //                   ].join(" ")}
-    //                 >
-    //                   {invertido ? "<" : ">"}
-    //                 </span>
-    //                 <CartaoComparativoAlinhado texto={textoDireita} etiqueta={etiqueta} indice={indice} tema={tema} ativo={direitaAtiva} carregado={direitaCarregada} />
-    //               </div>
-    //             );
-    //           })}
-    //         </div>
-    //         {/* === PARES ALINHADOS | fim === */}
-    //       </div>
-    //     </div>
-    //   </div>
+//             return (
+//               <div key={`${item}-${informacoes[indice]}`} className="contents">
+//                 <CartaoComparativoAlinhado texto={textoEsquerda} etiqueta={etiqueta} indice={indice} tema={tema} ativo={esquerdaAtiva} carregado={esquerdaCarregada} />
+//                 <span
+//                   className={[
+//                     "self-center text-center text-2xl font-black transition-[opacity,transform] duration-300",
+//                     tema === "sem" ? "text-[#f97316]" : "text-[#2563eb]",
+//                     carregado ? "scale-100 opacity-60" : "scale-75 opacity-0",
+//                   ].join(" ")}
+//                 >
+//                   {invertido ? "<" : ">"}
+//                 </span>
+//                 <CartaoComparativoAlinhado texto={textoDireita} etiqueta={etiqueta} indice={indice} tema={tema} ativo={direitaAtiva} carregado={direitaCarregada} />
+//               </div>
+//             );
+//           })}
+//         </div>
+//         {/* === PARES ALINHADOS | fim === */}
+//       </div>
+//     </div>
+//   </div>
 //   );
 // }
 /* === BLOCO PROCESSO TRAVADO | fim === */

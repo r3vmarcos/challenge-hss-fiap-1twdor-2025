@@ -310,7 +310,7 @@ export function SecaoBeneficios(): JSX.Element {
           <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
             Benefícios da nossa solução
           </h2>
-          <p className="mt-5 text-base font-medium leading-7 text-[#171826] sm:text-lg">
+          <p className="mt-5 text-sm font-thin leading-7 text-slate-700 sm:text-lg">
             Transforme o credenciamento
             médico em um processo mais
             organizado, rastreável e
@@ -374,12 +374,12 @@ export function SecaoBeneficios(): JSX.Element {
         <div className="mx-auto grid h-[calc(100vh-74px)] max-w-[1200px] items-center gap-12 overflow-hidden px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-2">
           {/* === TEXTO TRAVADO NO MEIO DA TELA | inicio === */}
           <div className="self-center">
-            <h2 className="max-w-[450px] text-[2.5rem] font-black leading-[1.12] tracking-[0.01em] text-[#070814] sm:text-[3.1rem]">
+            <h2 className="max-w-[450px] text-[2.5rem] font-black leading-[1.12] tracking-[0.01em] text-slate-900 sm:text-[3.1rem]">
               Benefícios da nossa
               solução
             </h2>
 
-            <p className="mt-7 max-w-[460px] text-lg font-medium leading-8 text-[#171826]">
+            <p className="mt-7 max-w-[460px] text-base font-medium leading-8 text-slate-700">
               Transforme o
               credenciamento médico em
               um processo mais
@@ -425,11 +425,11 @@ export function SecaoBeneficios(): JSX.Element {
                       {beneficio.icone}
                     </span>
 
-                    <h3 className="relative pr-12 text-xl font-black leading-tight text-[#070814]">
+                    <h3 className="relative pr-12 text-xl font-black leading-tight text-slate-800">
                       {beneficio.titulo}
                     </h3>
 
-                    <p className="relative mt-2 hyphens-auto text-sm font-medium leading-6 text-[#1f2937]">
+                    <p className="relative mt-2 hyphens-auto text-sm font-medium leading-6 text-slate-700">
                       {beneficio.texto}
                     </p>
                   </article>

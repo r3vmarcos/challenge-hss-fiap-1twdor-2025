@@ -1,5 +1,17 @@
 # Histórico de prompts do projeto
 
+## 2026-10-19 - Ajuste de legibilidade dos cartões comparativos
+
+Pedido: aumentar para aproximadamente 14 px os parágrafos e títulos `h4` dos cartões.
+
+Aplicação: tipografia dos cartões e textos auxiliares dos painéis ajustada para 14 px, com mais altura mínima nos cartões para acomodar linhas adicionais.
+
+## 2026-10-19 - Comparativo visual de dúvidas e benefícios
+
+Pedido: aproximar a seção comparativa da referência visual anexada sem modificar o `h2`.
+
+Aplicação: os painéis receberam fundos suaves, cartões individuais e setas de correspondência; o `h2` foi preservado e uma descrição complementar foi adicionada abaixo dele.
+
 ## 2026-10-16 - Estilos Tailwind no comparativo Sem HSS / Com HSS
 
 Pedido: converter os estilos e classes CSS do componente comparativo conforme `styles.css`.

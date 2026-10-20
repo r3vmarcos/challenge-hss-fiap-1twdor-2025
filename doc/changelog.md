@@ -1,5 +1,16 @@
 # Changelog
 
+## v6.32 - Tipografia acessível nos cartões comparativos
+
+01 - Aumentados para 14 px os títulos e parágrafos dos cartões e textos auxiliares dos painéis.
+02 - Ampliada a altura mínima dos cartões para acomodar o texto sem comprometer a leitura.
+
+## v6.31 - Comparativo de dúvidas e benefícios no padrão visual de referência
+
+01 - Atualizado o comparativo para painéis em tons suaves, cartões individuais e setas alinhadas entre as dúvidas comuns e as respostas da HSS.
+02 - Mantidos o texto e a apresentação do título `h2`, com descrição complementar abaixo.
+03 - Ajustada a apresentação dos itens para telas menores sem alterar o conteúdo dos painéis.
+
 ## v6.30 - Estilos Tailwind no comparativo Sem HSS / Com HSS
 
 01 - Migrados para classes Tailwind os estilos responsivos dos painéis e itens do comparativo Sem HSS / Com HSS.

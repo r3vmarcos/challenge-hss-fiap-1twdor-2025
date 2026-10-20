@@ -1,5 +1,17 @@
 # Validação Final
 
+## Alteração v6.32
+
+- Títulos e parágrafos dos cartões comparativos ajustados para 14 px; cartões com altura mínima ampliada para acomodar o conteúdo.
+- `npm run build`: validação pendente.
+
+## Alteração v6.31
+
+- Refinado o comparativo de dúvidas comuns e benefícios da HSS com painéis pastel, cartões alinhados e setas centrais, sem modificar o texto ou a apresentação do `h2`.
+- `npm run dev`: a porta configurada 5196 já estava ocupada; a landing no servidor existente respondeu HTTP 200.
+- `npm run dev -- --port 5197`: iniciado para validação alternativa; smoke HTTP da landing respondeu HTTP 200.
+- `npm run build`: aprovado.
+
 ## Alteração v6.30
 
 - Estilos responsivos dos painéis comparativos migrados para Tailwind CSS; `styles.css` foi preservado porque não contém seletores aplicáveis a esses painéis.
@@ -15,7 +27,7 @@
 
 ## Status
 
-Validação atualizada para a versão v6.30, com os painéis do comparativo Sem HSS / Com HSS estilizados em Tailwind CSS.
+Validação atualizada para a versão v6.31, com o comparativo de dúvidas comuns e benefícios da HSS alinhado à referência visual.
 
 ## Checklist Técnico
 
