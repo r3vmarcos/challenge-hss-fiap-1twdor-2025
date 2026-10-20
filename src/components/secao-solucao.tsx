@@ -4,6 +4,9 @@ import {
   useState,
 } from "react";
 
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+
+
 /* === TIPOS | inicio === */
 type EstadoTravamento =
   | "antes"
@@ -379,7 +382,7 @@ export function SecaoBeneficios(): JSX.Element {
               solução
             </h2>
 
-            <p className="mt-7 max-w-[460px] text-base font-medium leading-8 text-slate-700">
+            <p className="mt-7 mb-8 max-w-[460px] text-base font-medium leading-8 text-slate-700">
               Transforme o
               credenciamento médico em
               um processo mais
@@ -390,6 +393,10 @@ export function SecaoBeneficios(): JSX.Element {
               cada etapa com mais
               controle operacional.
             </p>
+
+            <ShimmerButton href="#lead" className="px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+              Agendar demonstração
+            </ShimmerButton>
           </div>
           {/* === TEXTO TRAVADO NO MEIO DA TELA | fim === */}
 
