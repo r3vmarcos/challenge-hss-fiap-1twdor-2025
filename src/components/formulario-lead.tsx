@@ -58,10 +58,10 @@ export function FormularioLead({ visaoPadrao }: FormularioLeadProps): JSX.Elemen
     <section id="lead" className="max-w-full scroll-mt-28 overflow-hidden bg-[#eef0f7] px-3 py-20 sm:px-6 sm:py-24 lg:px-8">
       <div className="mx-auto grid w-full max-w-[1200px] min-w-0 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="revelar-scroll min-w-0 rounded-[1.5rem] bg-hss-roxo p-5 text-white sm:p-12">
-          <h2 className="max-w-full break-words text-[2rem] font-black leading-[1.18] tracking-normal sm:max-w-[340px] sm:text-[3.1rem] sm:tracking-[0.02em]">
+          <h2 className="max-w-full break-words text-[2rem] font-black leading-[1.18] tracking-normal sm:text-[3.1rem] sm:tracking-[0.02em] sm:text-center">
             Transforme a simulação em conversa comercial.
           </h2>
-          <p className="mt-6 max-w-full break-words text-base font-medium leading-8 text-white/78 sm:max-w-[430px]">
+          <p className="mt-6 max-w-full break-words text-base font-medium leading-8 text-white/78 sm:text-center sm:text-sm">
             O formulário captura as informações principais da instituição para uma abordagem B2B consultiva sobre credenciamento médico, redução de tempo e ROI.
           </p>
         </div>

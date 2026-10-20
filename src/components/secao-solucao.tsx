@@ -119,7 +119,7 @@ export function SecaoBeneficios(): JSX.Element {
     function atualizarAlturaScrollInterno(): void {
       const passoPorCard = Math.max(
         window.innerHeight *
-          PERCENTUAL_PASSO_BENEFICIO,
+        PERCENTUAL_PASSO_BENEFICIO,
         PASSO_MINIMO_BENEFICIO,
       );
       const folgaFinal = Math.max(
@@ -128,8 +128,8 @@ export function SecaoBeneficios(): JSX.Element {
       );
       const novaAltura = Math.ceil(
         beneficios.length *
-          passoPorCard +
-          folgaFinal,
+        passoPorCard +
+        folgaFinal,
       );
 
       definirAlturaScrollInterno(
@@ -177,7 +177,7 @@ export function SecaoBeneficios(): JSX.Element {
         window.scrollY;
       const passoPorCard = Math.max(
         window.innerHeight *
-          PERCENTUAL_PASSO_BENEFICIO,
+        PERCENTUAL_PASSO_BENEFICIO,
         PASSO_MINIMO_BENEFICIO,
       );
       const progresso = Math.max(
@@ -310,10 +310,10 @@ export function SecaoBeneficios(): JSX.Element {
         className="scroll-mt-[74px] bg-[#eef0f7] px-4 py-16 sm:px-6 md:py-20"
       >
         <div className="mx-auto max-w-[720px]">
-          <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
+          <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem] sm:text-center">
             Benefícios da nossa solução
           </h2>
-          <p className="mt-5 text-sm font-thin leading-7 text-slate-700 sm:text-lg">
+          <p className="mt-5 text-sm font-thin leading-7 text-slate-700 sm:text-lg sm:text-center">
             Transforme o credenciamento
             médico em um processo mais
             organizado, rastreável e
@@ -324,7 +324,7 @@ export function SecaoBeneficios(): JSX.Element {
             operacional.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="my-8 grid gap-4 sm:grid-cols-2">
             {beneficios.map(
               (beneficio) => (
                 <article
@@ -344,6 +344,10 @@ export function SecaoBeneficios(): JSX.Element {
               ),
             )}
           </div>
+
+          <ShimmerButton href="#lead" className="px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+            Agendar demonstração
+          </ShimmerButton>
         </div>
       </section>
     );
@@ -425,7 +429,7 @@ export function SecaoBeneficios(): JSX.Element {
                       transitionDelay:
                         visivel
                           ? `${indice * 45}ms`
-                      : `${(beneficios.length - indice) * 24}ms`,
+                          : `${(beneficios.length - indice) * 24}ms`,
                     }}
                   >
                     <span className="pointer-events-none absolute right-3 top-3 flex h-16 w-16 items-center justify-center text-hss-roxo opacity-[0.08] [&>svg]:h-full [&>svg]:w-full">

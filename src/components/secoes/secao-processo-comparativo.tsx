@@ -10,6 +10,7 @@ import iconeLock from "@/assets/icons/lock.svg";
 import iconeShield from "@/assets/icons/shield.svg";
 import iconeUsers from "@/assets/icons/users.svg";
 import iconeZap from "@/assets/icons/zap.svg";
+import { ShimmerButton } from "../ui/shimmer-button";
 /* === IMPORTAÇÕES | fim === */
 
 // /* === TIPOS | inicio === */
@@ -130,61 +131,70 @@ export function SecaoProcessoComparativo(): JSX.Element {
         </div>
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] md:gap-3">
-        <article id="comparison-without" className="rounded-2xl bg-[#f0f3f8] p-4 sm:p-5" aria-labelledby="comparison-without-title">
-          <div className="flex min-h-[72px] items-center gap-3 px-1">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
-            <div>
-              <h3 id="comparison-without-title" className="text-lg font-black text-[#17223f]">Dúvidas comuns</h3>
-              <p className="mt-0.5 text-sm leading-5 text-slate-600">O que costuma preocupar os gestores</p>
-            </div>
-          </div>
-          <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
-            {duvidas.map(({ icone, titulo, descricao }) => (
-              <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/75 px-3 py-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8edf3]">
-                  <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
-                </span>
-                <div className="min-w-0">
-                  <h4 className="text-sm font-bold leading-5 text-[#17223f]">{titulo}</h4>
-                  <p className="mt-1 text-sm leading-5 text-slate-600">{descricao}</p>
-                </div>
+      <div className="flex justify-center flex-col">
+        <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] md:gap-3">
+          <article id="comparison-without" className="rounded-2xl bg-[#f0f3f8] p-4 sm:p-5" aria-labelledby="comparison-without-title">
+            <div className="flex min-h-[72px] items-center gap-3 px-1">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
+              <div>
+                <h3 id="comparison-without-title" className="text-lg font-black text-[#17223f]">Dúvidas comuns</h3>
+                <p className="mt-0.5 text-sm leading-5 text-slate-600">O que costuma preocupar os gestores</p>
               </div>
+            </div>
+            <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
+              {duvidas.map(({ icone, titulo, descricao }) => (
+                <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/75 px-3 py-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8edf3]">
+                    <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold leading-5 text-[#17223f]">{titulo}</h4>
+                    <p className="mt-1 text-sm leading-5 text-slate-600">{descricao}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          <div aria-hidden="true" className="hidden grid-rows-[repeat(5,minmax(112px,auto))] gap-2.5 pt-[100px] md:grid">
+            {duvidas.map(({ titulo }) => (
+              <span key={titulo} className="flex items-center justify-center">
+                <img src={iconeArrowRight} alt="" className="h-6 w-6 opacity-60" />
+              </span>
             ))}
           </div>
-        </article>
-        <div aria-hidden="true" className="hidden grid-rows-[repeat(5,minmax(112px,auto))] gap-2.5 pt-[100px] md:grid">
-          {duvidas.map(({ titulo }) => (
-            <span key={titulo} className="flex items-center justify-center">
-              <img src={iconeArrowRight} alt="" className="h-6 w-6 opacity-60" />
-            </span>
-          ))}
+          <article id="comparison-with" className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title">
+            <div className="flex min-h-[72px] items-center gap-3 px-1">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#079879]">
+                <img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5 brightness-0 invert" />
+              </span>
+              <div>
+                <h3 id="comparison-with-title" className="text-lg font-black text-[#075f50]">Com a HSS</h3>
+                <p className="mt-0.5 text-sm leading-5 text-[#47756d]">Implementação segura, prática e com suporte em todas as etapas</p>
+              </div>
+            </div>
+            <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
+              {beneficios.map(({ icone, titulo, descricao }) => (
+                <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/65 px-3 py-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d5eee8]">
+                    <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold leading-5 text-[#075f50]">{titulo}</h4>
+                    <p className="mt-1 text-sm leading-5 text-[#47756d]">{descricao}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
         </div>
-        <article id="comparison-with" className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title">
-          <div className="flex min-h-[72px] items-center gap-3 px-1">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#079879]">
-              <img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5 brightness-0 invert" />
-            </span>
-            <div>
-              <h3 id="comparison-with-title" className="text-lg font-black text-[#075f50]">Com a HSS</h3>
-              <p className="mt-0.5 text-sm leading-5 text-[#47756d]">Implementação segura, prática e com suporte em todas as etapas</p>
-            </div>
-          </div>
-          <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
-            {beneficios.map(({ icone, titulo, descricao }) => (
-              <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/65 px-3 py-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d5eee8]">
-                  <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
-                </span>
-                <div className="min-w-0">
-                  <h4 className="text-sm font-bold leading-5 text-[#075f50]">{titulo}</h4>
-                  <p className="mt-1 text-sm leading-5 text-[#47756d]">{descricao}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </article>
+
+          <ShimmerButton href="#lead" className="mt-8 max-w-[1100px] w-full mx-auto h-10 shrink-0 whitespace-nowrap px-3 text-[10px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-3.5 min-[390px]:text-[11px] sm:h-11 sm:px-5 sm:text-xs lg:h-12 lg:px-6 lg:text-[13px]">
+            Agendar demonstração
+          </ShimmerButton>
+
       </div>
+
+
     </section>
   );
 }

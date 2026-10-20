@@ -471,14 +471,11 @@ body::-webkit-scrollbar-thumb:hover,
 
 /* .shimmer-button-primario::after {
   background: linear-gradient(135deg, #291b7f, #4b32d8);
-}
-
-.shimmer-button-contorno {
-  border: 1px solid rgba(41, 27, 127, 0.72);
-  background: transparent;
-  color: #291b7f;
-  box-shadow: none;
 } */
+
+.shimmer-button-conteudo {
+  width: 100%;
+}
 
 /* .shimmer-button-contorno::before {
   background: conic-gradient(from 0deg, transparent 0deg, transparent 60deg, rgba(75, 50, 216, 0.95) 84deg, transparent 108deg, transparent 360deg);
