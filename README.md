@@ -87,6 +87,7 @@ O projeto foi estruturado em:
   - empresas
   - médicos
 - Comparativo visual entre processo tradicional e fluxo digital HSS
+- Menu mobile com as mesmas opções de navegação da versão desktop
 - Scrollytelling com seções fixas e transições guiadas
 - Painel administrativo isolado por rota hash (`/#adm`)
 - Persistência local via `localStorage` para demonstração funcional sem dependência de infraestrutura remota

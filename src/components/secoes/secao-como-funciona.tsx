@@ -5,7 +5,7 @@ import { CardSpotlight } from "@/components/ui/card-spotlight";
 export function SecaoComoFunciona(): JSX.Element {
   return (
     <section id="como-funciona" lang="pt-BR" className="scroll-mt-28 bg-[#eef0f7]/92 px-4 py-24 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1110px] text-center">
+      <div className="mx-auto max-w-[1200px] text-center">
         <h2 className="revelar-scroll text-[2.55rem] font-black tracking-[0.01em] text-[#070814] sm:text-[3.25rem]">Como funciona?</h2>
         <p className="revelar-scroll mx-auto mt-4 max-w-[1040px] text-base font-medium leading-8 text-[#111827] lg:text-lg">
           <span className="lg:whitespace-nowrap">A Health Sync estrutura as etapas do credenciamento médico em uma plataforma digital, auditável e rastreável.</span>

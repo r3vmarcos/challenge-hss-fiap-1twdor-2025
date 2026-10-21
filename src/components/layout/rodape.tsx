@@ -55,7 +55,7 @@ export function Rodape(): JSX.Element {
 
   return (
     <footer className="relative z-10 border-t border-[#d7d9e6] bg-[#eef0f7] px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-[1110px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div className="mx-auto grid max-w-[1200px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <div className="flex flex-wrap items-center gap-7">
             <img src={logoHss} alt="Health Sync Solutions" className="h-12 w-48 object-contain object-left" />

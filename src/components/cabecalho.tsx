@@ -12,21 +12,21 @@ interface CabecalhoProps {
 const links = [
   { href: "#beneficios", label: "Benefícios" },
   { href: "#como-funciona", label: "Como funciona?" },
-  { href: "#processo-sem-hss", label: "Diferencial" },
+  { href: "#processo-sem-hss", label: "Diferenciais" },
   { href: "#depoimentos", label: "Depoimentos" },
-  { href: "#roi", label: "Calculadora ROI", destaque: true },
+  { href: "#roi", label: "Calculadora ROI" },
 ];
 
 export function Cabecalho({
   paginaAdm = false,
 }: CabecalhoProps): JSX.Element {
   const [menuMobileAberto, definirMenuMobileAberto] = useState(false);
-  const linksMobile = links.filter((link) => !link.destaque);
+  const linksMobile = links;
 
   if (paginaAdm) {
     return (
       <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
-        <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
+        <div className="mx-auto w-full max-w-[1320px] px-4 py-2 sm:px-8 lg:px-12 lg:py-3 xl:px-16">
           <div className="flex min-w-0 items-center justify-between gap-2">
             <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
               <LogoOrigami />
@@ -47,33 +47,21 @@ export function Cabecalho({
 
   return (
     <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
-      <div className="mx-auto w-full max-w-[1110px] px-2 py-2 sm:px-6 lg:px-0 lg:py-3">
-        <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-1.5 sm:gap-2">
+      <div className="mx-auto w-full max-w-[1320px] px-4 py-2 sm:px-8 lg:px-12 lg:py-3 xl:px-16">
+        <div className="flex justify-between items-center gap-1.5 sm:gap-2">
           <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
             <LogoOrigami />
           </a>
 
-          <div className="flex min-w-0 items-center justify-center gap-1 sm:gap-3 lg:gap-6">
             <NavPrincipal
               paginaAdm={paginaAdm}
               className="hidden items-center gap-6 lg:flex"
               linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] transition-[color,transform] duration-200 hover:scale-[1.06] hover:text-hss-violeta"
             />
-            {!paginaAdm ? (
-              <ShimmerButton
-                href="#roi"
-                variante="contorno"
-                className="h-9 shrink-0 whitespace-nowrap px-2 text-[9px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-2.5 min-[390px]:text-[10px] sm:h-10 sm:px-4 sm:text-xs lg:h-11 lg:px-5 lg:text-[13px]"
-              >
-                Calculadora ROI
-              </ShimmerButton>
-            ) : null}
 
-            <ShimmerButton href="#lead" className="h-9 shrink-0 whitespace-nowrap px-2 text-[9px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-2.5 min-[390px]:text-[10px] sm:h-10 sm:px-4 sm:text-xs lg:h-11 lg:px-6 lg:text-[13px]">
+            <ShimmerButton href="#lead" className="h-10 shrink-0 whitespace-nowrap px-3 text-[10px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-3.5 min-[390px]:text-[11px] sm:h-11 sm:px-5 sm:text-xs lg:h-12 lg:px-6 lg:text-[13px]">
               Agendar demonstração
             </ShimmerButton>
-
-          </div>
 
           <div className="flex items-center justify-end gap-1 sm:gap-3">
             {!paginaAdm ? (
@@ -89,13 +77,13 @@ export function Cabecalho({
               </button>
             ) : null}
             <a
-            href="#adm"
-            className="hidden h-10 w-10 items-center justify-center justify-self-end rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon sm:inline-flex"
-            aria-label="Abrir portal ADM"
-            title="Portal ADM"
-          >
-            <IconePortalAdm />
-          </a>
+              href="#adm"
+              className="hidden h-10 w-10 items-center justify-center justify-self-end rounded-full border border-[#d8dbe7] bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:shadow-neon sm:inline-flex"
+              aria-label="Abrir portal ADM"
+              title="Portal ADM"
+            >
+              <IconePortalAdm />
+            </a>
           </div>
         </div>
 
@@ -158,13 +146,9 @@ function NavPrincipal({
   return (
     <nav className={className} aria-label="Navegação principal">
       {links.map((link) =>
-        link.destaque ? (
-          null
-        ) : (
           <a key={link.href} href={link.href} className={linkClassName}>
             {link.label}
-          </a>
-        ),
+          </a>    
       )}
     </nav>
   );
@@ -176,19 +160,11 @@ function IconePortalAdm(): JSX.Element {
   return (
     <svg
       aria-hidden="true"
-      viewBox="0 0 24 24"
+      viewBox="0 0 640 640"
       className="h-5 w-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="#291B7F"
     >
-      <rect x="3" y="4" width="18" height="14" rx="2" />
-      <path d="M8 20h8" />
-      <path d="M12 18v2" />
-      <path d="M8 9h8" />
-      <path d="M8 13h5" />
+      <path d="M256.5 72C322.8 72 376.5 125.7 376.5 192C376.5 258.3 322.8 312 256.5 312C190.2 312 136.5 258.3 136.5 192C136.5 125.7 190.2 72 256.5 72zM226.7 368L286.1 368L287.6 368C274.7 394.8 279.8 426.2 299.1 447.5C278.9 469.8 274.3 503.3 289.7 530.9L312.2 571.3C313.1 572.9 314.1 574.5 315.1 576L78.1 576C61.7 576 48.4 562.7 48.4 546.3C48.4 447.8 128.2 368 226.7 368zM432.6 311.6C432.6 298.3 443.3 287.6 456.6 287.6L504.6 287.6C517.9 287.6 528.6 298.3 528.6 311.6L528.6 317.7C528.6 336.6 552.7 350.5 569.1 341.1L574.1 338.2C585.7 331.5 600.6 335.6 607.1 347.3L629.5 387.5C635.7 398.7 632.1 412.7 621.3 419.5L616.6 422.4C600.4 432.5 600.4 462.3 616.6 472.5L621.2 475.4C632 482.2 635.7 496.2 629.5 507.4L607 547.8C600.5 559.5 585.6 563.7 574 556.9L569.1 554C552.7 544.5 528.6 558.5 528.6 577.4L528.6 583.5C528.6 596.8 517.9 607.5 504.6 607.5L456.6 607.5C443.3 607.5 432.6 596.8 432.6 583.5L432.6 577.6C432.6 558.6 408.4 544.6 391.9 554.1L387.1 556.9C375.5 563.6 360.7 559.5 354.1 547.8L331.5 507.4C325.3 496.2 328.9 482.1 339.8 475.3L344.2 472.6C360.5 462.5 360.5 432.5 344.2 422.4L339.7 419.6C328.8 412.8 325.2 398.7 331.4 387.5L353.9 347.2C360.4 335.5 375.3 331.4 386.8 338.1L391.6 340.9C408.1 350.4 432.3 336.4 432.3 317.4L432.3 311.5zM532.5 447.8C532.5 419.1 509.2 395.8 480.5 395.8C451.8 395.8 428.5 419.1 428.5 447.8C428.5 476.5 451.8 499.8 480.5 499.8C509.2 499.8 532.5 476.5 532.5 447.8z"/>
     </svg>
   );
 }

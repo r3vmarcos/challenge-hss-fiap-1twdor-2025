@@ -1,5 +1,11 @@
 # Histórico de prompts do projeto
 
+## 2026-10-15 - Correção das opções do menu mobile
+
+Pedido: corrigir o desaparecimento das opções de navegação no menu mobile.
+
+Aplicação: removido o filtro incorreto que descartava todos os links; o menu mobile passa a usar a mesma lista de opções do desktop.
+
 ## 2026-06-08 - Ajustes finais de interface, GitHub e deploy
 
 Pedido: adicionar GitHub no footer, corrigir o destravamento da calculadora para não rolar do topo, revisar ortografia/mojibakes, publicar no GitHub na main e fazer deploy Cloudflare main.

@@ -50,8 +50,7 @@
 
 ## Ajustes Responsivos Atuais
 
-- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, Benefícios, Como funciona?, Diferencial e Depoimentos ficam no menu sanduíche; Calculadora ROI e Agendar
-  demonstração permanecem no header.
+- [`src/components/cabecalho.tsx`](../src/components/cabecalho.tsx) -> no mobile, as mesmas opções de navegação do desktop ficam no menu sanduíche; Agendar demonstração permanece no header.
 - [`src/index.css`](../src/index.css) -> controla a escala reduzida dos logos do cabeçalho em desktop e mobile.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em
