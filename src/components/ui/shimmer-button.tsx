@@ -15,6 +15,13 @@ type PropriedadesBotao = PropriedadesBase & ButtonHTMLAttributes<HTMLButtonEleme
 
 type PropriedadesShimmerButton = PropriedadesLink | PropriedadesBotao;
 
+/* === TAMANHO NO CELULAR | inicio === */
+// Botoes de chamada da landing no celular e no tablet (abaixo de lg): mesma largura, altura e texto em todas as secoes,
+// centralizados e sem quebrar o texto (largura fixa de 15rem, que cabe "Agendar demonstração"). Vira bloco (flex) para o mx-auto centralizar.
+export const CLASSE_BOTAO_CELULAR =
+  'whitespace-nowrap max-lg:mx-auto max-lg:flex max-lg:h-auto max-lg:w-[15rem] max-lg:max-w-full max-lg:self-center max-lg:px-5 max-lg:py-2.5 max-lg:text-sm max-lg:leading-tight';
+/* === TAMANHO NO CELULAR | fim === */
+
 /* === COMPONENTE SHIMMER BUTTON | inicio === */
 export function ShimmerButton({
   children,

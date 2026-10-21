@@ -1,34 +1,30 @@
 import medicaHero from "@/assets/medica-hero-hss.png";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "@/components/ui/shimmer-button";
 
 /* === COMPONENTE HERO | inicio === */
-interface HeroHssProps {
-  diasEconomizados: number;
-  prejuizoEstimado: number;
-}
-
-export function HeroHss(_props: HeroHssProps): JSX.Element {
+export function HeroHss(): JSX.Element {
   return (
-    <section className="relative isolate mx-auto min-h-[calc(100vh-74px)] w-full max-w-[1200px] overflow-hidden bg-[#eef0f7]/92 px-4 pb-10 pt-10 sm:px-8 md:pb-12 md:pt-14 lg:px-12 lg:pb-10 lg:pt-8 xl:px-16">
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-132px)] w-full max-w-[1200px] items-center gap-7 md:gap-8 lg:grid-cols-[minmax(680px,0.58fr)_minmax(0,0.42fr)] lg:gap-8">
-        <div className="revelar-scroll relative z-20 w-full max-w-[720px] min-w-0 max-lg:mx-auto max-lg:text-center">
-          <h1 className="max-w-full text-[1.2rem] font-black leading-[1.15] tracking-normal text-[#070814] min-[380px]:text-[1.65rem] sm:text-[2.55rem] md:text-[3.15rem] lg:text-[3.05rem] xl:text-[3rem]">
-            <span className="block whitespace-nowrap">Digitalize e simplifique</span>
-            <span className="block whitespace-nowrap">
-              o <span className="text-hss-violeta">CREDENCIAMENTO</span>
-            </span>
+    // Tablet e celular: a hero ocupa exatamente a tela abaixo do header (100dvh - 74px). Titulo, texto e botoes mantem
+    // a altura natural; a imagem fica com o espaco que sobra e encolhe, para os botoes aparecerem sempre.
+    <section className="relative isolate mx-auto min-h-[calc(100vh-74px)] w-full max-w-[1480px] overflow-hidden px-4 pb-10 pt-10 max-lg:h-[calc(100dvh-74px)] max-lg:min-h-0 max-lg:py-5 sm:px-8 md:pb-12 md:pt-14 max-lg:md:py-8 lg:px-12 lg:pb-10 lg:pt-8 xl:px-16">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-132px)] w-full max-w-[1480px] items-center gap-7 max-lg:flex max-lg:h-full max-lg:min-h-0 max-lg:flex-col max-lg:gap-4 md:gap-8 lg:grid-cols-[minmax(680px,0.55fr)_minmax(0,0.45fr)] lg:gap-8">
+        {/* No celular e no tablet a coluna de texto vira "contents": titulo, texto, imagem e botoes entram nessa ordem no grid. */}
+        <div className="revelar-scroll relative z-20 w-full max-w-[860px] min-w-0 max-lg:mx-auto max-lg:text-center max-lg:contents">
+          <h1 className="max-w-full max-lg:order-1 max-lg:shrink-0 text-[1.2rem] font-black leading-[1.15] tracking-normal text-[#070814] min-[380px]:text-[1.65rem] sm:text-[2.55rem] md:text-[3.15rem] lg:text-[3rem] xl:text-[3.25rem] 2xl:text-[3.5rem]">
+            <span className="block whitespace-nowrap">Digitalize e simplifique o</span>
+            <span className="block whitespace-nowrap text-hss-violeta">CREDENCIAMENTO</span>
             <span className="block text-hss-violeta">MÉDICO</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-[min(31rem,100%)] text-base font-medium leading-7 text-[#111827] sm:text-[1.08rem] md:text-[1.16rem] lg:mx-0 lg:mt-6 lg:text-[1.22rem] lg:leading-8">
+          <p className="mx-auto mt-5 max-w-[min(31rem,100%)] max-lg:order-2 max-lg:mt-0 max-lg:shrink-0 text-base font-medium leading-7 text-[#111827] sm:text-[1.08rem] md:text-[1.16rem] lg:mx-0 lg:mt-6 lg:text-[1.22rem] lg:leading-8 xl:max-w-[36rem] xl:text-[1.4rem] xl:leading-9">
             O credenciamento médico como você nunca viu. Centralizado, econômico e confiável.
           </p>
 
-          <div className="mt-6 flex w-full flex-col justify-center gap-3 sm:flex-row lg:mt-7 lg:justify-start lg:gap-4">
-            <ShimmerButton href="#lead" className="w-full px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+          <div className="mt-6 flex w-full flex-col justify-center gap-2 max-lg:order-4 sm:gap-3 max-lg:mt-0 max-lg:shrink-0 sm:flex-row lg:mt-7 lg:justify-start lg:gap-4">
+            <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} max-sm:py-3.5 max-sm:text-base sm:max-lg:mx-0 sm:max-lg:py-3.5 sm:max-lg:text-base lg:w-auto lg:min-w-[220px] lg:px-8 lg:py-4 lg:text-base`}>
               Agendar demonstração
             </ShimmerButton>
-            <ShimmerButton href="#roi" variante="contorno" className="w-full px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+            <ShimmerButton href="#roi" variante="contorno" className={`${CLASSE_BOTAO_CELULAR} max-sm:py-3.5 max-sm:text-base sm:max-lg:mx-0 sm:max-lg:py-3.5 sm:max-lg:text-base lg:w-auto lg:min-w-[220px] lg:px-8 lg:py-4 lg:text-base`}>
               Calcular ROI
             </ShimmerButton>
           </div>
@@ -40,11 +36,11 @@ export function HeroHss(_props: HeroHssProps): JSX.Element {
           </div> */}
         </div>
 
-        <div className="revelar-scroll relative z-10 flex min-h-[330px] items-center justify-center overflow-visible sm:min-h-[430px] md:min-h-[530px] lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:min-h-0 lg:w-[58%] lg:justify-center xl:right-[-4rem]">
+        <div className="revelar-scroll relative z-10 flex min-h-[330px] max-lg:order-3 max-lg:min-h-0 max-lg:w-full max-lg:flex-1 items-center justify-center overflow-visible sm:min-h-[430px] md:min-h-[530px] lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:min-h-0 lg:w-[56%] lg:justify-center xl:right-[-4rem]">
           <img
             src={medicaHero}
             alt="Médica representando o credenciamento digital da Health Sync Solutions"
-            className="relative z-10 w-[70%] max-w-[430px] object-contain sm:max-w-[540px] md:max-w-[650px] lg:max-w-[760px] xl:max-w-[820px]"
+            className="relative z-10 w-[70%] max-w-[430px] object-contain max-lg:h-full max-lg:w-auto max-lg:max-w-full sm:max-w-[540px] md:max-w-[650px] lg:max-w-[820px] xl:max-w-[980px] 2xl:max-w-[1080px]"
           />
           <div
             aria-hidden="true"

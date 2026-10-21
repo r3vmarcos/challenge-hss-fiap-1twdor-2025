@@ -3,7 +3,7 @@ import { PainelAdmCredenciamento } from "@/components/admin/painel-adm-credencia
 /* === PAGINA ADM | inicio === */
 export function PaginaAdm(): JSX.Element {
   return (
-    <div className="min-h-[calc(100vh-5rem)] bg-[#eef0f7] px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-5rem)] px-4 py-8 sm:px-6 lg:px-8">
       <PainelAdmCredenciamento />
     </div>
   );

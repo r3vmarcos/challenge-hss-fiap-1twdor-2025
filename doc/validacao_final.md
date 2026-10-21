@@ -1,5 +1,19 @@
 # Validação Final
 
+## Alteração v6.34
+
+- Refinamento visual da calculadora e do Portal ADM.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+- `npm run dev`, smoke HTTP e conferência visual: validação pendente.
+
+## Alteração v6.33
+
+- Calculadora e editor de cenários do ADM trazidos do projeto de referência e restilizados com a paleta deste projeto.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+- `npm run dev` e smoke HTTP local: validação pendente.
+- IA de cenários: depende de `config/gemini.env` local ou dos secrets no Cloudflare; sem chave, a API responde erro e o restante da calculadora funciona.
+- D1: aplicar a migration `0004` (`npm run d1:migrar:local` / `npm run d1:migrar:remoto`) antes de publicar cenários pelo ADM.
+
 ## Alteração v6.32
 
 - Títulos e parágrafos dos cartões comparativos ajustados para 14 px; cartões com altura mínima ampliada para acomodar o conteúdo.

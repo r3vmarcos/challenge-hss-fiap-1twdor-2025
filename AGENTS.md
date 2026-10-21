@@ -22,5 +22,8 @@ Projeto React + Vite + TypeScript + Tailwind da Health Sync Solutions para o Med
 03 - A calculadora pública deve usar apenas cenários ativos do ADM.  
 04 - O ROI deve considerar tempo sem HSS x tempo com HSS.  
 05 - Manter cenários para empresa/hospital/clínica e médico.  
-06 - Não remover a lógica de Cloudflare Pages Functions e D1 preparada.
+06 - Não remover a lógica de Cloudflare Pages Functions e D1 preparada.  
+07 - A calculadora tem três tipos (médico, corporativo e carreira): médico e corporativo em dois passos; carreira em três (formação, gastos do curso, atendimentos), com o ganho líquido calculado dos atendimentos. Cenários vêm do ADM: rascunho local em `localStorage` e publicação na tabela D1 `cenarios_credenciamento` via `/api/cenarios-credenciamento`.  
+08 - A IA de cenários usa Gemini por `/api/ia-cenario`; a chave fica só no servidor (`config/gemini.env` local, ignorado pelo Git, e secrets no Cloudflare). Nunca expor a chave no front-end.  
+09 - Visual da calculadora e do ADM segue este projeto: bordas `hss-violeta/15`, cantos maiores, campos `#f3f4f6` com anel `hss-lavanda/30`, botões em pílula, sem HSS em laranja `#f97316` e com HSS em teal `#079879` (texto nessas cores usa `#c2410c`/`#075f50`). A régua do resultado é o único destaque; elevação/neon no hover só no botão principal; arredondamento por profundidade (caixa 22 px, painéis 16 px, campos 12 px); texto mínimo de 13 px.
 

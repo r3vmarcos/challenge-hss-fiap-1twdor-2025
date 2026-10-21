@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { LogoOrigami } from "@/components/ui/logo-origami";
 
@@ -9,19 +9,37 @@ interface CabecalhoProps {
   paginaAdm?: boolean;
 }
 
-const links = [
+// Destaque pequeno (roxo e peso 600) para os itens que levam a acao: calculadora e demonstracao.
+// Troca peso e cor em vez de somar classes, para nao depender da ordem do CSS gerado.
+function comDestaque(classe: string): string {
+  return classe.replace("font-normal", "font-semibold").replace("font-bold", "font-semibold").replace("text-[#070814]", "text-hss-roxo");
+}
+
+const links: { href: string; label: string; destaque?: boolean }[] = [
   { href: "#beneficios", label: "Benefícios" },
   { href: "#como-funciona", label: "Como funciona?" },
-  { href: "#processo-sem-hss", label: "Diferenciais" },
+  { href: "#diferenciais", label: "Diferenciais" },
   { href: "#depoimentos", label: "Depoimentos" },
-  { href: "#roi", label: "Calculadora ROI" },
+  { href: "#roi", label: "Calculadora ROI", destaque: true },
 ];
 
 export function Cabecalho({
   paginaAdm = false,
 }: CabecalhoProps): JSX.Element {
   const [menuMobileAberto, definirMenuMobileAberto] = useState(false);
+  const [paginaRolada, definirPaginaRolada] = useState(false);
   const linksMobile = links;
+
+  // No topo (hero) o cabecalho fica sem borda inferior; ao rolar, a borda aparece para separar do conteudo.
+  useEffect(() => {
+    function atualizarRolagem(): void {
+      definirPaginaRolada(window.scrollY > 8);
+    }
+
+    atualizarRolagem();
+    window.addEventListener("scroll", atualizarRolagem, { passive: true });
+    return () => window.removeEventListener("scroll", atualizarRolagem);
+  }, []);
 
   if (paginaAdm) {
     return (
@@ -35,7 +53,7 @@ export function Cabecalho({
             <ShimmerButton
               href="#topo"
               variante="contorno"
-              className="h-10 shrink-0 whitespace-nowrap px-5 text-xs leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-11 lg:text-[13px]"
+              className="h-10 shrink-0 whitespace-nowrap px-5 text-xs leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-11 lg:text-[0.8125rem]"
             >
               Sair
             </ShimmerButton>
@@ -46,7 +64,12 @@ export function Cabecalho({
   }
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-[80] border-b border-[#d9dbe7] bg-[#eef0f7]/95 backdrop-blur-xl">
+    <header
+      className={[
+        "fixed left-0 right-0 top-0 z-[80] border-b bg-[#eef0f7]/95 backdrop-blur-xl transition-[border-color] duration-1000 ease-in-out",
+        paginaRolada ? "border-[#d9dbe7]" : "border-transparent",
+      ].join(" ")}
+    >
       <div className="mx-auto w-full max-w-[1320px] px-4 py-2 sm:px-8 lg:px-12 lg:py-3 xl:px-16">
         <div className="flex justify-between items-center gap-1.5 sm:gap-2">
           <a href="#topo" className="flex min-w-0 shrink items-center" aria-label="Ir para o início">
@@ -55,13 +78,29 @@ export function Cabecalho({
 
             <NavPrincipal
               paginaAdm={paginaAdm}
-              className="hidden items-center gap-6 lg:flex"
-              linkClassName="text-[13px] font-normal tracking-[0.01em] text-[#070814] transition-[color,transform] duration-200 hover:scale-[1.06] hover:text-hss-violeta"
+              className="hidden items-center gap-[clamp(0.75rem,1.4vw,1.5rem)] lg:flex"
+              linkClassName="whitespace-nowrap text-[clamp(0.75rem,0.95vw,0.8125rem)] font-normal tracking-[0.01em] text-[#070814] transition-[color,transform] duration-200 hover:scale-[1.06] hover:text-hss-violeta"
             />
 
-            <ShimmerButton href="#lead" className="h-10 shrink-0 whitespace-nowrap px-3 text-[10px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-3.5 min-[390px]:text-[11px] sm:h-11 sm:px-5 sm:text-xs lg:h-12 lg:px-6 lg:text-[13px]">
-              Agendar demonstração
-            </ShimmerButton>
+            {/* No desktop, os dois atalhos ficam dentro da navegação; no tablet e no celular, viram botões no header.
+                Em telas bem estreitas, "Agendar demonstração" encurta para "Agendar". */}
+            {!paginaAdm ? (
+              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
+                <a
+                  href="#roi"
+                  className="inline-flex h-9 items-center whitespace-nowrap rounded-full border border-hss-roxo/30 bg-white px-3 text-[0.75rem] font-semibold text-hss-roxo transition-colors hover:border-hss-roxo min-[390px]:text-[0.8125rem] sm:px-4"
+                >
+                  Calcular ROI
+                </a>
+                <a
+                  href="#lead"
+                  className="inline-flex h-9 items-center whitespace-nowrap rounded-full bg-hss-roxo px-3 text-[0.75rem] font-semibold text-white transition-colors hover:bg-hss-violeta min-[390px]:text-[0.8125rem] sm:px-4"
+                >
+                  <span className="min-[430px]:hidden">Agendar</span>
+                  <span className="hidden min-[430px]:inline">Agendar demonstração</span>
+                </a>
+              </div>
+            ) : null}
 
           <div className="flex items-center justify-end gap-1 sm:gap-3">
             {!paginaAdm ? (
@@ -103,7 +142,10 @@ export function Cabecalho({
                 key={link.href}
                 href={link.href}
                 onClick={() => definirMenuMobileAberto(false)}
-                className="rounded-xl px-3 py-2 text-sm font-bold text-[#070814] hover:bg-hss-violeta/10 hover:text-hss-roxo"
+                className={[
+                  "rounded-xl px-3 py-2 text-sm font-bold hover:bg-hss-violeta/10 hover:text-hss-roxo",
+                  link.destaque ? "text-hss-roxo" : "text-[#070814]",
+                ].join(" ")}
               >
                 {link.label}
               </a>
@@ -146,10 +188,13 @@ function NavPrincipal({
   return (
     <nav className={className} aria-label="Navegação principal">
       {links.map((link) =>
-          <a key={link.href} href={link.href} className={linkClassName}>
+          <a key={link.href} href={link.href} className={link.destaque ? comDestaque(linkClassName) : linkClassName}>
             {link.label}
-          </a>    
+          </a>
       )}
+      <a href="#lead" className={comDestaque(linkClassName)}>
+        Agendar demonstração
+      </a>
     </nav>
   );
 }

@@ -1,5 +1,106 @@
 # Changelog
 
+## v6.43 - Vários locais de atendimento na calculadora de carreira
+
+01 - No passo "Seus atendimentos", o médico pode adicionar até 5 locais (hospital, clínica, pronto atendimento), cada um com nome, atendimentos por plantão, plantões por mês, valor por atendimento e parte que fica com ele.
+02 - Impostos e dias até o 1º pagamento ficam uma vez só, para todos os locais (os impostos são da PJ do médico).
+03 - Ganho líquido = soma do bruto dos locais × (1 - impostos); cada local mostra o seu bruto mensal e a memória de cálculo traz uma linha por local.
+04 - Conferência mostra quantos locais e plantões somados; avisa quando passam de 31 no mês.
+05 - Valores padrão: um local ("Pronto atendimento", mesmos números de antes), então o resultado sem locais extras não muda. Edições salvas antes desta versão voltam para o local padrão.
+06 - Ajuste: impostos e dias até o 1º pagamento passaram a ser de cada local; ganho líquido = soma do líquido de cada local.
+07 - Ajuste: o passo "Seus atendimentos" não mostra mais ganho nem conferência (só o resultado mostra); "Adicionar outro local de atendimento" fica abaixo de todos os locais.
+08 - Retorno desde o ingresso usa o prazo médio de pagamento pesado pela renda de cada local; no gráfico, cada local começa a somar no próprio prazo.
+
+## v6.42 - Menu de acessibilidade funcionando no site todo
+
+01 - Fonte: a troca para Poppins/Inter não chegava aos textos (o `#topo` fixa Lexend com `font-sans`); agora vale para todos os elementos.
+02 - Tamanho do texto: a escala passou a ser aplicada no `<html>` (93,75% / 100% / 112,5% / 125%), já que o site usa `rem`; tamanhos em `px` de header, "Como funciona?", Diferenciais e ADM foram convertidos para `rem`. Com texto ampliado, linhas travadas (título do contato, botões do rodapé da calculadora) podem quebrar.
+03 - Espaçamento de linhas: passa a sobrescrever a entrelinha dos elementos de texto (antes só valia para textos sem classe).
+04 - Alto contraste: preto e amarelo em todo o site, incluindo modal, listas, tabela, gráficos e campos; logos e ícones viram silhuetas brancas; botões, campos e cartões com contorno; barras de dados amarelas; item ativo/selecionado invertido; interruptores com pino visível.
+05 - Daltonismo: filtros trocados de simulação para correção (daltonização) e aplicados no `<html>`, sem quebrar elementos fixos (header, Benefícios, balões).
+06 - Leitura por hover: também lê o elemento focado pelo teclado (única forma em toque), lê rótulo e valor de campos, não repete a fala no mesmo elemento e não quebra em navegador sem síntese de voz.
+07 - Calculadora: centralização vertical segura (`safe center`) nos passos e no resultado; antes, conteúdo mais alto que a área subia por cima do seletor de vistas.
+
+## v6.41 - Revisão de responsividade
+
+01 - Verificado em 360, 390, 640, 768, 1024, 1280, 1440 e 1920 px (capturas com Chrome headless): sem rolagem horizontal em nenhuma largura.
+02 - Corrigido: a regra que esconde o header do site com a calculadora em tela escondia também o header interno da calculadora ("Calcule seu retorno" e passos). Seletor restrito a `#topo > header`.
+03 - Header: links sem quebra de linha em 1024 px (`whitespace-nowrap`, texto e espaçamento com `clamp`).
+04 - Calculadora: aviso "Gire a roda do mouse" oculto em telas de toque; cartões iniciais em 3 colunas só a partir de `lg`; título com `clamp`; no celular, botões do rodapé compactos e em duas linhas.
+05 - Resultado: seletor de vistas retangular no celular (pílula a partir de `sm`).
+06 - Botão A11y em smartphone e tablet (< `lg`) no canto inferior esquerdo, respeitando a área segura; some para a esquerda ao rolar e fica oculto com o menu aberto. No desktop continua no meio da lateral direita.
+07 - Painel do menu A11y no tablet (`sm` a `lg`) entra pela esquerda, do lado do botão; no smartphone continua subindo de baixo e no desktop entrando pela direita.
+
+## v6.40 - Contato mais baixo com rótulos nos campos
+
+01 - Nomes dos campos passaram para o placeholder; os rótulos continuam no código, ocultos na tela, para leitores de tela.
+02 - "Médico" e "Hospital / clínica" lado a lado; campos com 36 px; mensagem com 2 linhas; espaços e botão menores.
+03 - Campos ganharam foco visível (borda violeta e anel lavanda), antes ausente.
+04 - Cartão roxo alinhado à esquerda: convite em branco 600 e explicação em branco 75%, sem justificar.
+
+## v6.39 - Contato cerca de 40% mais baixo
+
+01 - Campos do formulário em 3 colunas a partir de `lg` (2 linhas em vez de 3) e mensagem com 3 linhas em vez de 6.
+02 - Paddings, espaços entre campos e botão reduzidos; campos mantidos em 40 px de altura.
+03 - Título do cartão roxo reduzido (até 2,25rem) e centralizado na vertical; padding vertical da seção reduzido.
+04 - Formulário reduzido a Nome, E-mail, Telefone, "Você é" (Médico / Hospital / clínica) e Mensagem, um campo embaixo do outro.
+05 - Instituição, cargo e porte saíram do formulário; seguem vazios no lead para manter o formato do D1 e do ADM. O porte padrão "Médio porte" deixou de ser enviado.
+06 - A escolha "Você é" grava em `visao` (`medico` ou `empresa`), usado pelo ADM para separar os contatos.
+07 - Texto do cartão roxo trocado por mensagem de marketing: "Menos papelada. Médicos atendendo mais rápido." e convite para médico ou instituição contar como é o credenciamento hoje.
+
+## v6.38 - Seção Diferenciais mais compacta
+
+01 - Linhas dos cartões reduzidas de 112 px para 84 px, com espaços menores entre cartões, cabeçalhos dos painéis, título e botão.
+02 - Padding vertical da seção reduzido; texto mantido em 14 px (ajuste de legibilidade da v6.32).
+03 - Coluna de setas realinhada às novas alturas (`pt-[98px]`).
+04 - A partir de `lg`, a seção vai do título ao botão em 100dvh: topo = header fixo (74px) + 3dvh, base = 3dvh, título em `clamp(28px, 4,5dvh, 48px)`, linhas de 8,5dvh com espaço de 0,9dvh e botão a 2,5dvh. Cabe a partir de ~800px de altura; abaixo disso a seção cresce para não cortar texto.
+05 - Corrigida a âncora: a seção usava `id="como-funciona"` (duplicado da seção "Como funciona?") e o link "Diferenciais" apontava para `#processo-sem-hss`, que não existia. Agora são `id="diferenciais"` e `#diferenciais`.
+06 - A partir de `md`, cada dúvida e o benefício correspondente ficam na mesma linha da grade (antes eram duas listas independentes e desalinhavam quando os cabeçalhos tinham alturas diferentes); os fundos dos painéis ocupam a coluna inteira por trás das linhas.
+07 - Hover em qualquer um dos 5 pares desenha um retângulo com margem (borda `#7156ff`, fundo `#ece8ff`) agrupando dúvida, seta e benefício; a seta fica opaca. No mobile, os painéis continuam empilhados.
+
+## v6.37 - Etapas do "Como funciona?" com hover e modal
+
+01 - O destaque da etapa 1 passou a acompanhar o mouse e o foco do teclado nas etapas 1 a 5; a última etapa destacada continua destacada.
+02 - Clique em uma etapa abre um modal com "O que acontece", "Com a HSS" e "O que continua com a instituição", com navegação entre etapas.
+03 - Modal em `<dialog>` nativo: fecha com Esc, botão × ou clique fora, e devolve o foco à etapa.
+04 - Etapas geradas a partir de `etapasProcesso` em `src/data/dadosLanding.ts`, que ganhou os campos `resumo`, `comHss` e `limite`.
+
+## v6.36 - "Agendar demonstração" como item do header
+
+01 - No header, "Agendar demonstração" deixou de ser botão e passou a ser um item de texto com o mesmo estilo dos links de navegação.
+02 - No desktop, o item fica dentro da navegação, depois de "Calculadora ROI"; no mobile, continua visível no header como texto.
+03 - "Calculadora ROI" e "Agendar demonstração" ganharam destaque pequeno: roxo da marca e peso 600, no mesmo tamanho dos demais links (no menu mobile, só a cor).
+
+## v6.35 - Calculadora de carreira em três passos
+
+01 - Depois de "Qual perfil de formação se parece com o seu?", a calculadora de carreira abre o passo "Ajuste os gastos do curso" e, em seguida, "Como serão os seus atendimentos?".
+02 - O ganho líquido mensal deixou de ser digitado: é calculado por atendimentos × plantões no mês × valor por atendimento × parte do médico × (1 - impostos).
+03 - Valores padrão dos atendimentos iguais ao cenário "Recém-formado" da calculadora do médico (30 atendimentos, 10 plantões, R$ 120, 40%, 13%): R$ 12.528 por mês, mantendo o payback publicado do estudo na primeira casa decimal.
+04 - Resultado e memória de cálculo da carreira mostram a linha "Ganho líquido por mês" e a faixa de mercado destaca "Seus atendimentos".
+
+## v6.34 - Refinamento visual da calculadora e do Portal ADM
+
+01 - Régua principal do resultado ampliada (barras de 36 px e valores em peso 700 com algarismos tabulares); passa a ser o destaque da tela.
+02 - Comparativos do resultado deixaram de ser cartões: viraram linhas separadas por fio fino.
+03 - Elevação e sombra neon no hover ficaram só no botão principal da calculadora; os demais botões e cartões mudam apenas de cor.
+04 - Arredondamento por profundidade: caixa 22 px, painéis 16 px, campos 12 px; pílula só em botões e seletores.
+05 - Textos em laranja/teal passaram a usar `#c2410c`/`#075f50` para contraste AA; barras e linhas mantêm `#f97316`/`#079879`.
+06 - Menor tamanho de texto subiu de 12 px para 13 px (e 11 px para 12 px nos selos e gráficos).
+07 - Textos com ponto no meio reescritos como frases.
+08 - Corrigido o rodapé do resumo: indicadores, aviso de premissas e link agora ficam empilhados; antes o aviso era espremido em uma coluna de uma palavra por linha e fazia a caixa rolar.
+09 - Indicadores do ROI corporativo não repetem mais o ROI do período analisado; equilíbrio abaixo de 1 médico/mês é descrito como "um médico por mês já paga a mensalidade".
+10 - Barra da régua principal ajustada de 36 px para 28 px para caber na caixa.
+
+## v6.33 - Nova calculadora de ROI e Portal ADM de cenários
+
+01 - Substituída a calculadora pela versão de dois passos com três calculadoras: ROI do médico, ROI corporativo e ROI da carreira médica.
+02 - Adicionados resultado com régua de prazos, gráfico tempo x gasto, comparativos sem/com HSS e memória de cálculo.
+03 - Adicionado assistente de IA (Gemini) para montar cenários; chave lida de `config/gemini.env` no `npm run dev` e de secrets no Cloudflare.
+04 - Substituído o painel ADM da calculadora pelo editor de cenários: etapas, prazos, premissas, campos do visitante, ativo/desativado, rascunho local e publicação.
+05 - Adicionadas a API `/api/cenarios-credenciamento`, a API `/api/ia-cenario` e a migration `0004_criar_tabela_cenarios_credenciamento.sql`.
+06 - Calculadora e ADM restilizados com o visual deste projeto: bordas violeta, cantos arredondados maiores, campos em cinza claro com anel lavanda no foco, botões em pílula, sombras `suave`/`neon`, laranja para sem HSS e teal para com HSS.
+07 - Removido o cálculo antigo que alimentava props não usadas do hero.
+
 ## v6.32 - Tipografia acessível nos cartões comparativos
 
 01 - Aumentados para 14 px os títulos e parágrafos dos cartões e textos auxiliares dos painéis.

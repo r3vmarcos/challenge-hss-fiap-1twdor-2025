@@ -183,99 +183,67 @@ export function MenuAcessibilidade(): JSX.Element {
   }, [configuracoes]);
 
   useEffect(() => {
-    if (!configuracoes.leitorHover) {
-      window.speechSynthesis.cancel();
+    // Navegadores sem sintese de voz: a opcao fica sem efeito, sem quebrar a pagina.
+    const voz = "speechSynthesis" in window ? window.speechSynthesis : null;
+
+    if (!configuracoes.leitorHover || !voz) {
+      voz?.cancel();
       return;
     }
 
-    const tagsValidas = [
-      "P",
-      "H1",
-      "H2",
-      "H3",
-      "H4",
-      "H5",
-      "H6",
-      "BUTTON",
-      "A",
-      "SPAN",
-      "LABEL",
-      "LI",
-      "STRONG",
-    ];
+    const tagsValidas = ["P", "H1", "H2", "H3", "H4", "H5", "H6", "BUTTON", "A", "SPAN", "LABEL", "LI", "STRONG", "DT", "DD", "TD", "TH", "LEGEND", "FIGCAPTION", "INPUT", "SELECT", "TEXTAREA"];
+    let ultimoLido: HTMLElement | null = null;
 
-    function aoPassarMouse(
-      evento: MouseEvent,
-    ): void {
-      const alvo =
-        evento.target as HTMLElement;
-
-      if (
-        alvo.closest(
-          "[data-a11y-menu]",
-        )
-      ) {
-        return;
+    function textoDe(alvo: HTMLElement): string {
+      if (alvo instanceof HTMLInputElement || alvo instanceof HTMLTextAreaElement || alvo instanceof HTMLSelectElement) {
+        const rotulo = alvo.labels?.[0]?.innerText ?? alvo.getAttribute("aria-label") ?? alvo.getAttribute("placeholder") ?? "";
+        const valor = alvo instanceof HTMLSelectElement ? alvo.selectedOptions[0]?.text ?? "" : alvo.value;
+        return [rotulo, valor].filter(Boolean).join(": ");
       }
+      return alvo.getAttribute("aria-label") ?? alvo.innerText ?? alvo.textContent ?? "";
+    }
 
-      if (
-        !tagsValidas.includes(
-          alvo.tagName,
-        ) &&
-        !alvo.getAttribute("aria-label")
-      ) {
-        return;
-      }
+    function ler(alvo: HTMLElement): void {
+      if (alvo === ultimoLido || alvo.closest("[data-a11y-menu]")) return;
+      if (!tagsValidas.includes(alvo.tagName) && !alvo.getAttribute("aria-label")) return;
 
-      const texto =
-        alvo.getAttribute("aria-label") ??
-        alvo.innerText ??
-        alvo.textContent;
+      const texto = textoDe(alvo).trim();
+      if (!texto) return;
 
-      if (!texto?.trim()) {
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-
-      const fala =
-        new SpeechSynthesisUtterance(
-          texto.trim(),
-        );
+      ultimoLido?.classList.remove("a11y-lendo");
+      ultimoLido = alvo;
+      voz?.cancel();
+      const fala = new SpeechSynthesisUtterance(texto);
       fala.lang = "pt-BR";
-      window.speechSynthesis.speak(fala);
+      voz?.speak(fala);
       alvo.classList.add("a11y-lendo");
     }
 
-    function aoSairMouse(
-      evento: MouseEvent,
-    ): void {
-      const alvo =
-        evento.target as HTMLElement;
-
+    function parar(alvo: HTMLElement): void {
+      if (alvo !== ultimoLido) return;
       alvo.classList.remove("a11y-lendo");
-      window.speechSynthesis.cancel();
+      ultimoLido = null;
+      voz?.cancel();
     }
 
-    document.addEventListener(
-      "mouseover",
-      aoPassarMouse,
-    );
-    document.addEventListener(
-      "mouseout",
-      aoSairMouse,
-    );
+    // Mouse no desktop; foco (Tab) no teclado e em telas de toque.
+    const aoPassarMouse = (evento: MouseEvent): void => ler(evento.target as HTMLElement);
+    const aoSairMouse = (evento: MouseEvent): void => parar(evento.target as HTMLElement);
+    const aoFocar = (evento: FocusEvent): void => ler(evento.target as HTMLElement);
+    const aoDesfocar = (evento: FocusEvent): void => parar(evento.target as HTMLElement);
+
+    document.addEventListener("mouseover", aoPassarMouse);
+    document.addEventListener("mouseout", aoSairMouse);
+    document.addEventListener("focusin", aoFocar);
+    document.addEventListener("focusout", aoDesfocar);
 
     return () => {
-      document.removeEventListener(
-        "mouseover",
-        aoPassarMouse,
-      );
-      document.removeEventListener(
-        "mouseout",
-        aoSairMouse,
-      );
-      window.speechSynthesis.cancel();
+      document.removeEventListener("mouseover", aoPassarMouse);
+      document.removeEventListener("mouseout", aoSairMouse);
+      document.removeEventListener("focusin", aoFocar);
+      document.removeEventListener("focusout", aoDesfocar);
+      ultimoLido?.classList.remove("a11y-lendo");
+      voz?.cancel();
     };
   }, [configuracoes.leitorHover]);
 
@@ -318,13 +286,14 @@ export function MenuAcessibilidade(): JSX.Element {
           )
         }
         className={[
-          "fixed right-3 top-1/2 z-[120] inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full shadow-[0_18px_42px_rgba(15,23,42,0.24)] transition md:right-5",
+          // Smartphone e tablet (< lg): canto inferior esquerdo. Desktop: meio da lateral direita.
+          "fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom))] left-3 z-[120] inline-flex h-12 w-12 items-center justify-center rounded-full shadow-[0_18px_42px_rgba(15,23,42,0.24)] transition lg:bottom-auto lg:left-auto lg:right-5 lg:top-1/2 lg:-translate-y-1/2",
           menuAberto
-            ? "-translate-x-[23.5rem] bg-hss-roxo text-white max-sm:pointer-events-none max-sm:opacity-0 max-sm:-translate-x-[calc(100vw-4.5rem)]"
+            ? "bg-hss-roxo text-white max-lg:pointer-events-none max-lg:opacity-0 lg:-translate-x-[23.5rem]"
             : "bg-hss-roxo text-white",
           botaoAcessibilidadeVisivel
             ? "opacity-100"
-            : "pointer-events-none translate-x-20 opacity-0",
+            : "pointer-events-none opacity-0 max-lg:-translate-x-20 lg:translate-x-20",
         ].join(" ")}
         aria-expanded={menuAberto}
         aria-haspopup="dialog"
@@ -353,10 +322,11 @@ export function MenuAcessibilidade(): JSX.Element {
       <aside
         data-a11y-menu
         className={[
-          "fixed bottom-0 right-0 top-auto z-[110] w-full max-w-[22rem] rounded-t-2xl border border-[#d8dbea] bg-white text-[#070814] shadow-[0_28px_90px_rgba(15,23,42,0.25)] transition-transform sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:rounded-l-2xl sm:rounded-tr-none",
+          // Smartphone: sobe de baixo. Tablet (sm a lg): entra pela esquerda, do lado do botao. Desktop: entra pela direita.
+          "fixed bottom-0 right-0 top-auto z-[110] w-full max-w-[22rem] rounded-t-2xl border border-[#d8dbea] bg-white text-[#070814] shadow-[0_28px_90px_rgba(15,23,42,0.25)] transition-transform sm:bottom-auto sm:left-0 sm:right-auto sm:top-1/2 sm:-translate-y-1/2 sm:rounded-t-none sm:rounded-r-2xl lg:left-auto lg:right-0 lg:rounded-r-none lg:rounded-l-2xl",
           menuAberto
             ? "translate-y-0 sm:translate-x-0 sm:-translate-y-1/2"
-            : "translate-y-full sm:translate-x-full sm:-translate-y-1/2",
+            : "translate-y-full sm:-translate-x-full sm:-translate-y-1/2 lg:translate-x-full",
         ].join(" ")}
         role="dialog"
         aria-modal="true"
@@ -603,6 +573,8 @@ function GrupoOpcoes({
 /* === CONTROLES MENU ACESSIBILIDADE | fim === */
 
 /* === FILTROS DALTONISMO | inicio === */
+// Correcao (daltonizacao), nao simulacao: a diferenca de cor que a pessoa nao percebe e levada para canais que ela percebe.
+// Matriz = I + D·(I - S), com S = simulacao do tipo de daltonismo e D = redistribuicao do erro (algoritmo Daltonize).
 function FiltrosDaltonismo(): JSX.Element {
   return (
     <svg
@@ -614,19 +586,19 @@ function FiltrosDaltonismo(): JSX.Element {
         <filter id="a11y-protanopia">
           <feColorMatrix
             type="matrix"
-            values="0.567 0.433 0 0 0 0.558 0.442 0 0 0 0 0.242 0.758 0 0 0 0 0 1 0"
+            values="1 0 0 0 0 -0.255 1.255 0 0 0 0.303 -0.545 1.242 0 0 0 0 0 1 0"
           />
         </filter>
         <filter id="a11y-deuteranopia">
           <feColorMatrix
             type="matrix"
-            values="0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0"
+            values="1 0 0 0 0 -0.438 1.438 0 0 0 0.262 -0.563 1.3 0 0 0 0 0 1 0"
           />
         </filter>
         <filter id="a11y-tritanopia">
           <feColorMatrix
             type="matrix"
-            values="0.95 0.05 0 0 0 0 0.433 0.567 0 0 0 0.475 0.525 0 0 0 0 0 1 0"
+            values="1.05 -0.382 0.332 0 0 0 1.234 -0.234 0 0 0 0 1 0 0 0 0 0 1 0"
           />
         </filter>
       </defs>

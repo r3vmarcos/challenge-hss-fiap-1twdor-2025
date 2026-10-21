@@ -1,2017 +1,1310 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CampoNumerico } from "@/components/calculadora/campo-numerico";
-import { CartaoResultado } from "@/components/calculadora/cartao-resultado";
-import {
-  CONFIGURACOES_CREDENCIAMENTO_PADRAO,
-  buscarConfiguracaoCredenciamento,
-  filtrarConfiguracoesPublicas,
-  normalizarConfiguracoesCredenciamento,
-} from "@/data/configuracoesCredenciamento";
+import { CampoDaPremissa } from "@/components/calculadora/campo-premissa";
+import { ChatIaCarreira, ChatIaCenario } from "@/components/calculadora/chat-ia-cenario";
+import { TelaResultado } from "@/components/calculadora/tela-resultado";
+import { TelaResultadoCarreira } from "@/components/calculadora/tela-resultado-carreira";
+import { CAMPOS_PREMISSAS } from "@/data/camposPremissas";
+import { CAMPO_CUSTO_VIDA_FORMADO, CAMPOS_CARREIRA, CAMPOS_CURSO, CAMPOS_LOCAL, locaisValidos, MAXIMO_LOCAIS, novoLocal, PERFIS_CARREIRA } from "@/data/carreiraMedica";
+import { filtrarCenariosPublicos, normalizarCenario, normalizarCenarios } from "@/data/configuracoesCredenciamento";
+import { useCenariosPublicos } from "@/hooks/useCenariosCredenciamento";
+import { GIROS_PARA_SAIR, useEncaixeMagnetico } from "@/hooks/useEncaixeMagnetico";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import {
-  calcularRoiEmpresa,
-  calcularRoiMedico,
-  formatarMoeda,
-  formatarNumero,
-} from "@/services/calculosRoi";
+import imagemRoiCarreira from "@/assets/img-roi-carreira.webp";
+import imagemRoiCorporativo from "@/assets/img-roi-corporativo.webp";
+import imagemRoiInicial from "@/assets/img-roi-inicial.webp";
+import imagemRoiMedico from "@/assets/img-roi-medico.webp";
+import { calcularCarreira, calcularCustoVidaFormado } from "@/services/calculosCarreira";
+import { ID_PERFIL_IA } from "@/services/iaCenarios";
+import { calcularConsultasMes, calcularRoiInstituicao, calcularRoiMedico, calcularTimeline, formatarMoeda, formatarNumero, formatarTempo } from "@/services/calculosRoi";
 import type {
-  ConfiguracaoCredenciamento,
-  DadosEmpresaRoi,
-  DadosMedicoRoi,
-  EtapaCalculadora,
-  ResultadoEmpresaRoi,
-  ResultadoMedicoRoi,
-  VisaoCalculadora,
+  CampoCarreira,
+  LocalAtendimento,
+  CampoPremissa,
+  CenarioCredenciamento,
+  PerfilCarreira,
+  PerspectivaRoi,
+  PremissasCarreira,
+  PremissasCenario,
+  ResultadoInstituicao,
+  ResultadoMedico,
+  TipoCalculadora,
 } from "@/types/calculadora";
 
-/* === VALORES INICIAIS | inicio === */
-const dadosEmpresaIniciais: DadosEmpresaRoi =
-  {
-    nomeInstituicao: "Hospital exemplo",
-    porteInstituicao: "Médio porte",
-    profissionaisSaude: 120,
-    atendimentosMes: 8500,
-    ticketMedioAtendimento: 280,
-    margemMediaAtendimento: 95,
-    medicosCredenciadosMes: 12,
-    valorMensalPorMedicoLiberado: 30000,
-    tempoCredenciamentoAtualDias: 45,
-    tempoCredenciamentoComHssDias: 14,
-    horasAdministrativasSemana: 110,
-    custoHoraAdministrativo: 48,
-    reducaoAdministrativaPercentual: 42,
-    taxaNoShowAtual: 16,
-    taxaNoShowComHss: 11,
-    reducaoGlosasPercentual: 52,
-    custoGlosasMensal: 24000,
-    custoMensalHss: 8500,
-    custoImplantacaoHss: 18000,
-    mesesAnalise: 12,
-    tipoCredenciamentoId:
-      "hospital-contratando-hss",
-    tipoCredenciamentoNome:
-      "Hospital contratando HSS",
-    cenarioRoi:
-      "hospital_contratando_hss",
-    horasAdministrativasPorCredenciamento: 22,
-    taxaRetrabalhoDocumental: 24,
-    custoRetrabalhoPorMedico: 520,
-    taxaDocumentosVencidos: 10,
-    custoDocumentoVencido: 260,
-    margemLiquidaPercentual: 35,
-  };
+/* === ROTEIRO DO PASSO A PASSO | inicio === */
+type IdPasso = "cenario" | "perfil" | "dados" | "curso" | "atendimentos";
 
-const dadosMedicoIniciais: DadosMedicoRoi =
-  {
-    nomeMedico: "Médico exemplo",
-    especialidade: "Clínica médica",
-    receitaMensalEsperadaHospital: 18000,
-    mesesAnalise: 12,
-    custoCrmAnual: 948,
-    custoCursos: 2230,
-    custoDocumentos: 250,
-    custoCertificadoDigital: 0,
-    custoVacinasExames: 420,
-    custoSeguroAnual: 1800,
-    custoPjPrimeiroAno: 4200,
-    horasPerdidasProcesso: 18,
-    valorHoraMedica: 180,
-    tempoCredenciamentoTradicionalDias: 45,
-    tempoCredenciamentoDigitalDias: 14,
-    custoTaxasHospitalares: 0,
-    tipoCredenciamentoId:
-      "medico-hospital",
-    tipoCredenciamentoNome:
-      "Médico atendendo em hospital",
-    cenarioRoi: "medico_hospital",
-    percentualRepasseClinica: 0,
-    custoOperacionalMensal: 1200,
-    investimentoInicial: 4000,
-  };
+interface DefinicaoPasso {
+  id: IdPasso;
+  nome: string;
+  pergunta: string;
+  descricao: string;
+}
 
-const etapas = [
+const CALCULADORAS: { valor: TipoCalculadora; titulo: string; destaque: string; descricao: string }[] = [
   {
-    numero: 1 as EtapaCalculadora,
-    nome: "Cenário",
+    valor: "medico",
+    titulo: "ROI do médico com a HSS",
+    destaque: "médico",
+    descricao: "Em quanto tempo você recupera o que gasta para começar a atender, sem e com a HSS, nos casos mais comuns de credenciamento.",
   },
   {
-    numero: 2 as EtapaCalculadora,
-    nome: "Tempo",
+    valor: "corporativo",
+    titulo: "ROI corporativo com a HSS",
+    destaque: "corporativo",
+    descricao: "Para hospitais, clínicas e pronto atendimentos: em quanto tempo a HSS se paga e quanto o credenciamento custa sem e com ela.",
   },
   {
-    numero: 3 as EtapaCalculadora,
-    nome: "Valores",
-  },
-  {
-    numero: 4 as EtapaCalculadora,
-    nome: "Custos",
-  },
-  {
-    numero: 5 as EtapaCalculadora,
-    nome: "Resultado",
+    valor: "carreira",
+    titulo: "ROI da carreira médica",
+    destaque: "carreira",
+    descricao: "Quanto custa a graduação em medicina e quantos anos de profissão pagam esse investimento.",
   },
 ];
 
-const descricoesEtapas: Record<EtapaCalculadora, string> = {
-  1: "Define a visão da simulação e o tipo de cenário configurado no ADM. Aqui entram instituição, porte, volume de médicos ou dados iniciais do médico.",
-  2: "Compara o tempo atual sem HSS com o tempo estimado no fluxo digital. A diferença alimenta dias economizados e receita antecipada.",
-  3: "Reúne valores de receita, margem, atendimentos, repasses e no-show usados para transformar o ganho operacional em dinheiro.",
-  4: "Concentra custos da HSS, implantação, retrabalho, documentos vencidos, glosas, cursos, CRM e demais despesas do cenário.",
-  5: "Mostra o resumo do cálculo: ROI, benefícios, custos, payback, prejuízo evitado e leitura final do cenário.",
+// Imagem da faixa da direita: uma na tela inicial e uma por calculadora.
+const IMAGENS_CALCULADORA: Record<TipoCalculadora, string> = {
+  medico: imagemRoiMedico,
+  corporativo: imagemRoiCorporativo,
+  carreira: imagemRoiCarreira,
 };
-/* === VALORES INICIAIS | fim === */
+
+const ROTULOS_CALCULADORA: Record<TipoCalculadora, string> = {
+  medico: "ROI do médico",
+  corporativo: "ROI corporativo",
+  carreira: "ROI da carreira",
+};
+
+// Medico e corporativo: dois passos curtos (escolher o caso e informar so os dados principais); o resto vem do ADM
+// (referencias de mercado) e aparece, com a conta inteira, na aba "Cálculo" do resultado.
+// Carreira: perfil, gastos do curso e atendimentos.
+const PASSOS: Record<TipoCalculadora, DefinicaoPasso[]> = {
+  medico: [
+    { id: "cenario", nome: "Onde atender", pergunta: "Onde você vai se credenciar?", descricao: "Os casos mais comuns, cada um com etapas e prazos próprios. Não achou o seu? Monte com a IA." },
+    { id: "dados", nome: "Seus dados", pergunta: "Conte só o principal", descricao: "Pense em uma semana normal depois de liberado: quantas consultas você faz, quanto recebe por elas e quanto gasta para começar. Com isso calculamos em quanto tempo você recupera o investimento, sem e com a HSS." },
+  ],
+  corporativo: [
+    { id: "cenario", nome: "Processo", pergunta: "Qual processo você quer simular?", descricao: "Os processos mais comuns de hospitais, clínicas e pronto atendimentos. Não achou o seu? Monte com a IA." },
+    { id: "dados", nome: "Seus dados", pergunta: "Conte só o principal", descricao: "Use a média dos últimos meses: quantos médicos entram por mês, a agenda de cada um e quanto fica com a instituição por consulta. Com isso calculamos em quanto tempo a HSS se paga." },
+  ],
+  carreira: [
+    { id: "perfil", nome: "Formação", pergunta: "Qual perfil de formação se parece com o seu?", descricao: "Os quatro perfis do estudo de custos da graduação em medicina (2025-2026). Não achou o seu? Monte com a IA. Nos próximos passos você ajusta os gastos do curso e os seus atendimentos." },
+    { id: "curso", nome: "Gastos do curso", pergunta: "Ajuste os gastos do curso", descricao: "Mensalidade, custo de vida, materiais e preparatório nos anos de graduação, já preenchidos com os valores do perfil. Use o botão \"i\" para ver as faixas de mercado." },
+    { id: "atendimentos", nome: "Seus atendimentos", pergunta: "Como serão os seus atendimentos?", descricao: "Pense em um mês normal depois de formado: quantos pacientes você atende por plantão, quantos plantões faz e quanto recebe por atendimento. Com isso calculamos o seu ganho líquido." },
+  ],
+};
+
+const PERSPECTIVA_DA_CALCULADORA: Record<Exclude<TipoCalculadora, "carreira">, PerspectivaRoi> = {
+  medico: "medico",
+  corporativo: "instituicao",
+};
+
+// Rotulos na voz de cada perfil; sem entrada aqui, vale o rotulo do catalogo.
+const ROTULOS_VISITANTE: Record<PerspectivaRoi, Partial<Record<CampoPremissa, string>>> = {
+  medico: {
+    parcelaMedicoPercentual: "Parte que fica com você",
+    custoEntrada: "Custos para entrar",
+    impostosPercentual: "Impostos sobre o que recebe",
+    custoConsultaMedico: "Seu custo por consulta",
+    valorHoraMedico: "Quanto vale uma hora sua",
+    mensalidadeHssMedico: "Mensalidade da HSS para você",
+    ocupacaoPercentual: "Quanto da agenda deve lotar",
+    horasMedicoSemHss: "Suas horas com papelada, sem HSS",
+    horasMedicoComHss: "Suas horas com papelada, com HSS",
+    custoRetrabalhoMedico: "Custo de cada retrabalho",
+  },
+  instituicao: {
+    consultasPorDia: "Consultas por dia, por médico",
+    parcelaMedicoPercentual: "Parte repassada ao médico",
+    ocupacaoPercentual: "Ocupação esperada da agenda",
+    mesesAnalise: "Período da análise",
+    custoRetrabalhoInstituicao: "Custo de cada retrabalho",
+  },
+};
+
+const CHAVE_PREMISSAS_VISITANTE = "hss_roi_v5_premissas";
+const CHAVE_CENARIOS_IA = "hss_roi_v4_cenarios_ia";
+const CHAVE_PREMISSAS_CARREIRA = "hss_roi_v6_premissas_carreira";
+const CHAVE_PERFIL_CARREIRA_IA = "hss_roi_v6_perfil_carreira_ia";
+const CHAVE_PRAZOS_EM_BRANCO = "hss_roi_v6_prazos_em_branco";
+
+// ==CENARIO E PERFIL EM BRANCO==
+// Primeira opcao das listas: o visitante preenche do zero. Os campos visiveis comecam em 0; os demais
+// (impostos, horas, retrabalho, precos da HSS) seguem a referencia do primeiro caso do ADM.
+const PREFIXO_EM_BRANCO = "em-branco";
+const ID_PERFIL_EM_BRANCO = "em-branco";
+
+interface PrazosEmBranco {
+  semHss: number;
+  comHss: number;
+}
+
+function ehEmBranco(id: string): boolean {
+  return id.startsWith(PREFIXO_EM_BRANCO);
+}
+
+function montarCenarioEmBranco(base: CenarioCredenciamento | undefined, perspectiva: PerspectivaRoi, prazos: PrazosEmBranco): CenarioCredenciamento {
+  const modelo = base ?? normalizarCenario({});
+  const visiveis = modelo.camposVisitante[perspectiva];
+  const premissas = { ...modelo.premissas };
+  visiveis.forEach((campo) => {
+    premissas[campo] = 0;
+  });
+
+  return {
+    ...modelo,
+    id: `${PREFIXO_EM_BRANCO}-${perspectiva}`,
+    nome: "Cenário em branco",
+    resumoSite: "Preencha do zero os prazos e os seus dados.",
+    limite: "Prazos informados por você.",
+    perspectivas: [perspectiva],
+    origemPrazos: "hipotese",
+    origemCriacao: "adm",
+    etapas: [
+      {
+        id: "etapa-1",
+        nome: "Credenciamento",
+        diasSemHss: prazos.semHss,
+        diasComHss: Math.min(prazos.comHss, prazos.semHss),
+        hssAtua: prazos.comHss < prazos.semHss,
+        nota: "Prazo total informado pelo visitante.",
+      },
+    ],
+    premissas,
+  };
+}
+
+const PERFIL_EM_BRANCO: PerfilCarreira = {
+  id: ID_PERFIL_EM_BRANCO,
+  nome: "Perfil em branco",
+  resumo: "Preencha do zero os gastos do curso e os seus atendimentos.",
+  premissas: {
+    mensalidadeInicial: 0,
+    reajusteAnualPercentual: 0,
+    anosCurso: 6,
+    custoVidaMensal: 0,
+    materiais: 0,
+    preparatorioResidencia: 0,
+    locais: [
+      { id: "local-1", nome: "Local 1", atendimentosPorDia: 0, diasAtendimentoMes: 0, valorAtendimento: 0, parcelaMedicoPercentual: 0, impostosPercentual: 0, prazoRecebimentoDias: 30 },
+    ],
+    custoVidaFormado: 0,
+  },
+  investimentoReferencia: 0,
+};
+/* === ROTEIRO DO PASSO A PASSO | fim === */
 
 /* === COMPONENTE PRINCIPAL DA CALCULADORA | inicio === */
-export function CalculadoraRoi({
-  dicasHoverAtivas,
-}: {
-  dicasHoverAtivas: boolean;
-}): JSX.Element {
-  const painelCalculadoraRef =
-    useRef<HTMLDivElement>(null);
-  const [visao, definirVisao] =
-    useLocalStorage<VisaoCalculadora>(
-      "hss_roi_visao",
-      "empresa",
-    );
-  const [
-    dadosEmpresa,
-    definirDadosEmpresa,
-  ] = useLocalStorage<DadosEmpresaRoi>(
-    "hss_roi_empresa",
-    dadosEmpresaIniciais,
+export function CalculadoraRoi(_props: { dicasHoverAtivas: boolean }): JSX.Element {
+  const { cenarios, origem } = useCenariosPublicos();
+  const [tipoSalvo, definirTipo] = useLocalStorage<TipoCalculadora>("hss_roi_v6_calculadora", "medico");
+  const [idCenarioMedico, definirIdCenarioMedico] = useLocalStorage<string>("hss_roi_v2_cenario_medico", "");
+  const [idCenarioInstituicao, definirIdCenarioInstituicao] = useLocalStorage<string>("hss_roi_v2_cenario_instituicao", "");
+  const [premissasSalvas, definirPremissasSalvas] = useLocalStorage<Record<string, Partial<PremissasCenario>>>(CHAVE_PREMISSAS_VISITANTE, {});
+  const [cenariosIaBrutos, definirCenariosIa] = useLocalStorage<unknown>(CHAVE_CENARIOS_IA, []);
+  const [idPerfilCarreira, definirIdPerfilCarreira] = useLocalStorage<string>("hss_roi_v6_perfil_carreira", PERFIS_CARREIRA[2].id);
+  const [premissasCarreiraSalvas, definirPremissasCarreiraSalvas] = useLocalStorage<Record<string, Partial<PremissasCarreira>>>(
+    CHAVE_PREMISSAS_CARREIRA,
+    {},
   );
-  const [
-    dadosMedico,
-    definirDadosMedico,
-  ] = useLocalStorage<DadosMedicoRoi>(
-    "hss_roi_medico",
-    dadosMedicoIniciais,
-  );
-  const [configuracoesSalvas] =
-    useLocalStorage<
-      ConfiguracaoCredenciamento[]
-    >(
-      "hss_adm_configuracoes_credenciamento",
-      CONFIGURACOES_CREDENCIAMENTO_PADRAO,
-    );
-  const [
-    etapaAtual,
-    definirEtapaAtual,
-  ] = useState<EtapaCalculadora>(1);
-  const [
-    calculadoraTravada,
-    definirCalculadoraTravada,
-  ] = useState(false);
-  const [
-    tentativasRolagemTravada,
-    definirTentativasRolagemTravada,
-  ] = useState(0);
+  // Perfil de formacao montado com a IA: um so por visitante, guardado no navegador como os cenarios da IA.
+  const [perfilIaCarreira, definirPerfilIaCarreira] = useLocalStorage<PerfilCarreira | null>(CHAVE_PERFIL_CARREIRA_IA, null);
+  const [prazosEmBranco, definirPrazosEmBranco] = useLocalStorage<PrazosEmBranco>(CHAVE_PRAZOS_EM_BRANCO, { semHss: 0, comHss: 0 });
+  // Etapa 0 = escolha da calculadora; 1 e 2 = perguntas; 3 = tela de resultado.
+  const [etapa, definirEtapa] = useState(0);
+  const [maiorEtapaVisitada, definirMaiorEtapaVisitada] = useState(0);
+  const [chatAberto, definirChatAberto] = useState(false);
+  // 1 = avancando (conteudo entra pela direita); -1 = voltando (entra pela esquerda).
+  const [direcaoPasso, definirDirecaoPasso] = useState(1);
+  const caixaRef = useRef<HTMLDivElement>(null);
+  const areaConteudoRef = useRef<HTMLDivElement>(null);
+  const primeiraRenderizacaoRef = useRef(true);
+  const { encaixado, girosDados, centralizar } = useEncaixeMagnetico(caixaRef);
 
-  const configuracoes = useMemo(
-    () =>
-      normalizarConfiguracoesCredenciamento(
-        configuracoesSalvas,
-      ),
-    [configuracoesSalvas],
-  );
-  const configuracoesEmpresa = useMemo(
-    () =>
-      filtrarConfiguracoesPublicas(
-        configuracoes,
-        "empresa",
-      ),
-    [configuracoes],
-  );
-  const configuracoesMedico = useMemo(
-    () =>
-      filtrarConfiguracoesPublicas(
-        configuracoes,
-        "medico",
-      ),
-    [configuracoes],
-  );
-  const resultadoEmpresa = useMemo(
-    () =>
-      calcularRoiEmpresa(dadosEmpresa),
-    [dadosEmpresa],
-  );
-  const resultadoMedico = useMemo(
-    () =>
-      calcularRoiMedico(dadosMedico),
-    [dadosMedico],
-  );
-  const configuracaoEmpresaAtual =
-    buscarConfiguracaoCredenciamento(
-      configuracoesEmpresa,
-      dadosEmpresa.tipoCredenciamentoId,
-    );
-  const configuracaoMedicoAtual =
-    buscarConfiguracaoCredenciamento(
-      configuracoesMedico,
-      dadosMedico.tipoCredenciamentoId,
-    );
+  const tipo: TipoCalculadora = tipoSalvo === "corporativo" || tipoSalvo === "carreira" ? tipoSalvo : "medico";
+  const ehCarreira = tipo === "carreira";
+  const perspectiva: PerspectivaRoi = tipo === "carreira" ? "medico" : PERSPECTIVA_DA_CALCULADORA[tipo];
+  const passos = PASSOS[tipo];
+  // Medico e corporativo tem 2 passos; carreira tem 3. O resultado vem logo depois do ultimo passo.
+  const totalPassos = passos.length;
+  const etapaResultado = totalPassos + 1;
 
+  // Carreira: perfil escolhido com as edicoes do visitante (sem comparacao com a HSS).
+  const perfilCarreira =
+    idPerfilCarreira === ID_PERFIL_EM_BRANCO
+      ? PERFIL_EM_BRANCO
+      : idPerfilCarreira === ID_PERFIL_IA && perfilIaCarreira
+        ? perfilIaCarreira
+        : (PERFIS_CARREIRA.find((item) => item.id === idPerfilCarreira) ?? PERFIS_CARREIRA[2]);
+  const premissasCarreira = useMemo<PremissasCarreira>(
+    () => {
+      const salvas = premissasCarreiraSalvas[perfilCarreira.id];
+      return { ...perfilCarreira.premissas, ...salvas, locais: locaisValidos(salvas?.locais ?? perfilCarreira.premissas.locais) };
+    },
+    [perfilCarreira, premissasCarreiraSalvas],
+  );
+  const carreiraEditada = Boolean(premissasCarreiraSalvas[perfilCarreira.id]);
+  // Cenarios montados com a IA ficam so neste navegador e aparecem junto dos cenarios ativos do ADM.
+  const cenariosIa = useMemo(() => normalizarCenarios(cenariosIaBrutos) ?? [], [cenariosIaBrutos]);
+  const publicos = useMemo(() => filtrarCenariosPublicos([...cenarios, ...cenariosIa], perspectiva), [cenarios, cenariosIa, perspectiva]);
+  const cenarioEmBranco = useMemo(
+    () => montarCenarioEmBranco(filtrarCenariosPublicos(cenarios, perspectiva)[0], perspectiva, prazosEmBranco),
+    [cenarios, perspectiva, prazosEmBranco],
+  );
+  const disponiveis = useMemo(() => [cenarioEmBranco, ...publicos], [cenarioEmBranco, publicos]);
+  const idSelecionado = perspectiva === "medico" ? idCenarioMedico : idCenarioInstituicao;
+  // Sem escolha salva, comeca no primeiro caso real, nao no cenario em branco.
+  const cenario = disponiveis.find((item) => item.id === idSelecionado) ?? publicos[0] ?? cenarioEmBranco;
+
+  // Edicoes do visitante ficam guardadas por cenario e valem para os dois perfis; sem edicao, valem os valores do ADM.
+  const premissas = useMemo<PremissasCenario | null>(
+    () => (cenario ? { ...cenario.premissas, ...premissasSalvas[cenario.id] } : null),
+    [cenario, premissasSalvas],
+  );
+  const resultadoMedico = useMemo(() => (cenario && premissas ? calcularRoiMedico(cenario.etapas, premissas) : null), [cenario, premissas]);
+  const resultadoInstituicao = useMemo(
+    () => (cenario && premissas ? calcularRoiInstituicao(cenario.etapas, premissas) : null),
+    [cenario, premissas],
+  );
+  const possuiEdicao = ehCarreira ? carreiraEditada : cenario ? Boolean(premissasSalvas[cenario.id]) : false;
+
+  // Com a caixa ocupando quase toda a tela (travada ou nao), o cabecalho fixo sai para nao cobrir a calculadora.
   useEffect(() => {
-    if (
-      !calculadoraTravada ||
-      window.innerWidth < 1024
-    ) {
-      return;
-    }
+    const caixa = caixaRef.current;
+    if (!caixa) return;
 
-    const overflowHtmlOriginal =
-      document.documentElement.style.overflow;
-    const overflowBodyOriginal =
-      document.body.style.overflow;
-    document.body.classList.add(
-      "calculadora-travada",
+    const observador = new IntersectionObserver(
+      ([entrada]) => document.body.classList.toggle("calculadora-em-tela", entrada.intersectionRatio >= 0.85),
+      { threshold: [0, 0.85, 1] },
     );
-
-    function bloquearRolagem(
-      evento: Event,
-    ): void {
-      if (evento instanceof KeyboardEvent) {
-        const teclasRolagem = [
-          "ArrowDown",
-          "ArrowUp",
-          "End",
-          "Home",
-          "PageDown",
-          "PageUp",
-          " ",
-        ];
-
-        if (!teclasRolagem.includes(evento.key)) {
-          return;
-        }
-      }
-
-      const alvo = evento.target;
-
-      evento.preventDefault();
-
-      if (
-        !(alvo instanceof Node) ||
-        !painelCalculadoraRef.current?.contains(alvo)
-      ) {
-        definirTentativasRolagemTravada(
-          (valorAtual) =>
-            Math.min(valorAtual + 1, 9),
-        );
-      }
-    }
-
-    document.documentElement.style.overflow =
-      "hidden";
-    document.body.style.overflow = "hidden";
-    window.addEventListener(
-      "wheel",
-      bloquearRolagem,
-      { passive: false },
-    );
-    window.addEventListener(
-      "touchmove",
-      bloquearRolagem,
-      { passive: false },
-    );
-    window.addEventListener(
-      "keydown",
-      bloquearRolagem,
-      { passive: false },
-    );
+    observador.observe(caixa);
 
     return () => {
-      document.documentElement.style.overflow =
-        overflowHtmlOriginal;
-      document.body.style.overflow =
-        overflowBodyOriginal;
-      document.body.classList.remove(
-        "calculadora-travada",
-      );
-      window.removeEventListener(
-        "wheel",
-        bloquearRolagem,
-      );
-      window.removeEventListener(
-        "touchmove",
-        bloquearRolagem,
-      );
-      window.removeEventListener(
-        "keydown",
-        bloquearRolagem,
-      );
+      observador.disconnect();
+      document.body.classList.remove("calculadora-em-tela");
     };
-  }, [calculadoraTravada]);
+  }, []);
 
+  // A cada troca de etapa, leva o foco ao titulo (sem mexer no foco no carregamento da pagina).
   useEffect(() => {
-    if (
-      visao === "empresa" &&
-      !configuracoesEmpresa.some(
-        (configuracao) =>
-          configuracao.id ===
-          dadosEmpresa.tipoCredenciamentoId,
-      )
-    ) {
-      const primeira =
-        configuracoesEmpresa[0];
-      if (primeira)
-        definirDadosEmpresa(
-          aplicarConfiguracaoNaEmpresa(
-            dadosEmpresa,
-            primeira,
-          ),
-        );
-    }
-
-    if (
-      visao === "medico" &&
-      !configuracoesMedico.some(
-        (configuracao) =>
-          configuracao.id ===
-          dadosMedico.tipoCredenciamentoId,
-      )
-    ) {
-      const primeira =
-        configuracoesMedico[0];
-      if (primeira)
-        definirDadosMedico(
-          aplicarConfiguracaoNoMedico(
-            dadosMedico,
-            primeira,
-          ),
-        );
-    }
-  }, [
-    configuracoesEmpresa,
-    configuracoesMedico,
-    dadosEmpresa,
-    dadosMedico,
-    definirDadosEmpresa,
-    definirDadosMedico,
-    visao,
-  ]);
-
-  const composicaoVisual =
-    visao === "empresa"
-      ? {
-          valores: [
-            resultadoEmpresa.economiaAdministrativaMensal,
-            resultadoEmpresa.economiaNoShowMensal,
-            resultadoEmpresa.economiaGlosasMensal,
-            resultadoEmpresa.receitaAntecipadaMensal,
-          ],
-          rotulos: [
-            "Admin",
-            "No-show",
-            "Retrabalho",
-            "Receita antecipada",
-          ],
-          descricoes: [
-            "Economia mensal estimada com redução de horas administrativas no credenciamento.",
-            "Economia mensal estimada pela redução de no-show após o fluxo digital.",
-            "Economia mensal estimada com menos retrabalho documental, glosas e pendências.",
-            "Receita antecipada pela entrada mais rápida do médico na operação.",
-          ],
-        }
-      : {
-          valores: [
-            resultadoMedico.custoInicialTotal,
-            resultadoMedico.receitaAntecipada,
-            resultadoMedico.receitaLiquidaMensal,
-          ],
-          rotulos: [
-            "Custo inicial",
-            "Receita antecipada",
-            "Líquido mensal",
-          ],
-          descricoes: [
-            "Soma dos custos de entrada, documentação, estrutura e tempo perdido pelo médico.",
-            "Receita antecipada pela redução do tempo até começar a atender.",
-            "Receita mensal estimada após repasses e custos operacionais.",
-          ],
-        };
-
-  function atualizarEmpresa(
-    campo: keyof DadosEmpresaRoi,
-    valor: string | number,
-  ): void {
-    definirDadosEmpresa({
-      ...dadosEmpresa,
-      [campo]: valor,
-    });
-  }
-
-  function atualizarMedico(
-    campo: keyof DadosMedicoRoi,
-    valor: string | number,
-  ): void {
-    definirDadosMedico({
-      ...dadosMedico,
-      [campo]: valor,
-    });
-  }
-
-  function aplicarConfiguracaoAtual(
-    configuracao: ConfiguracaoCredenciamento,
-  ): void {
-    if (visao === "empresa") {
-      definirDadosEmpresa(
-        aplicarConfiguracaoNaEmpresa(
-          dadosEmpresa,
-          configuracao,
-        ),
-      );
+    if (primeiraRenderizacaoRef.current) {
+      primeiraRenderizacaoRef.current = false;
       return;
     }
 
-    definirDadosMedico(
-      aplicarConfiguracaoNoMedico(
-        dadosMedico,
-        configuracao,
-      ),
-    );
+    areaConteudoRef.current?.scrollTo({ top: 0 });
+    // Se o visitante rolou a pagina, a navegacao interna (voltar, proximo, trocar, nova simulacao) traz a caixa de volta a tela.
+    centralizar();
+    areaConteudoRef.current?.querySelector<HTMLElement>("[data-titulo-passo]")?.focus({ preventScroll: true });
+  }, [etapa]);
+
+  function irPara(proxima: number): void {
+    definirDirecaoPasso(proxima >= etapa ? 1 : -1);
+    definirChatAberto(false);
+    definirEtapa(proxima);
+    definirMaiorEtapaVisitada((atual) => Math.max(atual, proxima));
   }
 
-  function alternarTravamentoCalculadora(): void {
-    definirTentativasRolagemTravada(0);
-    definirCalculadoraTravada(
-      (estadoAtual) => !estadoAtual,
-    );
+  function handleEscolherCalculadora(valor: TipoCalculadora): void {
+    // Voltando a mesma calculadora, mantem os passos ja visitados.
+    definirMaiorEtapaVisitada(valor === tipo ? Math.max(1, maiorEtapaVisitada) : 1);
+    definirTipo(valor);
+    definirDirecaoPasso(1);
+    definirEtapa(1);
   }
 
-  const classePainelCalculadora =
-    calculadoraTravada
-      ? "lg:fixed lg:left-1/2 lg:top-2 lg:z-[90] lg:max-h-[calc(100vh-16px)] lg:w-[min(1420px,calc(100vw-1rem))] lg:-translate-x-1/2 lg:overflow-hidden lg:rounded-[1.5rem] lg:bg-[#eef0f7]/95 lg:p-2 lg:shadow-[0_30px_90px_rgba(15,23,42,0.22)] lg:backdrop-blur"
-      : "";
+  function atualizarPremissaCarreira(campo: CampoCarreira, valor: number): void {
+    definirPremissasCarreiraSalvas({
+      ...premissasCarreiraSalvas,
+      [perfilCarreira.id]: { ...premissasCarreiraSalvas[perfilCarreira.id], [campo]: valor },
+    });
+  }
 
+  // Locais de atendimento (medico que atende em mais de um lugar): a lista inteira fica salva junto das edicoes do perfil.
+  function atualizarLocaisCarreira(locais: LocalAtendimento[]): void {
+    definirPremissasCarreiraSalvas({
+      ...premissasCarreiraSalvas,
+      [perfilCarreira.id]: { ...premissasCarreiraSalvas[perfilCarreira.id], locais },
+    });
+  }
+
+  // Custo de vida depois de formado: sem edicao, acompanha o custo de vida dos gastos do curso.
+  function atualizarCustoVidaFormado(valor: number): void {
+    definirPremissasCarreiraSalvas({
+      ...premissasCarreiraSalvas,
+      [perfilCarreira.id]: { ...premissasCarreiraSalvas[perfilCarreira.id], custoVidaFormado: valor },
+    });
+  }
+
+  function selecionarCenario(id: string): void {
+    if (perspectiva === "medico") {
+      definirIdCenarioMedico(id);
+      return;
+    }
+
+    definirIdCenarioInstituicao(id);
+  }
+
+  function atualizarPremissa(campo: CampoPremissa, valor: number): void {
+    if (!cenario) return;
+    definirPremissasSalvas({ ...premissasSalvas, [cenario.id]: { ...premissasSalvas[cenario.id], [campo]: valor } });
+  }
+
+  function restaurarValoresCenario(): void {
+    if (!ehCarreira && cenario && ehEmBranco(cenario.id)) definirPrazosEmBranco({ semHss: 0, comHss: 0 });
+    if (ehCarreira) {
+      const { [perfilCarreira.id]: _removido, ...restante } = premissasCarreiraSalvas;
+      definirPremissasCarreiraSalvas(restante);
+      return;
+    }
+    if (!cenario) return;
+    const { [cenario.id]: _removido, ...restante } = premissasSalvas;
+    definirPremissasSalvas(restante);
+  }
+
+  function handleUsarCenarioIa(novo: CenarioCredenciamento): void {
+    // O cenario do visitante fica so no perfil em que ele foi montado.
+    const comPerfil: CenarioCredenciamento = { ...novo, perspectivas: [perspectiva] };
+    definirCenariosIa([...cenariosIa, comPerfil]);
+    selecionarCenario(comPerfil.id);
+    definirChatAberto(false);
+  }
+
+  function handleComecarDoZero(): void {
+    if (ehCarreira) definirIdPerfilCarreira(ID_PERFIL_EM_BRANCO);
+    else selecionarCenario(cenarioEmBranco.id);
+    irPara(etapa + 1);
+  }
+
+  function handleUsarPerfilIa(perfil: PerfilCarreira): void {
+    // Um perfil novo da IA substitui o anterior e descarta as edicoes feitas sobre ele.
+    const { [ID_PERFIL_IA]: _removido, ...restante } = premissasCarreiraSalvas;
+    definirPremissasCarreiraSalvas(restante);
+    definirPerfilIaCarreira(perfil);
+    definirIdPerfilCarreira(ID_PERFIL_IA);
+    definirChatAberto(false);
+  }
+
+  function handleRemoverPerfilIa(): void {
+    const { [ID_PERFIL_IA]: _removido, ...restante } = premissasCarreiraSalvas;
+    definirPremissasCarreiraSalvas(restante);
+    definirPerfilIaCarreira(null);
+    if (idPerfilCarreira === ID_PERFIL_IA) definirIdPerfilCarreira(PERFIS_CARREIRA[2].id);
+  }
+
+  function handleRemoverCenarioIa(id: string): void {
+    definirCenariosIa(cenariosIa.filter((item) => item.id !== id));
+    const { [id]: _removido, ...restante } = premissasSalvas;
+    definirPremissasSalvas(restante);
+  }
+
+  const passoAtual = etapa >= 1 && etapa <= totalPassos ? passos[etapa - 1] : null;
+  const simulacaoPronta = !chatAberto && (ehCarreira || Boolean(cenario && premissas && resultadoMedico && resultadoInstituicao));
+
+  // Desktop: caixa de 90svh centralizada. Tablet e celular (abaixo de lg): a caixa ocupa a tela inteira (100dvh),
+  // acompanhando a area visivel quando a barra do navegador aparece ou some.
   return (
-    <section
-      id="roi"
-      className="flex min-h-[95vh] w-full max-w-full scroll-mt-[74px] items-center overflow-hidden px-3 py-3 sm:px-4 lg:px-6"
-    >
+    <section id="roi" className="flex min-h-[100svh] scroll-mt-0 items-center justify-center py-[5svh] max-lg:min-h-[100dvh] max-lg:py-0">
       <div
-        ref={painelCalculadoraRef}
-        className={[
-          "calculadora-compacta relative mx-auto flex w-full max-w-[1420px] flex-col",
-          classePainelCalculadora,
-        ].join(" ")}
+        ref={caixaRef}
+        data-tema-calculadora={etapa > 0 ? tipo : undefined}
+        className="relative flex h-[90svh] w-[90dvw] flex-col overflow-hidden rounded-[1.35rem] max-lg:h-[100dvh] max-lg:w-full max-lg:rounded-none max-lg:border-x-0 border border-blue-900/35 bg-[#eef1f7]/95 shadow-suave backdrop-blur"
       >
-        <button
-          type="button"
-          onClick={alternarTravamentoCalculadora}
-          className={
-            calculadoraTravada
-              ? "hidden lg:inline-flex absolute right-3 top-3 z-20 h-9 w-9 items-center justify-center rounded-full border border-hss-roxo bg-hss-roxo text-white shadow-neon"
-              : "hidden lg:inline-flex absolute right-3 top-3 z-20 h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-hss-roxo shadow-sm hover:-translate-y-0.5 hover:shadow-neon"
-          }
-          aria-label={
-            calculadoraTravada
-              ? "Destravar calculadora"
-              : "Travar calculadora na tela"
-          }
-          title={
-            calculadoraTravada
-              ? "Destravar calculadora"
-              : "Travar calculadora na tela"
-          }
-        >
-          <IconePino />
-          {calculadoraTravada &&
-          tentativasRolagemTravada >= 3 ? (
-            <span className="absolute right-0 top-[calc(100%+0.5rem)] w-44 rounded-2xl bg-hss-tinta px-3 py-2 text-left text-xs font-bold leading-5 text-white shadow-neon">
-              Destrave para continuar rolando a página.
-            </span>
+        <FundoParallaxCalculadora />
+
+        {/* No resultado a imagem sai para os graficos usarem a largura toda sem rolagem. */}
+        {etapa !== etapaResultado ? (
+        <>
+        {/* Tamanho relativo a caixa (nao a area de conteudo), para ficar igual em todas as telas mesmo com a barra de passos.
+            A mascara esfuma as laterais (esquerda e direita) para a foto se fundir ao fundo. */}
+        <img
+          src={etapa === 0 ? imagemRoiInicial : IMAGENS_CALCULADORA[tipo]}
+          alt=""
+          aria-hidden="true"
+          className={[
+            "pointer-events-none absolute z-10 hidden h-[78%] w-[36%] object-contain object-right-bottom xl:block",
+            // Laterais esfumadas em todas; as da tela inicial e da carreira tambem esfumam a base, e a do medico esfuma mais a direita e a base (mesa cortada na borda).
+            etapa === 0 || tipo === "carreira" ? "mascara-imagem-laterais-base" : tipo === "medico" ? "mascara-imagem-direita-base" : "mascara-imagem-laterais",
+            // Distancia da base e da direita: o corporativo sobe mais e encosta na direita; inicial, medico e carreira ficam um pouco acima da base e afastados da direita.
+            etapa > 0 && tipo === "corporativo" ? "bottom-[6%] right-0" : "bottom-[4%] right-[1.5%]",
+          ].join(" ")}
+        />
+        </>
+        ) : null}
+
+        <CabecalhoCalculadora
+          passos={passos}
+          etapa={etapa}
+          maiorEtapaVisitada={maiorEtapaVisitada}
+          tipo={tipo}
+          aoIrPara={irPara}
+        />
+
+        {/* No xl a faixa da direita fica reservada para a imagem; conteudo + rodape usam o restante. */}
+        <div className={["relative flex min-h-0 flex-1 flex-col", etapa === etapaResultado ? "" : "xl:pr-[38%]"].join(" ")}>
+
+        {/* A rolagem interna so existe como reserva para telas muito baixas; o conteudo foi dimensionado para caber. */}
+        <div ref={areaConteudoRef} className="flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          {/* A chave muda a cada passo: o conteudo novo entra deslizando pelo lado da navegacao (avancar = direita). */}
+          <div key={`${tipo}-${etapa}-${chatAberto ? "chat" : "passo"}`} className={[
+              "flex min-h-0 flex-1 flex-col",
+              // No tablet/celular o passo usa a altura natural (a area rola), exceto o chat: ele precisa caber na tela
+              // para o historico rolar por dentro e as sugestoes e o campo ficarem sempre visiveis.
+              chatAberto ? "" : "max-lg:min-h-fit",
+              direcaoPasso > 0 ? "animar-passo-avancar" : "animar-passo-voltar"].join(" ")}>
+          {etapa === 0 ? (
+            <TelaInicial tipoAtual={maiorEtapaVisitada > 0 ? tipo : null} aoEscolher={handleEscolherCalculadora} />
           ) : null}
-        </button>
-        <div className="revelar-scroll flex min-h-0 max-w-full flex-col overflow-hidden rounded-[1.35rem] border border-hss-violeta/15 bg-white/90 p-2 shadow-suave backdrop-blur dark:border-white/10 dark:bg-white/10 sm:p-3 lg:pr-14">
-          <h3 className="inline-flex max-w-full items-center rounded-full border border-hss-violeta/25 bg-hss-roxo px-3 py-1.5 text-lg font-black tracking-tight text-white shadow-[0_12px_28px_rgba(75,50,216,0.28)] dark:border-white/10 sm:text-xl">
-            Calcule agora o ROI
-          </h3>
 
-          <div className="mt-1.5 grid min-w-0 gap-1.5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,0.82fr)_minmax(0,1.36fr)]">
-            <BotaoVisao
-              ativo={
-                visao === "empresa"
-              }
-              titulo="Empresa / Hospital / Clínica"
-              subtitulo="Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos."
-              aoClicar={() =>
-                definirVisao("empresa")
-              }
-            />
-            <BotaoVisao
-              ativo={visao === "medico"}
-              titulo="Médico"
-              subtitulo="Calcula ROI do médico em hospital, clínica particular ou consultório próprio."
-              aoClicar={() =>
-                definirVisao("medico")
-              }
-            />
-            <CampoSelectConfiguracao
-              configuracoes={
-                visao === "empresa"
-                  ? configuracoesEmpresa
-                  : configuracoesMedico
-              }
-              valor={
-                visao === "empresa"
-                  ? configuracaoEmpresaAtual.id
-                  : configuracaoMedicoAtual.id
-              }
-              aoMudar={
-                aplicarConfiguracaoAtual
-              }
-            />
-          </div>
-
-          <NavegacaoEtapas
-            etapaAtual={etapaAtual}
-            aoMudar={definirEtapaAtual}
-            dicasHoverAtivas={dicasHoverAtivas}
-          />
-
-          <div className="hidden">
-            {etapas.map((etapa) => (
-              <button
-                type="button"
-                key={etapa.numero}
-                onClick={() =>
-                  definirEtapaAtual(
-                    etapa.numero,
-                  )
-                }
-                className={
-                  etapaAtual ===
-                  etapa.numero
-                    ? "w-full rounded-full bg-hss-roxo px-3 py-3 text-center text-sm font-black text-white shadow-neon transition hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
-                    : "w-full rounded-full border border-hss-violeta/15 bg-white px-3 py-3 text-center text-sm font-bold text-slate-600 transition hover:-translate-y-1 hover:border-hss-violeta/40 hover:bg-hss-violeta/10 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-                }
-              >
-                {String(
-                  etapa.numero,
-                ).padStart(2, "0")}{" "}
-                - {etapa.nome}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-2 grid min-h-0 min-w-0 gap-2 pr-0 lg:grid-cols-[0.94fr_1.06fr]">
-            <div className="min-w-0">
-              {visao === "empresa" ? (
-                <FormularioEmpresa
-                  etapaAtual={
-                    etapaAtual
-                  }
-                  dados={dadosEmpresa}
-                  configuracoes={
-                    configuracoesEmpresa
-                  }
-                  atualizar={
-                    atualizarEmpresa
-                  }
-                />
-              ) : (
-                <FormularioMedico
-                  etapaAtual={
-                    etapaAtual
-                  }
-                  dados={dadosMedico}
-                  configuracoes={
-                    configuracoesMedico
-                  }
-                  atualizar={
-                    atualizarMedico
-                  }
-                />
-              )}
+          {passoAtual && passoAtual.id === "cenario" && chatAberto ? (
+            <div className="mx-auto flex min-h-0 w-full max-w-[52rem] flex-1 flex-col px-5 py-5 sm:px-8">
+              <ChatIaCenario
+                perspectiva={perspectiva}
+                textoUsar="Usar na calculadora"
+                aoUsarCenario={handleUsarCenarioIa}
+                aoFechar={() => definirChatAberto(false)}
+              />
             </div>
-            <aside className="min-w-0 lg:h-fit">
-              {visao === "empresa" ? (
-                <ResumoEmpresa
-                  resultado={
-                    resultadoEmpresa
-                  }
-                />
-              ) : (
-                <ResumoMedico
-                  resultado={
-                    resultadoMedico
-                  }
-                />
-              )}
-            </aside>
+          ) : null}
+
+          {passoAtual && passoAtual.id === "perfil" && chatAberto ? (
+            <div className="mx-auto flex min-h-0 w-full max-w-[52rem] flex-1 flex-col px-5 py-5 sm:px-8">
+              <ChatIaCarreira aoUsarPerfil={handleUsarPerfilIa} aoFechar={() => definirChatAberto(false)} />
+            </div>
+          ) : null}
+
+          {passoAtual && !((passoAtual.id === "cenario" || passoAtual.id === "perfil") && chatAberto) ? (
+            <div className="flex flex-1 flex-col [justify-content:safe_center]">
+              <div className={`mx-auto w-full max-w-[68rem] px-5 py-4 sm:px-8`}>
+                <h3 data-titulo-passo tabIndex={-1} className="text-[1.5rem] font-semibold leading-tight tracking-[-0.02em] text-slate-950 outline-none sm:text-[1.75rem]">
+                  {passoAtual.pergunta}
+                </h3>
+                {passoAtual.descricao ? <p className="mt-1.5 text-base leading-7 text-slate-700 [@media(max-height:820px)]:hidden">{passoAtual.descricao}</p> : null}
+
+                <div className="mt-4 [@media(max-height:820px)]:mt-3">
+                  {passoAtual.id === "perfil" ? (
+                    <ListaPerfisCarreira
+                      selecionado={perfilCarreira.id}
+                      perfilIa={perfilIaCarreira}
+                      aoSelecionar={definirIdPerfilCarreira}
+                      aoAbrirChat={() => definirChatAberto(true)}
+                      aoRemoverIa={handleRemoverPerfilIa}
+                      aoComecarDoZero={handleComecarDoZero}
+                    />
+                  ) : ehCarreira ? (
+                    passoAtual.id === "curso" ? (
+                      <CamposCarreira campos={CAMPOS_CURSO} conferencia="curso" premissas={premissasCarreira} atualizar={atualizarPremissaCarreira} />
+                    ) : (
+                      <CamposAtendimentos premissas={premissasCarreira} atualizarLocais={atualizarLocaisCarreira} atualizarCustoVida={atualizarCustoVidaFormado} />
+                    )
+                  ) : passoAtual.id === "cenario" ? (
+                    <ListaCenarios
+                      cenarios={disponiveis}
+                      selecionado={cenario?.id ?? ""}
+                      perspectiva={perspectiva}
+                      aoSelecionar={selecionarCenario}
+                      aoAbrirChat={() => definirChatAberto(true)}
+                      aoRemoverIa={handleRemoverCenarioIa}
+                      aoComecarDoZero={handleComecarDoZero}
+                    />
+                  ) : cenario && premissas && resultadoMedico && resultadoInstituicao ? (
+                    <CamposVisitante
+                      prazos={ehEmBranco(cenario.id) ? prazosEmBranco : undefined}
+                      aoMudarPrazos={definirPrazosEmBranco}
+                      campos={cenario.camposVisitante[perspectiva]}
+                      perspectiva={perspectiva}
+                      premissas={premissas}
+                      resultadoMedico={resultadoMedico}
+                      resultadoInstituicao={resultadoInstituicao}
+                      atualizar={atualizarPremissa}
+                    />
+                  ) : null}
+                </div>
+
+                {possuiEdicao && (passoAtual.id === "dados" || passoAtual.id === "curso" || passoAtual.id === "atendimentos") ? (
+                  <button type="button" onClick={restaurarValoresCenario} className="mt-3 text-sm font-semibold text-hss-roxo underline-offset-4 hover:underline">
+                    {ehCarreira ? "Voltar aos valores deste perfil" : "Voltar aos valores de exemplo deste caso"}
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
+
+          {etapa === etapaResultado && ehCarreira ? (
+            <div className="mx-auto flex min-h-0 w-full max-w-[1240px] flex-1 flex-col px-4 py-4 max-lg:flex-none sm:px-8 sm:py-5">
+              <TelaResultadoCarreira perfil={perfilCarreira} premissas={premissasCarreira} editado={carreiraEditada} />
+            </div>
+          ) : null}
+
+          {etapa === etapaResultado && !ehCarreira && cenario && premissas && resultadoMedico && resultadoInstituicao ? (
+            <div className="mx-auto flex min-h-0 w-full max-w-[1240px] flex-1 flex-col px-4 py-4 max-lg:flex-none sm:px-8 sm:py-5">
+              <TelaResultado
+                cenario={cenario}
+                perspectiva={perspectiva}
+                resultadoMedico={resultadoMedico}
+                resultadoInstituicao={resultadoInstituicao}
+                premissas={premissas}
+                previaRascunho={origem === "rascunho"}
+              />
+            </div>
+          ) : null}
           </div>
-
         </div>
 
-        <div className="mt-1.5 w-full">
-          <MiniGrafico
-            valores={
-              composicaoVisual.valores
-            }
-            rotulos={
-              composicaoVisual.rotulos
-            }
-            descricoes={
-              composicaoVisual.descricoes
-            }
-          />
-        </div>
-
-        <div className="hidden">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.22em] text-hss-violeta dark:text-hss-lavanda">
-              Relatório
-            </p>
-            <p className="mt-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
-              Gere uma versão impressa
-              com os dados atuais da
-              simulação.
-            </p>
+        {etapa > 0 ? (
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-hss-violeta/15 px-5 py-2 sm:px-8">
+            {etapa === etapaResultado ? (
+              <>
+                <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap sm:gap-3 [&>button]:justify-center">
+                  <button type="button" onClick={() => irPara(1)} className={classeBotaoSecundario}>
+                    Ajustar respostas
+                  </button>
+                  <button type="button" onClick={() => irPara(0)} className={classeBotaoSecundario}>
+                    Nova simulação
+                  </button>
+                </div>
+                <a href="#lead" className={`${classeBotaoPrimario} w-full justify-center whitespace-nowrap sm:w-auto`}>
+                  Agendar demonstração
+                </a>
+              </>
+            ) : (
+              <>
+                <button type="button" onClick={() => irPara(etapa - 1)} className={classeBotaoSecundario}>
+                  {etapa === 1 ? (
+                    "Trocar calculadora"
+                  ) : (
+                    <>
+                      Voltar<span className="hidden sm:inline">: {passos[etapa - 2].nome}</span>
+                    </>
+                  )}
+                </button>
+                <button type="button" onClick={() => irPara(etapa + 1)} disabled={!simulacaoPronta} className={classeBotaoPrimario}>
+                  {etapa === totalPassos ? (
+                    "Ver resultado"
+                  ) : (
+                    <>
+                      Próximo<span className="hidden sm:inline">: {passos[etapa].nome}</span>
+                    </>
+                  )}
+                </button>
+              </>
+            )}
           </div>
-          <button
-            type="button"
-            onClick={() =>
-              window.print()
-            }
-            className="mt-4 rounded-full bg-hss-roxo px-6 py-3 text-sm font-extrabold text-white shadow-neon transition hover:-translate-y-1 sm:mt-0"
-          >
-            Imprimir simulação
-          </button>
+        ) : null}
         </div>
+
+        <DicaSaida encaixado={encaixado} girosDados={girosDados} comRodape={etapa > 0} />
       </div>
     </section>
   );
 }
+
+const classeBotaoPrimario =
+  "inline-flex items-center justify-center text-center rounded-full bg-hss-roxo px-4 py-3 text-sm leading-tight font-semibold sm:px-6 sm:py-2 sm:text-sm text-white shadow-neon transition hover:-translate-y-0.5 hover:bg-hss-violeta disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50";
+const classeBotaoSecundario =
+  "inline-flex items-center justify-center text-center rounded-full border border-hss-violeta/20 bg-white px-4 py-3 text-sm leading-tight font-semibold sm:whitespace-nowrap [.a11y-fonte-large_&]:whitespace-normal [.a11y-fonte-xlarge_&]:whitespace-normal sm:px-5 sm:py-2 sm:text-sm text-hss-roxo transition-colors hover:border-hss-violeta/50 hover:bg-hss-lavanda/10";
 /* === COMPONENTE PRINCIPAL DA CALCULADORA | fim === */
 
-/* === FORMULARIO EMPRESA | inicio === */
-function FormularioEmpresa({
-  etapaAtual,
-  dados,
-  configuracoes,
-  atualizar,
-}: {
-  etapaAtual: EtapaCalculadora;
-  dados: DadosEmpresaRoi;
-  configuracoes: ConfiguracaoCredenciamento[];
-  atualizar: (
-    campo: keyof DadosEmpresaRoi,
-    valor: string | number,
-  ) => void;
-}): JSX.Element {
-  const configuracaoAtual =
-    buscarConfiguracaoCredenciamento(
-      configuracoes,
-      dados.tipoCredenciamentoId,
-    );
+/* === DICA DE SAIDA DO ENCAIXE | inicio === */
+function DicaSaida({ encaixado, girosDados, comRodape }: { encaixado: boolean; girosDados: number; comRodape: boolean }): JSX.Element | null {
+  const [mostrarInicial, definirMostrarInicial] = useState(false);
 
-  if (etapaAtual === 1) {
-    return (
-      <div className="grid gap-4">
-        <TextoResultado
-          texto={
-            configuracaoAtual.premissaSite
-          }
-        />
-        <div className="grid gap-4 md:grid-cols-2">
-          <CampoTexto
-            label="Instituição"
-            valor={
-              dados.nomeInstituicao
-            }
-            aoMudar={(valor) =>
-              atualizar(
-                "nomeInstituicao",
-                valor,
-              )
-            }
-          />
-          <CampoSelectTexto
-            label="Porte"
-            valor={
-              dados.porteInstituicao
-            }
-            opcoes={[
-              "Pequeno porte",
-              "Médio porte",
-              "Grande porte",
-              "Rede hospitalar",
-            ]}
-            aoMudar={(valor) =>
-              atualizar(
-                "porteInstituicao",
-                valor,
-              )
-            }
-          />
-          <CampoNumerico
-            id="profissionaisSaude"
-            label="Profissionais de saúde"
-            valor={
-              dados.profissionaisSaude
-            }
-            aoMudar={(valor) =>
-              atualizar(
-                "profissionaisSaude",
-                valor,
-              )
-            }
-          />
-          <CampoNumerico
-            id="medicosCredenciadosMes"
-            label="Médicos credenciados por mês"
-            valor={
-              dados.medicosCredenciadosMes
-            }
-            aoMudar={(valor) =>
-              atualizar(
-                "medicosCredenciadosMes",
-                valor,
-              )
-            }
-          />
-        </div>
-      </div>
-    );
-  }
+  // Ao encaixar, explica por alguns segundos como sair; depois so reaparece quando o visitante comeca a girar a roda.
+  useEffect(() => {
+    if (!encaixado) {
+      definirMostrarInicial(false);
+      return;
+    }
 
-  if (etapaAtual === 2) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <CampoNumerico
-          id="tempoCredenciamentoAtualDias"
-          label="Tempo sem HSS"
-          sufixo="dias"
-          valor={
-            dados.tempoCredenciamentoAtualDias
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "tempoCredenciamentoAtualDias",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="tempoCredenciamentoComHssDias"
-          label="Tempo com HSS"
-          sufixo="dias"
-          valor={
-            dados.tempoCredenciamentoComHssDias
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "tempoCredenciamentoComHssDias",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="horasAdministrativasPorCredenciamento"
-          label="Horas administrativas por credenciamento"
-          sufixo="h"
-          valor={
-            dados.horasAdministrativasPorCredenciamento ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "horasAdministrativasPorCredenciamento",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoHoraAdministrativo"
-          label="Custo hora administrativa"
-          prefixo="R$"
-          valor={
-            dados.custoHoraAdministrativo
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoHoraAdministrativo",
-              valor,
-            )
-          }
-        />
-        <InfoProcesso
-          titulo="Tempo economizado por médico"
-          valor={`${formatarNumero(Math.max(0, dados.tempoCredenciamentoAtualDias - dados.tempoCredenciamentoComHssDias))} dias`}
-        />
-        <InfoProcesso
-          titulo="Cenário ADM aplicado"
-          valor={
-            dados.tipoCredenciamentoNome ??
-            configuracaoAtual.nome
-          }
-        />
-      </div>
-    );
-  }
+    definirMostrarInicial(true);
+    const temporizador = window.setTimeout(() => definirMostrarInicial(false), 2600);
+    return () => window.clearTimeout(temporizador);
+  }, [encaixado]);
 
-  if (etapaAtual === 3) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <CampoNumerico
-          id="valorMensalPorMedicoLiberado"
-          label="Receita mensal por médico ativo"
-          prefixo="R$"
-          valor={
-            dados.valorMensalPorMedicoLiberado
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "valorMensalPorMedicoLiberado",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="margemLiquidaPercentual"
-          label="Margem líquida estimada"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.margemLiquidaPercentual ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "margemLiquidaPercentual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="atendimentosMes"
-          label="Atendimentos por mês"
-          valor={dados.atendimentosMes}
-          aoMudar={(valor) =>
-            atualizar(
-              "atendimentosMes",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="ticketMedioAtendimento"
-          label="Ticket médio por atendimento"
-          prefixo="R$"
-          valor={
-            dados.ticketMedioAtendimento
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "ticketMedioAtendimento",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="taxaNoShowAtual"
-          label="No-show atual"
-          sufixo="%"
-          max={100}
-          valor={dados.taxaNoShowAtual}
-          aoMudar={(valor) =>
-            atualizar(
-              "taxaNoShowAtual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="taxaNoShowComHss"
-          label="No-show projetado com HSS"
-          sufixo="%"
-          max={100}
-          valor={dados.taxaNoShowComHss}
-          aoMudar={(valor) =>
-            atualizar(
-              "taxaNoShowComHss",
-              valor,
-            )
-          }
-        />
-      </div>
-    );
-  }
+  if (!encaixado || (!mostrarInicial && girosDados === 0)) return null;
 
-  if (etapaAtual === 4) {
-    return (
-      <div className="grid gap-2 md:grid-cols-2">
-        <CampoNumerico
-          id="custoMensalHss"
-          label="Custo mensal HSS"
-          prefixo="R$"
-          valor={dados.custoMensalHss}
-          aoMudar={(valor) =>
-            atualizar(
-              "custoMensalHss",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoImplantacaoHss"
-          label="Implantação HSS"
-          prefixo="R$"
-          valor={
-            dados.custoImplantacaoHss
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoImplantacaoHss",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="taxaRetrabalhoDocumental"
-          label="Taxa de retrabalho documental"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.taxaRetrabalhoDocumental ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "taxaRetrabalhoDocumental",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoRetrabalhoPorMedico"
-          label="Custo de retrabalho por médico"
-          prefixo="R$"
-          valor={
-            dados.custoRetrabalhoPorMedico ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoRetrabalhoPorMedico",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="taxaDocumentosVencidos"
-          label="Taxa de documentos vencidos"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.taxaDocumentosVencidos ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "taxaDocumentosVencidos",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoDocumentoVencido"
-          label="Custo por documento vencido"
-          prefixo="R$"
-          valor={
-            dados.custoDocumentoVencido ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoDocumentoVencido",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="reducaoAdministrativaPercentual"
-          label="Redução administrativa"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.reducaoAdministrativaPercentual
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "reducaoAdministrativaPercentual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="reducaoGlosasPercentual"
-          label="Redução de retrabalho/glosas"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.reducaoGlosasPercentual
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "reducaoGlosasPercentual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoGlosasMensal"
-          label="Custo mensal com glosas/retrabalho"
-          prefixo="R$"
-          valor={
-            dados.custoGlosasMensal
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoGlosasMensal",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="mesesAnaliseEmpresa"
-          label="Meses de análise"
-          valor={dados.mesesAnalise}
-          aoMudar={(valor) =>
-            atualizar(
-              "mesesAnalise",
-              valor,
-            )
-          }
-        />
-      </div>
-    );
-  }
+  const restantes = GIROS_PARA_SAIR - girosDados;
+  const texto =
+    girosDados === 0 ? `Gire a roda do mouse ${GIROS_PARA_SAIR} vezes para sair da calculadora` : `Gire mais ${restantes} ${restantes === 1 ? "vez" : "vezes"} para sair`;
 
   return (
-    <TextoResultado texto="Resultado da empresa: a calculadora cruza tempo economizado, receita por médico ativo, redução de retrabalho, custos administrativos, no-show e custo da HSS para estimar ROI, payback e prejuízo evitado." />
+    <div
+      role="status"
+      className={[
+        "pointer-events-none absolute left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full bg-hss-tinta [@media(pointer:coarse)]:hidden px-4 py-2 text-[0.8125rem] font-medium text-white shadow-neon",
+        comRodape ? "bottom-[4.75rem]" : "bottom-5",
+      ].join(" ")}
+    >
+      <span className="flex gap-1" aria-hidden="true">
+        {Array.from({ length: GIROS_PARA_SAIR }, (_, indice) => (
+          <span key={indice} className={indice < girosDados ? "h-1.5 w-1.5 rounded-full bg-white" : "h-1.5 w-1.5 rounded-full bg-white/30"} />
+        ))}
+      </span>
+      {texto}
+    </div>
   );
 }
-/* === FORMULARIO EMPRESA | fim === */
+/* === DICA DE SAIDA DO ENCAIXE | fim === */
 
-/* === FORMULARIO MEDICO | inicio === */
-function FormularioMedico({
-  etapaAtual,
-  dados,
-  configuracoes,
-  atualizar,
+/* === CABECALHO DA CALCULADORA | inicio === */
+function CabecalhoCalculadora({
+  passos,
+  etapa,
+  maiorEtapaVisitada,
+  tipo,
+  aoIrPara,
 }: {
-  etapaAtual: EtapaCalculadora;
-  dados: DadosMedicoRoi;
-  configuracoes: ConfiguracaoCredenciamento[];
-  atualizar: (
-    campo: keyof DadosMedicoRoi,
-    valor: string | number,
-  ) => void;
+  passos: DefinicaoPasso[];
+  etapa: number;
+  maiorEtapaVisitada: number;
+  tipo: TipoCalculadora;
+  aoIrPara: (etapa: number) => void;
 }): JSX.Element {
-  const configuracaoAtual =
-    buscarConfiguracaoCredenciamento(
-      configuracoes,
-      dados.tipoCredenciamentoId,
-    );
-
-  if (etapaAtual === 1) {
-    return (
-      <div className="grid gap-4">
-        <TextoResultado
-          texto={
-            configuracaoAtual.premissaSite
-          }
-        />
-        <div className="grid gap-4 md:grid-cols-2">
-          <CampoTexto
-            label="Nome do médico"
-            valor={dados.nomeMedico}
-            aoMudar={(valor) =>
-              atualizar(
-                "nomeMedico",
-                valor,
-              )
-            }
-          />
-          <CampoTexto
-            label="Especialidade"
-            valor={dados.especialidade}
-            aoMudar={(valor) =>
-              atualizar(
-                "especialidade",
-                valor,
-              )
-            }
-          />
-          <CampoNumerico
-            id="receitaMensalEsperadaHospital"
-            label="Receita mensal bruta esperada"
-            prefixo="R$"
-            valor={
-              dados.receitaMensalEsperadaHospital
-            }
-            aoMudar={(valor) =>
-              atualizar(
-                "receitaMensalEsperadaHospital",
-                valor,
-              )
-            }
-          />
-          <CampoNumerico
-            id="mesesAnaliseMedico"
-            label="Meses de análise"
-            valor={dados.mesesAnalise}
-            aoMudar={(valor) =>
-              atualizar(
-                "mesesAnalise",
-                valor,
-              )
-            }
-          />
-        </div>
-      </div>
-    );
-  }
-
-  if (etapaAtual === 2) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <CampoNumerico
-          id="tempoCredenciamentoTradicionalDias"
-          label="Tempo tradicional / sem HSS"
-          sufixo="dias"
-          valor={
-            dados.tempoCredenciamentoTradicionalDias
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "tempoCredenciamentoTradicionalDias",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="tempoCredenciamentoDigitalDias"
-          label="Tempo com HSS / fluxo digital"
-          sufixo="dias"
-          valor={
-            dados.tempoCredenciamentoDigitalDias
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "tempoCredenciamentoDigitalDias",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="horasPerdidasProcesso"
-          label="Horas perdidas no processo"
-          sufixo="h"
-          valor={
-            dados.horasPerdidasProcesso
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "horasPerdidasProcesso",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="valorHoraMedica"
-          label="Valor da hora médica"
-          prefixo="R$"
-          valor={dados.valorHoraMedica}
-          aoMudar={(valor) =>
-            atualizar(
-              "valorHoraMedica",
-              valor,
-            )
-          }
-        />
-        <InfoProcesso
-          titulo="Dias antecipados"
-          valor={`${formatarNumero(Math.max(0, dados.tempoCredenciamentoTradicionalDias - dados.tempoCredenciamentoDigitalDias))} dias`}
-        />
-        <InfoProcesso
-          titulo="Cenário ADM aplicado"
-          valor={
-            dados.tipoCredenciamentoNome ??
-            configuracaoAtual.nome
-          }
-        />
-      </div>
-    );
-  }
-
-  if (etapaAtual === 3) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <CampoNumerico
-          id="percentualRepasseClinica"
-          label="Repasse para clínica/hospital"
-          sufixo="%"
-          max={100}
-          valor={
-            dados.percentualRepasseClinica ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "percentualRepasseClinica",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoOperacionalMensal"
-          label="Custo operacional mensal"
-          prefixo="R$"
-          valor={
-            dados.custoOperacionalMensal ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoOperacionalMensal",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="investimentoInicial"
-          label="Investimento inicial"
-          prefixo="R$"
-          valor={
-            dados.investimentoInicial ??
-            0
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "investimentoInicial",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoTaxasHospitalares"
-          label="Taxas hospitalares/credenciamento"
-          prefixo="R$"
-          valor={
-            dados.custoTaxasHospitalares
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoTaxasHospitalares",
-              valor,
-            )
-          }
-        />
-      </div>
-    );
-  }
-
-  if (etapaAtual === 4) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <CampoNumerico
-          id="custoCrmAnual"
-          label="CRM/anuidade"
-          prefixo="R$"
-          valor={dados.custoCrmAnual}
-          aoMudar={(valor) =>
-            atualizar(
-              "custoCrmAnual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoCursos"
-          label="Cursos obrigatórios"
-          prefixo="R$"
-          ajuda="Ex.: BLS, ACLS, PALS, ATLS, reanimação neonatal."
-          valor={dados.custoCursos}
-          aoMudar={(valor) =>
-            atualizar(
-              "custoCursos",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoDocumentos"
-          label="Documentos e cópias"
-          prefixo="R$"
-          valor={dados.custoDocumentos}
-          aoMudar={(valor) =>
-            atualizar(
-              "custoDocumentos",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoCertificadoDigital"
-          label="Certificado digital"
-          prefixo="R$"
-          valor={
-            dados.custoCertificadoDigital
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoCertificadoDigital",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoVacinasExames"
-          label="Vacinas, sorologias e ASO"
-          prefixo="R$"
-          valor={
-            dados.custoVacinasExames
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoVacinasExames",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoSeguroAnual"
-          label="Seguro de responsabilidade civil"
-          prefixo="R$"
-          valor={dados.custoSeguroAnual}
-          aoMudar={(valor) =>
-            atualizar(
-              "custoSeguroAnual",
-              valor,
-            )
-          }
-        />
-        <CampoNumerico
-          id="custoPjPrimeiroAno"
-          label="PJ/contador no primeiro ano"
-          prefixo="R$"
-          valor={
-            dados.custoPjPrimeiroAno
-          }
-          aoMudar={(valor) =>
-            atualizar(
-              "custoPjPrimeiroAno",
-              valor,
-            )
-          }
-        />
-      </div>
-    );
-  }
+  const itens = [...passos.map((passo) => passo.nome), "Resultado"];
+  const totalPassos = passos.length;
+  const etapaResultado = totalPassos + 1;
+  const textoEtapa = etapa === etapaResultado ? "Resultado" : etapa > 0 ? `Passo ${etapa} de ${totalPassos}` : "";
 
   return (
-    <TextoResultado texto="Resultado do médico: a calculadora soma custos de entrada e custos do processo, calcula receita líquida mensal, receita antecipada pela redução de tempo e retorno projetado no período." />
+    <header className="shrink-0 border-b border-hss-violeta/15 bg-gradient-to-r from-blue-900/15 via-blue-900/5 to-white px-5 pt-4 sm:px-8">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+        <h2 className="text-[clamp(1.125rem,4.6vw,1.625rem)] font-semibold uppercase leading-tight tracking-[0.02em] text-slate-950">Calcule seu retorno</h2>
+        {etapa > 0 ? (
+          <div className="flex items-center gap-4 text-sm">
+            <span className="whitespace-nowrap font-semibold text-slate-950">{textoEtapa}</span>
+            {/* So informativo: trocar de calculadora fica no botao "Trocar calculadora" do rodape. */}
+            <span className="text-slate-600">
+              Calculadora: <span className="font-semibold text-slate-950">{ROTULOS_CALCULADORA[tipo]}</span>
+            </span>
+          </div>
+        ) : null}
+      </div>
+
+      {etapa > 0 ? (
+        <nav aria-label="Progresso da simulação">
+          <ol className={["mt-2 grid gap-1.5", itens.length === 4 ? "grid-cols-4" : "grid-cols-3"].join(" ")}>
+            {itens.map((nome, indice) => {
+              const numero = indice + 1;
+              const atual = numero === etapa;
+              const liberado = numero <= maiorEtapaVisitada;
+
+              return (
+                <li key={nome}>
+                  <button
+                    type="button"
+                    disabled={!liberado}
+                    aria-current={atual ? "step" : undefined}
+                    aria-label={numero === etapaResultado ? "Ir para o resultado" : `Ir para o passo ${numero}: ${nome}`}
+                    onClick={() => aoIrPara(numero)}
+                    className="block w-full pb-2 pt-1.5 text-left disabled:cursor-not-allowed"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={["block h-1.5 rounded-full", numero <= etapa ? "bg-hss-roxo" : liberado ? "bg-hss-roxo/35" : "bg-hss-violeta/10"].join(" ")}
+                    />
+                    <span aria-hidden="true" className={["mt-1 hidden truncate text-[0.8125rem] lg:block", atual ? "font-semibold text-slate-950" : "text-slate-600"].join(" ")}>
+                      {nome}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      ) : (
+        <div className="pb-4" />
+      )}
+    </header>
   );
 }
-/* === FORMULARIO MEDICO | fim === */
+/* === CABECALHO DA CALCULADORA | fim === */
 
-/* === APLICACAO DAS CONFIGURACOES ADM | inicio === */
-function aplicarConfiguracaoNaEmpresa(
-  dados: DadosEmpresaRoi,
-  configuracao: ConfiguracaoCredenciamento,
-): DadosEmpresaRoi {
-  return {
-    ...dados,
-    tipoCredenciamentoId:
-      configuracao.id,
-    tipoCredenciamentoNome:
-      configuracao.nome,
-    cenarioRoi: configuracao.cenarioRoi,
-    valorMensalPorMedicoLiberado:
-      configuracao.receitaMensalPorMedico,
-    tempoCredenciamentoAtualDias:
-      configuracao.tempoSemHssDias,
-    tempoCredenciamentoComHssDias:
-      configuracao.tempoComHssDias,
-    horasAdministrativasPorCredenciamento:
-      configuracao.horasAdministrativasPorCredenciamento,
-    custoHoraAdministrativo:
-      configuracao.custoHoraAdministrativa,
-    reducaoAdministrativaPercentual:
-      configuracao.reducaoAdministrativaPercentual,
-    reducaoGlosasPercentual:
-      configuracao.reducaoRetrabalhoPercentual,
-    taxaNoShowAtual:
-      configuracao.taxaNoShowAtual,
-    taxaNoShowComHss:
-      configuracao.taxaNoShowComHss,
-    custoMensalHss:
-      configuracao.custoMensalHss,
-    custoImplantacaoHss:
-      configuracao.custoImplantacaoHss,
-    taxaRetrabalhoDocumental:
-      configuracao.taxaRetrabalhoPercentual,
-    custoRetrabalhoPorMedico:
-      configuracao.custoRetrabalhoPorMedico,
-    taxaDocumentosVencidos:
-      configuracao.taxaDocumentosVencidosPercentual,
-    custoDocumentoVencido:
-      configuracao.custoDocumentoVencido,
-    margemLiquidaPercentual:
-      configuracao.margemLiquidaPercentual,
-  };
+/* === FUNDO PARALLAX DA CALCULADORA | inicio === */
+// Camadas discretas atras do conteudo; o movimento vem do useParallaxProfundidade (atributos data-parallax-*).
+function FundoParallaxCalculadora(): JSX.Element {
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <span className="parallax-profundidade calc-parallax-grade" data-parallax-depth="-0.012" data-parallax-pointer="6" />
+      <span className="parallax-profundidade calc-parallax-brilho calc-parallax-brilho-a" data-parallax-depth="0.015" data-parallax-pointer="10" data-parallax-invert="true" />
+      <span className="parallax-profundidade calc-parallax-brilho calc-parallax-brilho-b" data-parallax-depth="-0.02" data-parallax-pointer="8" />
+      <span className="parallax-profundidade calc-parallax-plano calc-parallax-plano-a" data-parallax-depth="-0.03" data-parallax-pointer="14" />
+      <span className="parallax-profundidade calc-parallax-plano calc-parallax-plano-b" data-parallax-depth="0.025" data-parallax-pointer="11" data-parallax-invert="true" />
+      <span className="parallax-profundidade calc-parallax-anel" data-parallax-depth="0.018" data-parallax-pointer="18" data-parallax-invert="true" />
+    </div>
+  );
 }
+/* === FUNDO PARALLAX DA CALCULADORA | fim === */
 
-function aplicarConfiguracaoNoMedico(
-  dados: DadosMedicoRoi,
-  configuracao: ConfiguracaoCredenciamento,
-): DadosMedicoRoi {
-  return {
-    ...dados,
-    tipoCredenciamentoId:
-      configuracao.id,
-    tipoCredenciamentoNome:
-      configuracao.nome,
-    cenarioRoi: configuracao.cenarioRoi,
-    receitaMensalEsperadaHospital:
-      configuracao.receitaMensalPorMedico,
-    tempoCredenciamentoTradicionalDias:
-      configuracao.tempoSemHssDias,
-    tempoCredenciamentoDigitalDias:
-      configuracao.tempoComHssDias,
-    valorHoraMedica:
-      configuracao.custoHoraAdministrativa,
-    horasPerdidasProcesso:
-      configuracao.horasAdministrativasPorCredenciamento,
-    percentualRepasseClinica:
-      configuracao.percentualRepasseClinica,
-    custoOperacionalMensal:
-      configuracao.custoOperacionalMensalMedico,
-    investimentoInicial:
-      configuracao.investimentoInicialMedico,
-  };
-}
-/* === APLICACAO DAS CONFIGURACOES ADM | fim === */
+/* === FUNDO DOS CARTOES | inicio === */
+// Degrade discreto do branco para a cor de cada calculadora; o hover mantem o preenchimento solido da marca.
+const FUNDO_CARTAO_CALCULADORA: Record<TipoCalculadora, string> = {
+  medico: "border-sky-200 bg-gradient-to-r from-white to-sky-100 hover:border-sky-600 hover:from-sky-600 hover:to-sky-600",
+  corporativo: "border-violet-300 bg-gradient-to-r from-white to-violet-200 hover:border-violet-600 hover:from-violet-600 hover:to-violet-600",
+  carreira: "border-orange-300 bg-gradient-to-r from-white to-orange-200 hover:border-orange-600 hover:from-orange-600 hover:to-orange-600",
+};
 
-/* === CAMPOS E CONTROLES | inicio === */
-function NavegacaoEtapas({
-  etapaAtual,
-  aoMudar,
-  dicasHoverAtivas,
-}: {
-  etapaAtual: EtapaCalculadora;
-  aoMudar: (
-    etapa: EtapaCalculadora,
-  ) => void;
-  dicasHoverAtivas: boolean;
-}): JSX.Element {
-  const listaRef =
-    useRef<HTMLDivElement>(null);
-  const [etapaExplicada, definirEtapaExplicada] =
-    useState<(typeof etapas)[number] | null>(null);
+// Mesma cor do hover de cada cartao, aplicada a palavra destacada do titulo.
+const COR_DESTAQUE_CALCULADORA: Record<TipoCalculadora, string> = {
+  medico: "text-sky-600",
+  corporativo: "text-violet-600",
+  carreira: "text-orange-600",
+};
+/* === FUNDO DOS CARTOES | fim === */
 
-  function rolar(direcao: -1 | 1): void {
-    const largura = listaRef.current?.clientWidth ?? 180;
-
-    listaRef.current?.scrollBy({
-      left: direcao * largura,
-      behavior: "smooth",
-    });
-  }
+/* === TITULO COM DESTAQUE | inicio === */
+// Destaca em maiusculas e cor a palavra que identifica a calculadora (medico, corporativo, carreira).
+function TituloComDestaque({ titulo, destaque, classeCor }: { titulo: string; destaque: string; classeCor: string }): JSX.Element {
+  const posicao = titulo.indexOf(destaque);
+  if (posicao < 0) return <>{titulo}</>;
 
   return (
     <>
-    <div className="mt-2 grid grid-cols-[2.25rem_minmax(0,1fr)_2.25rem] items-center gap-1.5 md:grid-cols-1">
-      <button
-        type="button"
-        onClick={() => rolar(-1)}
-        aria-label="Ver etapas anteriores"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white sm:hidden"
-      >
-        &lt;
-      </button>
-
-      <div
-        ref={listaRef}
-        className="scrollbar-hss flex snap-x snap-mandatory gap-1.5 overflow-x-auto py-0.5 sm:grid sm:snap-none sm:grid-cols-5 sm:overflow-visible"
-      >
-        {etapas.map((etapa) => {
-          const ativo =
-            etapaAtual === etapa.numero;
-
-          return (
-            <div
-              key={etapa.numero}
-              className="group relative grid w-full shrink-0 snap-start grid-cols-[minmax(0,1fr)_2.5rem] gap-2 sm:block sm:min-w-0"
-            >
-              <button
-                type="button"
-                onClick={() =>
-                  aoMudar(etapa.numero)
-                }
-                aria-describedby={`descricao-etapa-${etapa.numero}`}
-                className={
-                  ativo
-                    ? "h-9 w-full rounded-md border-2 border-hss-violeta bg-hss-lavanda px-2.5 text-[13px] font-semibold text-hss-roxo shadow-[0_0_18px_rgba(141,123,255,0.42)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-hss-lavanda/40"
-                    : "h-9 w-full rounded-md border border-hss-violeta/15 bg-hss-violeta/10 px-2.5 text-[13px] font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-hss-violeta/40 hover:bg-hss-violeta/15 hover:text-hss-roxo dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-                }
-              >
-                {etapa.numero}º {etapa.nome.toUpperCase()}
-              </button>
-
-              <button
-                type="button"
-                onClick={() =>
-                  definirEtapaExplicada(etapa)
-                }
-                aria-label={`Explicar etapa ${etapa.nome}`}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-sm font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white lg:hidden"
-              >
-                <IconeInfo />
-              </button>
-
-              <div
-                id={`descricao-etapa-${etapa.numero}`}
-                className={
-                  dicasHoverAtivas
-                    ? "pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-0 right-0 z-20 hidden rounded-2xl border border-hss-violeta/20 bg-white p-3 text-xs font-semibold leading-5 text-slate-700 opacity-0 shadow-neon transition group-hover:opacity-100 group-focus-within:opacity-100 dark:border-white/10 dark:bg-hss-tinta dark:text-slate-200 lg:block"
-                    : "hidden"
-                }
-              >
-                {descricoesEtapas[etapa.numero]}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <button
-        type="button"
-        onClick={() => rolar(1)}
-        aria-label="Ver próximas etapas"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hss-violeta/20 bg-white text-lg font-black text-hss-roxo shadow-sm transition hover:-translate-y-0.5 hover:shadow-neon dark:border-white/10 dark:bg-white/10 dark:text-white sm:hidden"
-      >
-        &gt;
-      </button>
-    </div>
-
-    {etapaExplicada ? (
-      <div
-        className="fixed inset-0 z-[70] flex items-center justify-center bg-hss-tinta/35 px-4 backdrop-blur-[1px] lg:hidden"
-        onClick={() =>
-          definirEtapaExplicada(null)
-        }
-        role="presentation"
-      >
-        <div
-          className="w-fit max-w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-hss-violeta/25 bg-white p-4 shadow-neon dark:border-white/10 dark:bg-hss-tinta"
-          onClick={(evento) =>
-            evento.stopPropagation()
-          }
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Explicação da etapa ${etapaExplicada.nome}`}
-        >
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="text-sm font-black text-hss-roxo dark:text-white">
-              {etapaExplicada.nome.toUpperCase()}
-            </h3>
-            <button
-              type="button"
-              onClick={() =>
-                definirEtapaExplicada(null)
-              }
-              aria-label="Fechar explicação"
-              className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-hss-violeta/20 text-sm font-black text-hss-roxo dark:border-white/10 dark:text-white"
-            >
-              x
-            </button>
-          </div>
-          <p className="mt-2 text-sm font-semibold leading-6 text-slate-600 dark:text-slate-300">
-            {descricoesEtapas[etapaExplicada.numero]}
-          </p>
-        </div>
-      </div>
-    ) : null}
+      {titulo.slice(0, posicao)}
+      <span className={["uppercase tracking-[0.04em] group-hover:text-white", classeCor].join(" ")}>{destaque}</span>
+      {titulo.slice(posicao + destaque.length)}
     </>
   );
 }
+/* === TITULO COM DESTAQUE | fim === */
 
-function IconeInfo(): JSX.Element {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-5 w-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 16v-4" />
-      <path d="M12 8h.01" />
-    </svg>
-  );
-}
-
-function IconePino(): JSX.Element {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-5 w-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 17v5" />
-      <path d="m5 17 14 0" />
-      <path d="m8 3 8 0" />
-      <path d="m9 3 1 9-3 5h10l-3-5 1-9" />
-    </svg>
-  );
-}
-
-function CampoTexto({
-  label,
-  valor,
-  aoMudar,
+/* === TELA INICIAL | inicio === */
+function TelaInicial({
+  tipoAtual,
+  aoEscolher,
 }: {
-  label: string;
-  valor: string;
-  aoMudar: (valor: string) => void;
+  tipoAtual: TipoCalculadora | null;
+  aoEscolher: (valor: TipoCalculadora) => void;
 }): JSX.Element {
   return (
-    <label className="block rounded-3xl border border-hss-violeta/15 bg-[#f3f4f6] p-4 dark:border-white/10 dark:bg-white/5">
-      <span className="text-sm font-extrabold text-slate-800 dark:text-white">
-        {label}
-      </span>
-      <input
-        value={valor}
-        onChange={(evento) =>
-          aoMudar(evento.target.value)
+        <div className="flex flex-1 [align-items:safe_center] px-5 py-8 sm:px-8 lg:px-12">
+      <div className="mx-auto w-full max-w-[46rem] xl:mx-0">
+        <h3 data-titulo-passo tabIndex={-1} className="text-[1.75rem] font-semibold leading-tight tracking-[-0.025em] text-slate-950 outline-none sm:text-[2.25rem]">
+          Qual retorno você quer calcular?
+        </h3>
+        <p className="mt-3 max-w-[58ch] text-base leading-7 text-slate-700">
+          Três calculadoras, já preenchidas com valores de mercado.
+          <br />
+          Ao final, você vê em quanto tempo o investimento retorna.
+        </p>
+
+        <ul className="mt-7 grid gap-3">
+          {CALCULADORAS.map((opcao) => {
+            const carreira = opcao.valor === "carreira";
+            return (
+              <li key={opcao.valor}>
+                <button
+                  type="button"
+                  onClick={() => aoEscolher(opcao.valor)}
+                  className={[
+                    "group flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-colors sm:gap-5 sm:p-5",
+                    FUNDO_CARTAO_CALCULADORA[opcao.valor],
+                  ].join(" ")}
+                >
+                  <span className="min-w-0 flex-1">
+                    <strong className="block text-lg font-semibold text-slate-950 group-hover:text-white">
+                      <TituloComDestaque titulo={opcao.titulo} destaque={opcao.destaque} classeCor={COR_DESTAQUE_CALCULADORA[opcao.valor]} />
+                    </strong>
+                    <span className="mt-1 block text-sm leading-6 text-slate-600 group-hover:text-white/85">{opcao.descricao}</span>
+                  </span>
+                  <span
+                    className={[
+                      "hidden shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold sm:inline-flex",
+                      carreira ? "text-hss-violeta" : "text-hss-roxo",
+                    ].join(" ")}
+                  >
+                    {tipoAtual === opcao.valor ? "Continuar" : "Começar"} →
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+/* === TELA INICIAL | fim === */
+
+/* === LISTA DE CENARIOS | inicio === */
+function ListaCenarios({
+  cenarios,
+  selecionado,
+  perspectiva,
+  aoSelecionar,
+  aoAbrirChat,
+  aoRemoverIa,
+  aoComecarDoZero,
+}: {
+  cenarios: CenarioCredenciamento[];
+  selecionado: string;
+  perspectiva: PerspectivaRoi;
+  aoSelecionar: (id: string) => void;
+  aoAbrirChat: () => void;
+  aoRemoverIa: (id: string) => void;
+  aoComecarDoZero: () => void;
+}): JSX.Element {
+  // Uma coluna, em grupos: os cenarios do visitante (em branco e IA) primeiro, depois os do ADM e, por ultimo, o atalho da IA.
+  // O cenario em branco so aparece como opcao depois de usado; antes disso, e o botao "Faça seu cenário do início".
+  const personalizados = cenarios.filter((cenario) => (ehEmBranco(cenario.id) && cenario.id === selecionado) || cenario.origemCriacao === "ia");
+  const atuais = cenarios.filter((cenario) => !ehEmBranco(cenario.id) && cenario.origemCriacao !== "ia");
+
+  function renderizarCenario(cenario: CenarioCredenciamento): JSX.Element {
+    const timeline = calcularTimeline(cenario.etapas);
+    const daIa = cenario.origemCriacao === "ia";
+
+    return (
+      <OpcaoLista
+        key={cenario.id}
+        nomeGrupo={`cenario-${perspectiva}`}
+        valor={cenario.id}
+        ativo={cenario.id === selecionado}
+        titulo={cenario.nome}
+        destaque={
+          ehEmBranco(cenario.id) && timeline.diasSemHss === 0
+            ? "Preencha do zero"
+            : timeline.diasEconomizados > 0
+              ? `${timeline.diasSemHss} → ${timeline.diasComHss} dias`
+              : `${timeline.diasSemHss} dias, sem redução`
         }
-        className="mt-3 w-full rounded-2xl border border-transparent bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
+        resumo={cenario.resumoSite}
+        aoSelecionar={aoSelecionar}
+        aoRemover={daIa ? () => aoRemoverIa(cenario.id) : undefined}
       />
-    </label>
-  );
-}
+    );
+  }
 
-function CampoSelectTexto({
-  label,
-  valor,
-  opcoes,
-  aoMudar,
-}: {
-  label: string;
-  valor: string;
-  opcoes: string[];
-  aoMudar: (valor: string) => void;
-}): JSX.Element {
   return (
-    <label className="block rounded-3xl border border-hss-violeta/15 bg-[#f3f4f6] p-4 dark:border-white/10 dark:bg-white/5">
-      <span className="text-sm font-extrabold text-slate-800 dark:text-white">
-        {label}
-      </span>
-      <select
-        value={valor}
-        onChange={(evento) => aoMudar(evento.target.value)}
-        className="mt-3 w-full rounded-2xl border border-transparent bg-white px-3 py-3 font-bold outline-none dark:border-white/10 dark:bg-hss-tinta/70 dark:text-white"
-      >
-        {opcoes.map((opcao) => (
-          <option key={opcao} value={opcao}>
-            {opcao}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
+    <div className="grid gap-3">
+      <GrupoLista titulo="Cenário personalizado" radio={personalizados.length > 0}>
+        <BotaoComecarDoZero texto="Faça seu cenário do início" aoClicar={aoComecarDoZero} />
+        {personalizados.map(renderizarCenario)}
+      </GrupoLista>
 
-function CampoSelectConfiguracao({
-  configuracoes,
-  valor,
-  aoMudar,
-}: {
-  configuracoes: ConfiguracaoCredenciamento[];
-  valor: string;
-  aoMudar: (
-    configuracao: ConfiguracaoCredenciamento,
-  ) => void;
-}): JSX.Element {
-  return (
-    <label className="flex min-w-0 max-w-full flex-col gap-2 overflow-hidden rounded-[1rem] border border-hss-violeta/15 bg-[#f3f4f6] p-2 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur lg:h-full lg:flex-row lg:items-center lg:justify-between">
-      <span className="min-w-0 max-w-full break-words text-sm font-semibold text-slate-950 lg:w-[8.8rem] lg:shrink-0">
-        Tipo de cenário →
-      </span>
-      <select
-        value={valor}
-        onChange={(evento) =>
-          aoMudar(
-            buscarConfiguracaoCredenciamento(
-              configuracoes,
-              evento.target.value,
-            ),
-          )
-        }
-        className="min-w-0 max-w-full rounded-xl border border-transparent bg-white px-3 py-2.5 text-sm font-bold text-slate-900 outline-none lg:flex-1"
-      >
-        {configuracoes.map(
-          (configuracao) => (
-            <option
-              key={configuracao.id}
-              value={configuracao.id}
-            >
-              {configuracao.nome} - {" "}
-              {configuracao.categoria}
-            </option>
-          ),
+      <GrupoLista titulo="Cenários atuais" radio={atuais.length > 0}>
+        {atuais.length > 0 ? (
+          atuais.map(renderizarCenario)
+        ) : (
+          <p className="rounded-2xl border border-dashed border-hss-violeta/30 p-4 text-sm leading-6 text-slate-700">
+            Nenhum caso está ativo para este perfil. Monte um com a IA ou ative um cenário no Portal ADM.
+          </p>
         )}
-      </select>
-    </label>
+      </GrupoLista>
+
+      <GrupoLista titulo="Cenário com IA" radio={false}>
+        <BotaoMontarComIa titulo="Montar meu cenário com IA" texto="O assistente faz algumas perguntas e monta as etapas e os valores do seu caso." aoClicar={aoAbrirChat} />
+      </GrupoLista>
+    </div>
+  );
+}
+/* === LISTA DE CENARIOS | fim === */
+
+/* === ITENS DAS LISTAS | inicio === */
+// Peças comuns da lista de cenarios e da lista de perfis da carreira.
+function GrupoLista({ titulo, radio = true, children }: { titulo: string; radio?: boolean; children: ReactNode }): JSX.Element {
+  return (
+    // Sem titulo visivel: os grupos sao separados por uma linha; o titulo fica so para leitores de tela.
+    <section aria-label={titulo} className="border-t border-hss-violeta/15 pt-3 first:border-t-0 first:pt-0">
+      <div className="grid min-w-0 gap-1.5" role={radio ? "radiogroup" : undefined} aria-label={radio ? titulo : undefined}>
+        {children}
+      </div>
+    </section>
   );
 }
 
-function InfoProcesso({
-  titulo,
+function OpcaoLista({
+  nomeGrupo,
   valor,
-}: {
-  titulo: string;
-  valor: string;
-}): JSX.Element {
-  return (
-    <div className="rounded-2xl bg-white/80 p-2 shadow-sm dark:bg-white/10">
-      <span className="block text-xs font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-        {titulo}
-      </span>
-      <strong className="mt-0.5 block text-base text-hss-roxo dark:text-white">
-        {valor}
-      </strong>
-    </div>
-  );
-}
-
-function TextoResultado({
-  texto,
-}: {
-  texto: string;
-}): JSX.Element {
-  return (
-    <div className="rounded-[1.1rem] bg-hss-roxo/10 p-2.5 dark:bg-white/5">
-      <h3 className="text-base font-black text-slate-950 dark:text-white">
-        Leitura do cenário
-      </h3>
-      <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">
-        {texto}
-      </p>
-    </div>
-  );
-}
-
-function BotaoVisao({
   ativo,
   titulo,
-  subtitulo,
-  aoClicar,
+  destaque,
+  resumo,
+  aoSelecionar,
+  aoRemover,
 }: {
+  nomeGrupo: string;
+  valor: string;
   ativo: boolean;
   titulo: string;
-  subtitulo: string;
-  aoClicar: () => void;
+  destaque: string;
+  resumo?: string;
+  aoSelecionar: (valor: string) => void;
+  aoRemover?: () => void;
 }): JSX.Element {
+  return (
+    <label
+      className={[
+        "flex w-full min-w-0 cursor-pointer items-start gap-2.5 rounded-2xl border px-3 py-2.5 transition-colors sm:py-1.5",
+        ativo ? "border-hss-violeta bg-hss-lavanda/10 ring-4 ring-hss-lavanda/30" : "border-hss-violeta/20 bg-white hover:border-hss-violeta/50",
+      ].join(" ")}
+    >
+      <input
+        type="radio"
+        name={nomeGrupo}
+        value={valor}
+        checked={ativo}
+        onChange={() => aoSelecionar(valor)}
+        className="mt-1 h-4 w-4 shrink-0 accent-[#291B7F]"
+      />
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-baseline justify-between gap-x-4">
+          <strong className="min-w-0 text-sm font-semibold leading-5 text-slate-950">{titulo}</strong>
+          <span className="min-w-0 text-[0.8125rem] font-medium tabular-nums text-slate-600">{destaque}</span>
+        </span>
+        {/* Resumo so em telas altas: em notebooks a lista inteira precisa caber sem rolagem. */}
+        {resumo ? <span className="mt-0.5 block text-[0.8125rem] sm:truncate leading-[1.125rem] text-slate-600 [@media(max-height:940px)]:hidden">{resumo}</span> : null}
+      </span>
+      {aoRemover ? (
+        <button
+          type="button"
+          onClick={(evento) => {
+            evento.preventDefault();
+            aoRemover();
+          }}
+          aria-label={`Remover "${titulo}"`}
+          className="self-start text-[0.8125rem] font-semibold text-[#c2410c] hover:underline"
+        >
+          Remover
+        </button>
+      ) : null}
+    </label>
+  );
+}
+
+// Leva direto ao passo de preenchimento com tudo zerado.
+function BotaoComecarDoZero({ texto, aoClicar }: { texto: string; aoClicar: () => void }): JSX.Element {
   return (
     <button
       type="button"
       onClick={aoClicar}
-      className={
-        ativo
-          ? "min-w-0 rounded-[1rem] bg-[#f97316] p-2 text-left text-[#070814] shadow-[0_14px_32px_rgba(249,115,22,0.24)] transition hover:-translate-y-1"
-          : "min-w-0 rounded-[1rem] border border-[#fdba74] bg-[#ffedd5] p-2 text-left text-[#070814] transition hover:-translate-y-1 hover:border-[#fb923c] hover:bg-[#fed7aa] hover:shadow-suave"
-      }
+      className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-hss-roxo bg-white px-5 py-3 text-center text-sm font-semibold text-hss-roxo transition-colors hover:bg-hss-roxo hover:text-white sm:w-auto sm:justify-self-start sm:py-2"
     >
-      <strong className="block min-w-0 break-words text-sm font-semibold uppercase [overflow-wrap:anywhere]">
-        {titulo}
-      </strong>
-      <span
-        className={
-          ativo
-            ? "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-[#070814] [overflow-wrap:anywhere]"
-            : "mt-0.5 block min-w-0 break-words text-[11px] leading-4 text-[#070814] [overflow-wrap:anywhere]"
-        }
-      >
-        {subtitulo}
-      </span>
+      {texto}
+      <span aria-hidden="true">→</span>
     </button>
   );
 }
-/* === CAMPOS E CONTROLES | fim === */
 
-/* === RESUMOS | inicio === */
-function ResumoEmpresa({
-  resultado,
-}: {
-  resultado: ResultadoEmpresaRoi;
-}): JSX.Element {
+function BotaoMontarComIa({ titulo, texto, aoClicar }: { titulo: string; texto: string; aoClicar: () => void }): JSX.Element {
   return (
-    <div className="space-y-2">
-      <CartaoResultado
-        destaque
-        titulo="ROI estimado"
-        valor={`${formatarNumero(resultado.roiPercentual)}%`}
-        detalhe="Retorno considerando benefícios menos custos da HSS."
-      />
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-        <CartaoResultado
-          titulo="Benefícios mensais"
-          valor={formatarMoeda(
-            resultado.beneficiosMensais,
-          )}
-          detalhe="Administração, no-show, retrabalho e receita antecipada."
-        />
-        <CartaoResultado
-          titulo="Custo mensal equivalente"
-          valor={formatarMoeda(
-            resultado.custosMensaisEquivalentes,
-          )}
-          detalhe="Mensalidade HSS + implantação amortizada."
-        />
-        <CartaoResultado
-          titulo="Prejuízo sem HSS"
-          valor={formatarMoeda(
-            resultado.prejuizoMensalSemHss,
-          )}
-          detalhe="Tempo atual sem médicos liberados."
-        />
-        <CartaoResultado
-          titulo="Dias economizados"
-          valor={`${formatarNumero(resultado.tempoEconomizadoTotalDias)} dias`}
-          detalhe="Soma dos dias economizados no volume mensal."
-        />
-        <CartaoResultado
-          titulo="Receita antecipada"
-          valor={formatarMoeda(
-            resultado.receitaAntecipadaMensal,
-          )}
-          detalhe="Impacto da entrada mais rápida do médico."
-        />
-        <CartaoResultado
-          titulo="Payback"
-          valor={
-            resultado.paybackMeses ===
-            null
-              ? "Sem payback"
-              : `${formatarNumero(resultado.paybackMeses)} meses`
-          }
-          detalhe="Tempo para recuperar a implantação."
-        />
-      </div>
-    </div>
+    <button
+      type="button"
+      onClick={aoClicar}
+      className="flex min-w-0 flex-wrap items-baseline gap-x-3 rounded-2xl border border-dashed border-hss-roxo/40 bg-white px-3 py-2.5 text-left hover:border-hss-roxo hover:bg-hss-roxo/[0.04] sm:py-1.5"
+    >
+      <strong className="text-sm font-semibold text-hss-roxo">{titulo}</strong>
+      <span className="min-w-0 text-[0.8125rem] leading-5 text-slate-600 sm:truncate">{texto}</span>
+    </button>
   );
 }
+/* === ITENS DAS LISTAS | fim === */
 
-function ResumoMedico({
-  resultado,
-}: {
-  resultado: ResultadoMedicoRoi;
-}): JSX.Element {
-  return (
-    <div className="space-y-2">
-      <CartaoResultado
-        destaque
-        titulo="ROI do médico"
-        valor={`${formatarNumero(resultado.roiPercentual)}%`}
-        detalhe="Retorno considerando custos de entrada e receita líquida."
-      />
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-        <CartaoResultado
-          titulo="Custo inicial total"
-          valor={formatarMoeda(
-            resultado.custoInicialTotal,
-          )}
-          detalhe="CRM, cursos, documentos, seguro, PJ, investimento e tempo."
-        />
-        <CartaoResultado
-          titulo="Receita líquida mensal"
-          valor={formatarMoeda(
-            resultado.receitaLiquidaMensal,
-          )}
-          detalhe="Receita bruta menos repasse e custo operacional."
-        />
-        <CartaoResultado
-          titulo="Receita antecipada"
-          valor={formatarMoeda(
-            resultado.receitaAntecipada,
-          )}
-          detalhe="Valor antecipado pela redução do tempo de entrada."
-        />
-        <CartaoResultado
-          titulo="Dias antecipados"
-          valor={`${formatarNumero(resultado.economiaTempoCredenciamento)} dias`}
-          detalhe="Diferença entre fluxo tradicional e fluxo com HSS."
-        />
-        <CartaoResultado
-          titulo="Repasse mensal"
-          valor={formatarMoeda(
-            resultado.repasseMensal,
-          )}
-          detalhe="Valor repassado para clínica ou hospital."
-        />
-        <CartaoResultado
-          titulo="Payback"
-          valor={
-            resultado.paybackMeses ===
-            null
-              ? "Sem payback"
-              : `${formatarNumero(resultado.paybackMeses)} meses`
-          }
-          detalhe="Tempo para recuperar os custos iniciais."
-        />
-      </div>
-    </div>
-  );
-}
-/* === RESUMOS | fim === */
+/* === CAMPOS DO VISITANTE | inicio === */
+const ORDEM_CAMPOS = Object.keys(CAMPOS_PREMISSAS) as CampoPremissa[];
 
-/* === MINI GRAFICO | inicio === */
-function MiniGrafico({
-  valores,
-  rotulos,
-  descricoes,
+function CamposVisitante({
+  prazos,
+  aoMudarPrazos,
+  campos,
+  perspectiva,
+  premissas,
+  resultadoMedico,
+  resultadoInstituicao,
+  atualizar,
 }: {
-  valores: number[];
-  rotulos: string[];
-  descricoes: string[];
+  prazos?: PrazosEmBranco;
+  aoMudarPrazos: (prazos: PrazosEmBranco) => void;
+  campos: CampoPremissa[];
+  perspectiva: PerspectivaRoi;
+  premissas: PremissasCenario;
+  resultadoMedico: ResultadoMedico;
+  resultadoInstituicao: ResultadoInstituicao;
+  atualizar: (campo: CampoPremissa, valor: number) => void;
 }): JSX.Element {
-  const maior = Math.max(
-    ...valores.map((valor) =>
-      Math.abs(valor),
-    ),
-    1,
-  );
+  // Ordem do catalogo, independente da ordem em que o ADM marcou os campos.
+  const visiveis = ORDEM_CAMPOS.filter((campo) => campos.includes(campo));
 
   return (
-    <div className="rounded-[1rem] border border-hss-violeta/15 bg-white/70 p-2 dark:border-white/10 dark:bg-white/5">
-      <p className="text-[10px] font-black uppercase tracking-[0.14em] text-hss-violeta dark:text-hss-lavanda">
-        Composição visual
+    <GradeCampos>
+      {prazos ? (
+        <>
+          <CampoNumerico
+            id="branco-prazo-sem"
+            label="Prazo do credenciamento sem HSS"
+            info="Quantos dias, somando todas as etapas, o credenciamento leva hoje."
+            sufixo="dias"
+            valor={prazos.semHss}
+            aoMudar={(valor) => aoMudarPrazos({ ...prazos, semHss: valor })}
+          />
+          <CampoNumerico
+            id="branco-prazo-com"
+            label="Prazo do credenciamento com HSS"
+            info="Sua hipótese de prazo com a HSS. Não pode passar do prazo sem HSS."
+            sufixo="dias"
+            max={prazos.semHss}
+            valor={prazos.comHss}
+            aoMudar={(valor) => aoMudarPrazos({ ...prazos, comHss: valor })}
+          />
+        </>
+      ) : null}
+      {visiveis.map((campo) => (
+        <CampoDaPremissa
+          key={campo}
+          campo={campo}
+          rotulo={ROTULOS_VISITANTE[perspectiva][campo]}
+          premissas={premissas}
+          aoMudar={atualizar}
+          prefixoId={perspectiva === "medico" ? "med" : "inst"}
+        />
+      ))}
+      <Conferencia>
+        {perspectiva === "medico"
+          ? `Cerca de ${formatarNumero(calcularConsultasMes(premissas))} consultas por mês: você fica com ${formatarMoeda(resultadoMedico.margemPorConsulta)} por consulta, cerca de ${formatarMoeda(resultadoMedico.rendaMensal)} por mês.${
+              resultadoMedico.investimentoFormacao > 0 ? ` Investimento no curso: ${formatarMoeda(resultadoMedico.investimentoFormacao)}.` : ""
+            }`
+          : `A instituição fica com ${formatarNumero(resultadoInstituicao.parcelaInstituicaoPercentual)}%: margem de ${formatarMoeda(resultadoInstituicao.margemPorConsulta)} por consulta e ${formatarMoeda(resultadoInstituicao.margemDiaria)} por dia, por médico.`}
+      </Conferencia>
+      <p className="text-[0.8125rem] leading-5 text-slate-600 min-[360px]:col-span-2 lg:col-span-3">
+        Impostos, horas de papelada, retrabalho e os demais valores usam referências de mercado.
       </p>
-      <div
-        className="mt-1 grid w-full gap-1.5"
-        style={{
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(14rem, 100%), 1fr))",
-        }}
-      >
-        {valores.map(
-          (valor, indice) => {
-            const largura = Math.max(
-              8,
-              (Math.abs(valor) /
-                maior) *
-                100,
-            );
-            return (
-              <div
-                key={rotulos[indice]}
-                className="group relative flex min-h-11 w-full flex-col justify-end rounded-xl bg-hss-violeta/10 p-2 dark:bg-white/5"
-                tabIndex={0}
-                aria-label={`${rotulos[indice]}: ${descricoes[indice]}`}
-              >
-                <div className="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-3 right-3 z-20 rounded-2xl border border-hss-violeta/20 bg-white p-3 text-xs font-semibold leading-5 text-slate-700 opacity-0 shadow-neon transition group-hover:opacity-100 group-focus:opacity-100 dark:border-white/10 dark:bg-hss-tinta dark:text-slate-200">
-                  {descricoes[indice]}
-                </div>
-                <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/75 dark:bg-hss-tinta/70">
-                  <div
-                    className="h-full rounded-l-full bg-hss-roxo shadow-neon transition-all"
-                    style={{
-                      width: `${largura}%`,
-                    }}
-                  />
-                </div>
-                <strong className="mt-1 block text-xs text-slate-900 dark:text-white">
-                  {rotulos[indice]}
-                </strong>
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
-                  {formatarMoeda(valor)}
-                </span>
-              </div>
-            );
-          },
-        )}
-      </div>
+    </GradeCampos>
+  );
+}
+/* === CAMPOS DO VISITANTE | fim === */
+
+/* === PERFIS DA CARREIRA | inicio === */
+function ListaPerfisCarreira({
+  selecionado,
+  perfilIa,
+  aoSelecionar,
+  aoAbrirChat,
+  aoRemoverIa,
+  aoComecarDoZero,
+}: {
+  selecionado: string;
+  perfilIa: PerfilCarreira | null;
+  aoSelecionar: (id: string) => void;
+  aoAbrirChat: () => void;
+  aoRemoverIa: () => void;
+  aoComecarDoZero: () => void;
+}): JSX.Element {
+  function renderizarPerfil(perfil: PerfilCarreira): JSX.Element {
+    const resultado = calcularCarreira(perfil.premissas);
+    const daIa = perfil.id === ID_PERFIL_IA;
+
+    return (
+      <OpcaoLista
+        key={perfil.id}
+        nomeGrupo="perfil-carreira"
+        valor={perfil.id}
+        ativo={perfil.id === selecionado}
+        titulo={perfil.nome}
+        destaque={
+          perfil.id === ID_PERFIL_EM_BRANCO
+            ? "Preencha do zero"
+            : `${formatarMoeda(resultado.investimentoTotal)} em ${formatarNumero(perfil.premissas.anosCurso)} anos · retorno em ${formatarTempo(resultado.mesesPagarFormacao).toLowerCase()}`
+        }
+        resumo={perfil.resumo}
+        aoSelecionar={aoSelecionar}
+        aoRemover={daIa ? aoRemoverIa : undefined}
+      />
+    );
+  }
+
+  return (
+    <div className="grid gap-3">
+      <GrupoLista titulo="Perfil personalizado" radio={selecionado === ID_PERFIL_EM_BRANCO || Boolean(perfilIa)}>
+        <BotaoComecarDoZero texto="Faça seu perfil do início" aoClicar={aoComecarDoZero} />
+        {selecionado === ID_PERFIL_EM_BRANCO ? renderizarPerfil(PERFIL_EM_BRANCO) : null}
+        {perfilIa ? renderizarPerfil(perfilIa) : null}
+      </GrupoLista>
+
+      <GrupoLista titulo="Perfis atuais">{PERFIS_CARREIRA.map(renderizarPerfil)}</GrupoLista>
+
+      <GrupoLista titulo="Perfil com IA" radio={false}>
+        <BotaoMontarComIa
+          titulo={perfilIa ? "Montar outro perfil com IA" : "Montar meu perfil com IA"}
+          texto="O assistente pergunta sobre o curso e os seus atendimentos e preenche os valores."
+          aoClicar={aoAbrirChat}
+        />
+      </GrupoLista>
     </div>
   );
 }
-/* === MINI GRAFICO | fim === */
+
+function CamposCarreira({
+  campos,
+  conferencia,
+  premissas,
+  atualizar,
+}: {
+  campos: CampoCarreira[];
+  conferencia: "curso" | "atendimentos";
+  premissas: PremissasCarreira;
+  atualizar: (campo: CampoCarreira, valor: number) => void;
+}): JSX.Element {
+  const resultado = calcularCarreira(premissas);
+
+  return (
+    <GradeCampos>
+      {campos.map((campo) => {
+        const definicao = CAMPOS_CARREIRA[campo];
+        return (
+          <CampoNumerico
+            key={campo}
+            id={`carreira-${campo}`}
+            label={definicao.rotulo}
+            info={
+              <>
+                <span className="block">{definicao.info}</span>
+                <span className="mt-2 block border-t border-white/15 pt-2 text-white/70">No cálculo: {definicao.entraEm}</span>
+              </>
+            }
+            prefixo={definicao.prefixo}
+            sufixo={definicao.sufixo}
+            min={definicao.min}
+            max={definicao.max}
+            passo={campo === "reajusteAnualPercentual" ? 0.1 : 1}
+            valor={premissas[campo]}
+            aoMudar={(valor) => atualizar(campo, valor)}
+          />
+        );
+      })}
+      <Conferencia>
+        {conferencia === "curso"
+          ? `Investimento total estimado: ${formatarMoeda(resultado.investimentoTotal)} em ${formatarNumero(resultado.mesesCurso / 12)} anos, sendo ${formatarMoeda(
+              resultado.totalMensalidades,
+            )} em mensalidades e ${formatarMoeda(resultado.totalCustoVida)} de custo de vida.`
+          : `Ganho líquido de cerca de ${formatarMoeda(resultado.rendaLiquidaMensal)} por mês. Com ele, o investimento de ${formatarMoeda(
+              resultado.investimentoTotal,
+            )} volta em ${formatarTempo(resultado.mesesPagarFormacao).toLowerCase()} de profissão.`}
+      </Conferencia>
+    </GradeCampos>
+  );
+}
+/* === PERFIS DA CARREIRA | fim === */
+
+/* === ATENDIMENTOS DA CARREIRA | inicio === */
+// Passo "Seus atendimentos": um bloco por local (medico que atende em mais de um lugar, ate MAXIMO_LOCAIS),
+// cada um com todos os campos, inclusive impostos e prazo de pagamento. O ganho so aparece no resultado.
+function CamposAtendimentos({
+  premissas,
+  atualizarLocais,
+  atualizarCustoVida,
+}: {
+  premissas: PremissasCarreira;
+  atualizarLocais: (locais: LocalAtendimento[]) => void;
+  atualizarCustoVida: (valor: number) => void;
+}): JSX.Element {
+  const { locais } = premissas;
+
+  function mudarLocal(id: string, mudanca: Partial<LocalAtendimento>): void {
+    atualizarLocais(locais.map((local) => (local.id === id ? { ...local, ...mudanca } : local)));
+  }
+
+  return (
+    <div className="grid gap-4">
+      <ul className="grid gap-3" aria-label="Locais de atendimento">
+        {locais.map((local, indice) => {
+          const nomeVisivel = local.nome.trim() || `Local ${indice + 1}`;
+          return (
+            <li key={local.id} className="rounded-2xl border border-hss-violeta/15 bg-white p-4">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <label className="flex min-w-[10rem] flex-1">
+                  <span className="sr-only">Nome do local {indice + 1}</span>
+                  <input
+                    type="text"
+                    value={local.nome}
+                    maxLength={40}
+                    placeholder={`Local ${indice + 1}`}
+                    onChange={(evento) => mudarLocal(local.id, { nome: evento.target.value })}
+                    className="min-w-0 flex-1 rounded-lg border border-transparent bg-transparent px-1.5 py-1 text-base font-semibold text-slate-950 outline-none transition hover:border-hss-violeta/20 focus:border-hss-violeta focus:ring-4 focus:ring-hss-lavanda/30"
+                  />
+                </label>
+                {locais.length > 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => atualizarLocais(locais.filter((item) => item.id !== local.id))}
+                    aria-label={`Remover ${nomeVisivel}`}
+                    className="text-[0.8125rem] font-semibold text-[#c2410c] hover:underline"
+                  >
+                    Remover
+                  </button>
+                ) : null}
+              </div>
+
+              <div className="mt-3 grid gap-x-4 gap-y-3 min-[360px]:grid-cols-2 lg:grid-cols-3">
+                {CAMPOS_LOCAL.map((campo) => {
+                  const definicao = CAMPOS_CARREIRA[campo];
+                  return (
+                    <CampoNumerico
+                      key={campo}
+                      id={`${local.id}-${campo}`}
+                      label={definicao.rotulo}
+                      info={
+                        <>
+                          <span className="block">{definicao.info}</span>
+                          <span className="mt-2 block border-t border-white/15 pt-2 text-white/70">No cálculo: {definicao.entraEm}</span>
+                        </>
+                      }
+                      prefixo={definicao.prefixo}
+                      sufixo={definicao.sufixo}
+                      min={definicao.min}
+                      max={definicao.max}
+                      valor={local[campo]}
+                      aoMudar={(valor) => mudarLocal(local.id, { [campo]: valor })}
+                    />
+                  );
+                })}
+                {/* Custo de vida e da pessoa, nao do local: aparece uma vez, no primeiro local. */}
+                {indice === 0 ? (
+                  <CampoNumerico
+                    id="carreira-custoVidaFormado"
+                    label={CAMPO_CUSTO_VIDA_FORMADO.rotulo}
+                    info={
+                      <>
+                        <span className="block">{CAMPO_CUSTO_VIDA_FORMADO.info}</span>
+                        <span className="mt-2 block border-t border-white/15 pt-2 text-white/70">No cálculo: {CAMPO_CUSTO_VIDA_FORMADO.entraEm}</span>
+                      </>
+                    }
+                    prefixo={CAMPO_CUSTO_VIDA_FORMADO.prefixo}
+                    valor={calcularCustoVidaFormado(premissas)}
+                    aoMudar={atualizarCustoVida}
+                  />
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {locais.length < MAXIMO_LOCAIS ? (
+        <button
+          type="button"
+          onClick={() => atualizarLocais([...locais, novoLocal(locais.length + 1)])}
+          className="rounded-2xl border border-dashed border-hss-roxo/40 bg-white px-4 py-3 text-left text-sm font-semibold text-hss-roxo transition-colors hover:border-hss-roxo hover:bg-hss-lavanda/10"
+        >
+          Adicionar outro local de atendimento
+          <span className="block text-[0.8125rem] font-normal text-slate-600">Para quem atende em mais de um hospital, clínica ou pronto atendimento.</span>
+        </button>
+      ) : (
+        <p className="text-[0.8125rem] text-slate-600">Limite de {MAXIMO_LOCAIS} locais atingido.</p>
+      )}
+    </div>
+  );
+}
+/* === ATENDIMENTOS DA CARREIRA | fim === */
+
+/* === CAMPOS DE APOIO | inicio === */
+// Duas colunas a partir de 360px para que cada passo caiba inteiro na caixa de 90dvh, sem rolagem.
+function GradeCampos({ children }: { children: ReactNode }): JSX.Element {
+  return <div className="grid gap-x-6 gap-y-4 min-[360px]:grid-cols-2 lg:grid-cols-3">{children}</div>;
+}
+
+function Conferencia({ children }: { children: ReactNode }): JSX.Element {
+  return (
+    <p className="rounded-2xl border border-hss-violeta/15 bg-hss-roxo/10 px-4 py-3 text-sm leading-6 text-slate-950 min-[360px]:col-span-2 lg:col-span-3" aria-live="polite">
+      {children}
+    </p>
+  );
+}
+/* === CAMPOS DE APOIO | fim === */

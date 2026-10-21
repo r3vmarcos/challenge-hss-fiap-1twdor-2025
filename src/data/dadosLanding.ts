@@ -1,59 +1,41 @@
-/* === DADOS BASE DO HERO | inicio === */
-import type { DadosEmpresaRoi } from "@/types/calculadora";
-
-export const dadosBaseHero: DadosEmpresaRoi = {
-  nomeInstituicao: "Hospital exemplo",
-  porteInstituicao: "Médio porte",
-  profissionaisSaude: 120,
-  atendimentosMes: 8500,
-  ticketMedioAtendimento: 280,
-  margemMediaAtendimento: 95,
-  medicosCredenciadosMes: 12,
-  valorMensalPorMedicoLiberado: 28000,
-  tempoCredenciamentoAtualDias: 45,
-  tempoCredenciamentoComHssDias: 12,
-  horasAdministrativasSemana: 110,
-  custoHoraAdministrativo: 42,
-  reducaoAdministrativaPercentual: 38,
-  taxaNoShowAtual: 18,
-  taxaNoShowComHss: 11,
-  reducaoGlosasPercentual: 22,
-  custoGlosasMensal: 24000,
-  custoMensalHss: 7500,
-  custoImplantacaoHss: 18000,
-  mesesAnalise: 12,
-  tipoCredenciamentoId: "hospitalar-padrao",
-  tipoCredenciamentoNome: "Credenciamento hospitalar padrão",
-  horasAdministrativasPorCredenciamento: 22,
-  taxaRetrabalhoDocumental: 24,
-  custoRetrabalhoPorMedico: 520,
-  taxaDocumentosVencidos: 10,
-  custoDocumentoVencido: 260,
-  margemLiquidaPercentual: 35,
-};
-/* === DADOS BASE DO HERO | fim === */
-
 /* === DADOS DO PROCESSO | inicio === */
+// resumo: linha curta do cartao. texto: o que acontece na etapa. comHss e limite: explicacao exibida no modal.
+// Os limites seguem as notas dos cenarios da calculadora: a HSS organiza o fluxo, mas nao substitui decisoes da instituicao.
 export const etapasProcesso = [
   {
     titulo: "Pré-cadastro do médico",
+    resumo: "Dados básicos, vínculo e tipo de credenciamento.",
     texto: "Instituição ou médico inicia o fluxo com dados básicos, vínculo desejado e tipo de credenciamento.",
+    comHss: "O médico recebe um formulário digital e preenche pelo celular. Os dados ficam salvos no cadastro único e são reaproveitados em outros credenciamentos.",
+    limite: "O prazo ainda depende de o médico responder e enviar as informações.",
   },
   {
     titulo: "Envio e triagem documental",
+    resumo: "Documentos reunidos e conferidos conforme o cenário.",
     texto: "Documentos obrigatórios são reunidos, classificados e conferidos conforme o perfil do cenário.",
+    comHss: "Um checklist mostra o que cada tipo de credenciamento exige. Documento faltando ou com pendência aparece no status, sem troca de e-mails.",
+    limite: "A triagem é mais rápida quando o médico já tem os documentos completos.",
   },
   {
     titulo: "Validação de CRM, RQE e certidões",
+    resumo: "Conferência das credenciais e certidões do médico.",
     texto: "A etapa reduz risco assistencial e organiza a conferência das credenciais profissionais.",
+    comHss: "Cada credencial tem status e histórico de conferência, e a plataforma avisa antes de um documento vencer.",
+    limite: "A consulta às fontes oficiais, como o conselho regional, continua obrigatória.",
   },
   {
     titulo: "Análise técnica e aprovação interna",
+    resumo: "Validação pelas áreas responsáveis da instituição.",
     texto: "Coordenação, corpo clínico, compliance ou jurídico validam o médico conforme as regras da instituição.",
+    comHss: "O dossiê chega completo e organizado a quem aprova, com as pendências rastreadas desde o envio.",
+    limite: "A decisão é da instituição. Na simulação, o prazo desta etapa é o mesmo com e sem a HSS.",
   },
   {
     titulo: "Liberação operacional para atuação",
+    resumo: "Liberação para agenda, plantão ou procedimento.",
     texto: "O médico é liberado para agenda, plantão, procedimento ou recredenciamento conforme o cenário.",
+    comHss: "Contrato com assinatura digital e status de liberação visível para o médico e para a instituição.",
+    limite: "Agenda, escala e integração com os sistemas do hospital continuam com a instituição.",
   },
 ];
 

@@ -8,19 +8,13 @@ import { SecaoProcessoComparativo } from "@/components/secoes/secao-processo-com
 
 /* === PAGINA LANDING | inicio === */
 interface PaginaLandingProps {
-  diasEconomizados: number;
-  prejuizoEstimado: number;
   dicasHoverAtivas: boolean;
 }
 
-export function PaginaLanding({
-  diasEconomizados,
-  prejuizoEstimado,
-  dicasHoverAtivas,
-}: PaginaLandingProps): JSX.Element {
+export function PaginaLanding({ dicasHoverAtivas }: PaginaLandingProps): JSX.Element {
   return (
     <>
-      <HeroHss diasEconomizados={diasEconomizados} prejuizoEstimado={prejuizoEstimado} />
+      <HeroHss />
       <SecaoBeneficios />
       <SecaoComoFunciona />
       <SecaoProcessoComparativo />

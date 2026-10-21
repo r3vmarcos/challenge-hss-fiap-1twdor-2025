@@ -17,6 +17,8 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+config/gemini.env
+.dev.vars
 
 # Sistema/editor
 .DS_Store

@@ -10,7 +10,7 @@ import iconeLock from "@/assets/icons/lock.svg";
 import iconeShield from "@/assets/icons/shield.svg";
 import iconeUsers from "@/assets/icons/users.svg";
 import iconeZap from "@/assets/icons/zap.svg";
-import { ShimmerButton } from "../ui/shimmer-button";
+import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "../ui/shimmer-button";
 /* === IMPORTAÇÕES | fim === */
 
 // /* === TIPOS | inicio === */
@@ -121,74 +121,80 @@ export function SecaoProcessoComparativo(): JSX.Element {
   ];
 
   return (
-    <section id="como-funciona" lang="pt-BR" aria-labelledby="diferenciais-title" className="scroll-mt-28 bg-[#e9eaf2] px-4 py-12 sm:px-6 lg:px-8">
+    <section
+      id="diferenciais"
+      lang="pt-BR"
+      aria-labelledby="diferenciais-title"
+      // lg+: do titulo ao botao cabe em 100dvh. Topo = header fixo (74px) + 3dvh; base = 3dvh.
+      // Soma: ~60dvh (titulo, 5 linhas de 8,5dvh, espacos) + ~290px fixos (header, cabecalhos dos paineis, botao); cabe a partir de ~800px de altura.
+      className="scroll-mt-28 px-4 py-9 sm:px-6 sm:py-10 lg:flex lg:min-h-[100dvh] lg:scroll-mt-0 lg:flex-col lg:justify-center lg:px-8 lg:pb-[3dvh] lg:pt-[calc(74px+3dvh)]"
+    >
       <div className="mx-auto max-w-[1200px] text-center">
-        <div className="mb-8 sm:mb-10">
-          <h2 id="diferenciais-title" className="text-[clamp(32px,4.2vw,48px)] font-black leading-[1.15] tracking-[-1.5px] text-[#080b15]">Diferenciais</h2>
-          <p className="mx-auto mt-3 max-w-[620px] text-sm leading-6 text-slate-600 sm:text-base">
+        <div className="mb-5 sm:mb-6 lg:mb-[2dvh]">
+          <h2 id="diferenciais-title" className="text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#080b15]">Diferenciais</h2>
+          {/* No celular o painel "Dúvidas comuns" some, entao este texto (que fala das duvidas) tambem sai. */}
+          <p className="mx-auto mt-2 max-w-[620px] text-sm leading-6 text-slate-600 max-sm:hidden sm:text-base">
             Entenda as principais dúvidas dos gestores e veja como a HSS torna a implementação segura, viável e eficiente.
           </p>
         </div>
       </div>
 
       <div className="flex justify-center flex-col">
-        <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] md:gap-3">
-          <article id="comparison-without" className="rounded-2xl bg-[#f0f3f8] p-4 sm:p-5" aria-labelledby="comparison-without-title">
-            <div className="flex min-h-[72px] items-center gap-3 px-1">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
-              <div>
-                <h3 id="comparison-without-title" className="text-lg font-black text-[#17223f]">Dúvidas comuns</h3>
-                <p className="mt-0.5 text-sm leading-5 text-slate-600">O que costuma preocupar os gestores</p>
-              </div>
-            </div>
-            <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
-              {duvidas.map(({ icone, titulo, descricao }) => (
-                <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/75 px-3 py-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8edf3]">
-                    <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <h4 className="text-sm font-bold leading-5 text-[#17223f]">{titulo}</h4>
-                    <p className="mt-1 text-sm leading-5 text-slate-600">{descricao}</p>
-                  </div>
-                </div>
+        {/* Mobile: os dois paineis empilhados. No celular (abaixo de sm) so aparece "Com a HSS", para encurtar a secao. */}
+        <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:hidden">
+          <article className="rounded-2xl bg-[#f0f3f8] p-4 max-sm:hidden sm:p-5" aria-labelledby="comparison-without-title-mobile">
+            <CabecalhoPainel tipo="sem" idTitulo="comparison-without-title-mobile" />
+            <div className="mt-2.5 grid gap-2">
+              {duvidas.map((item) => (
+                <CartaoComparativo key={item.titulo} tipo="sem" {...item} />
               ))}
             </div>
           </article>
-          <div aria-hidden="true" className="hidden grid-rows-[repeat(5,minmax(112px,auto))] gap-2.5 pt-[100px] md:grid">
-            {duvidas.map(({ titulo }) => (
-              <span key={titulo} className="flex items-center justify-center">
-                <img src={iconeArrowRight} alt="" className="h-6 w-6 opacity-60" />
-              </span>
-            ))}
-          </div>
-          <article id="comparison-with" className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title">
-            <div className="flex min-h-[72px] items-center gap-3 px-1">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#079879]">
-                <img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5 brightness-0 invert" />
-              </span>
-              <div>
-                <h3 id="comparison-with-title" className="text-lg font-black text-[#075f50]">Com a HSS</h3>
-                <p className="mt-0.5 text-sm leading-5 text-[#47756d]">Implementação segura, prática e com suporte em todas as etapas</p>
-              </div>
-            </div>
-            <div className="mt-3 grid gap-2.5 md:grid-rows-[repeat(5,minmax(112px,auto))]">
-              {beneficios.map(({ icone, titulo, descricao }) => (
-                <div key={titulo} className="flex min-h-[112px] items-center gap-3 rounded-xl bg-white/65 px-3 py-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d5eee8]">
-                    <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <h4 className="text-sm font-bold leading-5 text-[#075f50]">{titulo}</h4>
-                    <p className="mt-1 text-sm leading-5 text-[#47756d]">{descricao}</p>
-                  </div>
-                </div>
+          <article className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title-mobile">
+            <CabecalhoPainel tipo="com" idTitulo="comparison-with-title-mobile" />
+            <div className="mt-2.5 grid gap-2">
+              {beneficios.map((item) => (
+                <CartaoComparativo key={item.titulo} tipo="com" {...item} />
               ))}
             </div>
           </article>
         </div>
 
-          <ShimmerButton href="#lead" className="mt-8 max-w-[1100px] w-full mx-auto h-10 shrink-0 whitespace-nowrap px-3 text-[10px] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] min-[390px]:px-3.5 min-[390px]:text-[11px] sm:h-11 sm:px-5 sm:text-xs lg:h-12 lg:px-6 lg:text-[13px]">
+        {/* md+: cada duvida e o beneficio correspondente ficam na mesma linha da grade, entao ficam sempre alinhados.
+            Os fundos dos paineis ocupam a coluna inteira (do cabecalho ao fim) por tras das linhas.
+            Linhas: cabecalho, 5 pares e um respiro final de 0,5rem. */}
+        <div className="mx-auto hidden w-full max-w-[1120px] md:grid md:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] md:grid-rows-[auto_repeat(5,minmax(84px,auto))_0.5rem] md:gap-x-3 md:gap-y-2 lg:grid-rows-[auto_repeat(5,minmax(8.5dvh,auto))_0.5rem] lg:gap-y-[0.9dvh]">
+          <div aria-hidden="true" className="col-start-1 row-start-1 row-end-[-1] rounded-2xl bg-[#f0f3f8]" />
+          <div aria-hidden="true" className="col-start-3 row-start-1 row-end-[-1] rounded-2xl bg-[#e8f5f2]" />
+
+          <div className="col-start-1 row-start-1 px-6 pt-5">
+            <CabecalhoPainel tipo="sem" idTitulo="comparison-without-title" />
+          </div>
+          <div className="col-start-3 row-start-1 px-6 pt-5">
+            <CabecalhoPainel tipo="com" idTitulo="comparison-with-title" />
+          </div>
+
+          {duvidas.map((duvida, indice) => (
+            <div
+              key={duvida.titulo}
+              style={{ gridRow: indice + 2, gridColumn: "1 / -1" }}
+              // Hover no par: retangulo com margem agrupando a duvida, a seta e o beneficio.
+              className="group relative grid grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] gap-x-3 before:pointer-events-none before:absolute before:-inset-y-1 before:inset-x-2 before:rounded-[1.1rem] before:border-2 before:border-[#7156ff] before:bg-[#ece8ff]/60 before:opacity-0 before:transition-opacity before:duration-200 before:content-[''] hover:before:opacity-100 motion-reduce:before:transition-none"
+            >
+              <div className="relative mx-5 flex">
+                <CartaoComparativo tipo="sem" {...duvida} />
+              </div>
+              <span aria-hidden="true" className="relative flex items-center justify-center">
+                <img src={iconeArrowRight} alt="" className="h-6 w-6 opacity-60 transition-opacity duration-200 group-hover:opacity-100" />
+              </span>
+              <div className="relative mx-5 flex">
+                <CartaoComparativo tipo="com" {...beneficios[indice]} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+          <ShimmerButton href="#lead" className={`mt-6 lg:mt-[2.5dvh] max-w-[1100px] w-full mx-auto h-10 shrink-0 whitespace-nowrap px-3 text-[0.625rem] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-12 lg:px-6 lg:text-[0.8125rem] ${CLASSE_BOTAO_CELULAR}`}>
             Agendar demonstração
           </ShimmerButton>
 
@@ -199,6 +205,55 @@ export function SecaoProcessoComparativo(): JSX.Element {
   );
 }
 /* === SEÇÃO PROCESSO COMPARATIVO | fim === */
+
+/* === PARTES DO COMPARATIVO | inicio === */
+type TipoPainel = "sem" | "com";
+
+function CabecalhoPainel({ tipo, idTitulo }: { tipo: TipoPainel; idTitulo: string }): JSX.Element {
+  const comHss = tipo === "com";
+
+  return (
+    <div className="flex min-h-[68px] items-center gap-3 px-1 text-left">
+      {comHss ? (
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#079879]">
+          <img src={iconeCheck} alt="" aria-hidden="true" className="h-5 w-5 brightness-0 invert" />
+        </span>
+      ) : (
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
+      )}
+      <div>
+        <h3 id={idTitulo} className={comHss ? "text-lg font-black text-[#075f50]" : "text-lg font-black text-[#17223f]"}>
+          {comHss ? "Com a HSS" : "Dúvidas comuns"}
+        </h3>
+        <p className={comHss ? "mt-0.5 text-sm leading-5 text-[#47756d]" : "mt-0.5 text-sm leading-5 text-slate-600"}>
+          {comHss ? "Implementação segura, prática e com suporte em todas as etapas" : "O que costuma preocupar os gestores"}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CartaoComparativo({ tipo, icone, titulo, descricao }: { tipo: TipoPainel; icone: string; titulo: string; descricao: string }): JSX.Element {
+  const comHss = tipo === "com";
+
+  return (
+    <div
+      className={[
+        "flex min-h-[84px] w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left lg:min-h-[8.5dvh] lg:py-[0.8dvh]",
+        comHss ? "bg-white/65" : "bg-white/75",
+      ].join(" ")}
+    >
+      <span className={["flex h-10 w-10 shrink-0 items-center justify-center rounded-xl", comHss ? "bg-[#d5eee8]" : "bg-[#e8edf3]"].join(" ")}>
+        <img src={icone} alt="" aria-hidden="true" className="h-5 w-5" />
+      </span>
+      <div className="min-w-0">
+        <h4 className={comHss ? "text-sm font-bold leading-5 text-[#075f50]" : "text-sm font-bold leading-5 text-[#17223f]"}>{titulo}</h4>
+        <p className={comHss ? "mt-1 text-sm leading-5 text-[#47756d]" : "mt-1 text-sm leading-5 text-slate-600"}>{descricao}</p>
+      </div>
+    </div>
+  );
+}
+/* === PARTES DO COMPARATIVO | fim === */
 
 // /* === BLOCO PROCESSO TRAVADO | inicio === */
 // function BlocoProcessoTravado({ id, titulo, descricao, etiqueta, itens, informacoes, invertido }: BlocoProcessoProps): JSX.Element {

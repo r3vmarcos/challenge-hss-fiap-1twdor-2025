@@ -1,5 +1,23 @@
 # Histórico de prompts do projeto
 
+## 2026-10-20 - Passos de gastos do curso e atendimentos na carreira
+
+Pedido: depois de "Qual perfil de formação se parece com o seu?", mostrar uma janela para ajustar os gastos do curso e depois outra para os dados dos atendimentos do médico.
+
+Aplicação: a calculadora de carreira passou a ter três passos (formação, gastos do curso, seus atendimentos); o ganho líquido mensal é calculado a partir dos atendimentos.
+
+## 2026-10-20 - Refinamento visual da calculadora e do ADM
+
+Pedido: aplicar a proposta de design (régua como destaque, menos elevação, arredondamento por profundidade, sem textos com ponto no meio) na calculadora e no Portal ADM.
+
+Aplicação: régua do resultado ampliada, comparativos em linhas, hover simplificado, raios hierarquizados, cores de texto com contraste AA e menor corpo de texto em 13 px.
+
+## 2026-10-20 - Troca da calculadora e do Portal ADM
+
+Pedido: trocar a calculadora pela do projeto `D:\bss_next\challenge-hss-fiap-1twdor-2025`, estilizá-la com as cores e bordas deste projeto e trazer o Portal ADM referente à calculadora.
+
+Aplicação: componentes, tipos, serviços, dados e hooks da calculadora foram trazidos junto com o editor de cenários do ADM, a IA de cenários (Gemini) e a API/migration de cenários no D1; as cores e bordas foram mapeadas para a paleta deste projeto e a aba de contatos do ADM foi mantida.
+
 ## 2026-10-19 - Ajuste de legibilidade dos cartões comparativos
 
 Pedido: aumentar para aproximadamente 14 px os parágrafos e títulos `h4` dos cartões.

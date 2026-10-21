@@ -1,21 +1,26 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Cabecalho } from "@/components/cabecalho";
 import { CamadasParallax } from "@/components/camadas-parallax";
 import { Rodape } from "@/components/layout/rodape";
 import { MenuAcessibilidade } from "@/components/menu-acessibilidade";
 import { PaginaAdm } from "@/components/paginas/pagina-adm";
 import { PaginaLanding } from "@/components/paginas/pagina-landing";
-import { dadosBaseHero } from "@/data/dadosLanding";
 import { useParallaxProfundidade } from "@/hooks/useParallaxProfundidade";
 import { useScrollRevelado } from "@/hooks/useScrollRevelado";
-import { calcularRoiEmpresa } from "@/services/calculosRoi";
 
 /* === COMPONENTE APP | inicio === */
 export default function App(): JSX.Element {
-  const [hashAtual, definirHashAtual] = useState(() => window.location.hash);
+  // Ao atualizar a pagina, comeca sempre na hero: o hash de secao e descartado (o #adm e mantido).
+  const [hashAtual, definirHashAtual] = useState(() => {
+    const hash = window.location.hash;
+    if (hash && hash !== "#adm") {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      return "";
+    }
+    return hash;
+  });
   const [dicasHoverAtivas, definirDicasHoverAtivas] = useState(false);
   const primeiraRolagemRef = useRef(true);
-  const resultadoHero = useMemo(() => calcularRoiEmpresa(dadosBaseHero), []);
   const paginaAdm = hashAtual === "#adm";
 
   useScrollRevelado(hashAtual);
@@ -26,7 +31,10 @@ export default function App(): JSX.Element {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    // "instant" ignora o scroll-behavior: smooth do CSS; com rolagem suave, o encaixe da calculadora
+    // podia capturar a pagina no caminho e esconder o cabecalho.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.body.classList.remove("calculadora-travada", "calculadora-em-tela");
   }, []);
 
   useEffect(() => {
@@ -44,7 +52,7 @@ export default function App(): JSX.Element {
     window.requestAnimationFrame(() => {
       if (primeiraRolagemRef.current) {
         primeiraRolagemRef.current = false;
-        window.scrollTo({ top: 0, behavior: "auto" });
+        window.scrollTo({ top: 0, behavior: "instant" });
         return;
       }
 
@@ -72,11 +80,7 @@ export default function App(): JSX.Element {
         {paginaAdm ? (
           <PaginaAdm />
         ) : (
-          <PaginaLanding
-            diasEconomizados={resultadoHero.tempoEconomizadoPorMedicoDias}
-            prejuizoEstimado={resultadoHero.prejuizoMensalSemHss}
-            dicasHoverAtivas={dicasHoverAtivas}
-          />
+          <PaginaLanding dicasHoverAtivas={dicasHoverAtivas} />
         )}
       </main>
       <div className="relative z-10">

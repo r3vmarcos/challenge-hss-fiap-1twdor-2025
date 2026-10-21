@@ -4,11 +4,22 @@
 
 - [`src/main.tsx`](../src/main.tsx) -> inicializa o React no DOM.
 - [`src/App.tsx`](../src/App.tsx) -> orquestra layout, hash `#adm`, hooks visuais e seleção da página.
-- [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) -> concentra dados do hero, processo e depoimentos da landing.
-- [`src/data/configuracoesCredenciamento.ts`](../src/data/configuracoesCredenciamento.ts) -> base padrão dos cenários do ADM.
-- [`src/services/calculosRoi.ts`](../src/services/calculosRoi.ts) -> regras de cálculo de ROI, payback, receita antecipada e prejuízo evitado.
-- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> calculadora pública por etapas e cenários ativos.
-- [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) -> painel administrativo com abas de contatos e configuração da calculadora.
+- [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) -> concentra dados do processo e depoimentos da landing.
+- [`src/data/configuracoesCredenciamento.ts`](../src/data/configuracoesCredenciamento.ts) -> cenários padrão (etapas, prazos sem/com HSS, premissas) e normalização dos dados vindos do ADM, D1 ou IA.
+- [`src/data/camposPremissas.ts`](../src/data/camposPremissas.ts) -> catálogo dos campos de premissa: rótulo, unidade, limites, grupo e explicação.
+- [`src/data/carreiraMedica.ts`](../src/data/carreiraMedica.ts) -> perfis e campos da calculadora de carreira médica.
+- [`src/services/calculosRoi.ts`](../src/services/calculosRoi.ts) -> ROI do médico e da instituição, timeline, payback, projeções mês a mês e formatadores.
+- [`src/services/calculosCarreira.ts`](../src/services/calculosCarreira.ts) -> investimento da graduação e tempo de retorno da carreira.
+- [`src/services/memoriaCalculo.ts`](../src/services/memoriaCalculo.ts) -> linhas da memória de cálculo exibidas no resultado e no ADM.
+- [`src/services/iaCenarios.ts`](../src/services/iaCenarios.ts) -> cliente da API `/api/ia-cenario`.
+- [`src/hooks/useCenariosCredenciamento.ts`](../src/hooks/useCenariosCredenciamento.ts) -> rascunho local do ADM, leitura dos cenários publicados no D1 e publicação.
+- [`src/hooks/useEncaixeMagnetico.ts`](../src/hooks/useEncaixeMagnetico.ts) -> encaixe da calculadora na tela; sai após girar a roda do mouse.
+- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> calculadora pública: escolha entre ROI do médico, corporativo e da carreira, em dois passos e resultado.
+- [`src/components/calculadora/tela-resultado.tsx`](../src/components/calculadora/tela-resultado.tsx) -> resultado médico/corporativo com vistas de resumo, gráfico e cálculo.
+- [`src/components/calculadora/tela-resultado-carreira.tsx`](../src/components/calculadora/tela-resultado-carreira.tsx) -> resultado da calculadora de carreira.
+- [`src/components/calculadora/graficos-resultado.tsx`](../src/components/calculadora/graficos-resultado.tsx) -> gráficos SVG de tempo x gasto.
+- [`src/components/calculadora/chat-ia-cenario.tsx`](../src/components/calculadora/chat-ia-cenario.tsx) -> conversa com a IA para montar um cenário (calculadora e ADM).
+- [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) -> Portal ADM com abas "Cenários da calculadora" e "Contatos".
 - [`src/components/admin/painel-adm-contatos.tsx`](../src/components/admin/painel-adm-contatos.tsx) -> aba ADM que lista pessoas que preencheram o formulário e solicitaram contato.
 - [`wrangler.toml`](../wrangler.toml) -> configuração Cloudflare Pages e D1.
 
@@ -40,13 +51,20 @@
 - [`src/components/ui/marquee.tsx`](../src/components/ui/marquee.tsx) -> marquee horizontal.
 - [`src/components/ui/number-ticker.tsx`](../src/components/ui/number-ticker.tsx) -> contador animado.
 - [`src/components/ui/logo-origami.tsx`](../src/components/ui/logo-origami.tsx) -> alternância animada dos logos HSS/FIAP no cabeçalho.
+- [`src/components/ui/botao-info.tsx`](../src/components/ui/botao-info.tsx) -> botão "i" com balão de explicação dos campos.
+- [`src/components/ui/interruptor.tsx`](../src/components/ui/interruptor.tsx) -> interruptor ativo/desativado usado no ADM.
 
 ## Cloudflare
 
 - [`functions/api/leads.js`](../functions/api/leads.js) -> endpoint de leads com gravação via `POST` e listagem administrativa via `GET`.
 - [`functions/api/configuracoes-credenciamento.js`](../functions/api/configuracoes-credenciamento.js) -> endpoint de configurações do ADM.
 - [`functions/api/simulacoes-roi.js`](../functions/api/simulacoes-roi.js) -> endpoint de simulações.
-- [`migrations/`](../migrations) -> migrations D1 preparadas.
+- [`functions/api/cenarios-credenciamento.js`](../functions/api/cenarios-credenciamento.js) -> leitura (`GET`) e publicação (`POST`, token `HSS_ADM_TOKEN` opcional) dos cenários no D1.
+- [`functions/api/ia-cenario.js`](../functions/api/ia-cenario.js) -> endpoint da IA; usa os secrets `GEMINI_API_KEY`, `GEMINI_MODELO` e reservas `_2` a `_9`.
+- [`servidor/gemini-cenario.js`](../servidor/gemini-cenario.js) -> módulo do Gemini compartilhado com o middleware do Vite (`vite.config.ts`), que atende `/api/ia-cenario` no `npm run dev`.
+- [`config/gemini.env.example`](../config/gemini.env.example) -> modelo do `config/gemini.env` local (ignorado pelo Git).
+- [`scripts/publicar-chave-gemini.mjs`](../scripts/publicar-chave-gemini.mjs) -> `npm run ia:publicar-chave`, grava as chaves como secrets do Cloudflare Pages.
+- [`migrations/`](../migrations) -> migrations D1 preparadas; `0004` cria a tabela `cenarios_credenciamento`.
 
 ## Ajustes Responsivos Atuais
 
@@ -55,12 +73,11 @@
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em
   azul.
-- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> controla o modal compacto de explicação das etapas no mobile.
 - [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> apresenta os painéis em desktop com setas entre os cartões e preserva o empilhamento responsivo em telas menores.
 - [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta largura, título em três linhas e imagem do hero; no desktop, a médica fica posicionada no lado direito,
   centralizada verticalmente e com degradê transparente na base.
-- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> usa limites de largura e `min-w-0` para selects, cards e wrappers no
-  mobile.
+- [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> caixa de 90dvh x 90dvw com grade de campos em duas colunas a partir de
+  360px; enquanto ocupa a tela, cabeçalho e botão A11y saem de cena (`calculadora-em-tela` em `src/index.css`).
 - [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> reduz padding e limita largura dos campos no mobile.
 
 ## Textos Visíveis Do Site
@@ -121,6 +138,7 @@ Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/componen
 - A Health Sync estrutura cada etapa do credenciamento médico em uma plataforma digital única, auditável e rastreável - para que instituições e médicos assumam o controle do
   processo, economizando tempo e com menos burocracia.
 - Etapas do processo de credenciamento
+- Hover ou foco destaca a etapa; clique abre o modal com "O que acontece", "Com a HSS", "O que continua com a instituição", "Etapa anterior" e "Próxima etapa" (textos em `etapasProcesso`: `texto`, `comHss`, `limite`).
 - Pré-cadastro do médico: Instituição ou médico inicia o fluxo com dados básicos, vínculo desejado e tipo de credenciamento.
 - Envio e triagem documental: Documentos obrigatórios são reunidos, classificados e conferidos conforme o perfil do cenário.
 - Validação de CRM, RQE e certidões: A etapa reduz risco assistencial e organiza a conferência das credenciais profissionais.
@@ -183,82 +201,57 @@ Origem visual: [`src/components/secoes/secao-depoimentos.tsx`](../src/components
 
 Origem: [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx)
 
-- Calcule agora o ROI
-- Destaque visual do título "Calcule agora o ROI" sem aumento de fonte.
-- A calculadora compacta não reserva espaço lateral para o pino no mobile; o espaço extra fica apenas no desktop.
-- Empresa / Hospital / Clínica
-- Calcula benefício de contratar a HSS, reduzir tempo e credenciar médicos mais rápido.
-- Médico
-- Calcula ROI do médico em hospital, clínica particular ou consultório próprio.
-- Tipo de cenário configurado no ADM
-- Cenário
-- Tempo
-- Valores
-- Custos
-- Resultado
-- Leitura do cenário
-- ROI estimado
-- Benefícios mensais
-- Custo mensal equivalente
-- Prejuízo sem HSS
-- Dias economizados
-- Receita antecipada
-- Payback
-- ROI do médico
-- Custo inicial total
-- Receita líquida mensal
-- Dias antecipados
-- Repasse mensal
-- Composição visual
-- Admin
-- No-show
-- Retrabalho
-- Receita antecipada
-- Custo inicial
-- Líquido mensal
-- Destrave para continuar rolando a página.
-- Travar calculadora na tela
-- Destravar calculadora
-- Quando travada no PC/notebook, a calculadora bloqueia a rolagem da página até ser destravada.
+Componentes de apoio: [`src/components/calculadora/`](../src/components/calculadora)
+
+- Calcule seu retorno
+- Qual retorno você quer calcular?
+- ROI do médico com a HSS
+- ROI corporativo com a HSS
+- ROI da carreira médica
+- Começar / Continuar simulação
+- Onde você vai se credenciar? / Qual processo você quer simular? / Qual perfil de formação se parece com o seu?
+- Conte só o principal (médico e corporativo)
+- Carreira: Ajuste os gastos do curso / Como serão os seus atendimentos?
+- Montar meu cenário com IA
+- Trocar calculadora / Voltar / Próximo / Ver resultado
+- Seu resultado
+- Ajustar respostas / Nova simulação / Agendar demonstração
+- Gire a roda do mouse 3 vezes para sair da calculadora
+- Cores: sem HSS em laranja (`#f97316`), com HSS em teal (`#079879`), seleção com borda violeta e anel lavanda.
 
 ### Painel ADM
 
 Origem principal: [`src/components/admin/painel-adm-credenciamento.tsx`](../src/components/admin/painel-adm-credenciamento.tsx) Origem dos contatos: [`src/components/admin/painel-adm-contatos.tsx`](../src/components/admin/painel-adm-contatos.tsx)
 
-- Gestão de contatos e calculadora ROI.
+- Portal ADM
+- Cenários da calculadora
 - Contatos
-- Calculadora
+- Entrar no Portal ADM (ambiente demo: usuário hssadmin e senha hss2026)
+- Cenários (interruptor liga ou desliga o cenário na calculadora)
+- Como aparece no site
+- Para quem é este cenário
+- Mostrar na calculadora do site
+- Etapas e prazos
+- O que o visitante preenche
+- Resultado e conta com os valores deste cenário
+- Descartar rascunho / Restaurar cenários padrão / Publicar no site
 - Contatos recebidos
-- Empresa / Hospital / Clínica
-- Médicos
 - Buscar contato
 - Carregando contatos...
 - Nenhum contato encontrado no banco ou fallback local.
-- Adicionar cenário
-- Restaurar padrões
-- Cenários totais
-- Ativos no site
-- Tempo economizado
-- ROI simulado
-- Mostrar este cenário no site
 
 ### Formulário De Lead
 
 Origem: [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx)
 
-- Transforme a simulação em conversa comercial.
-- O formulário captura as informações principais da instituição para uma abordagem B2B consultiva sobre credenciamento médico, redução de tempo e ROI.
+- MENOS PAPELADA. (maior, caixa alta) / MÉDICOS ATENDENDO MAIS RÁPIDO. (caixa alta, uma linha, sem quebra; "Menos" e "rápido" em hss-verde)
+- Conte como é o credenciamento hoje na sua instituição. / Ou sua rotina como médico. / Nossa equipe mostra como a HSS reúne documentos, validações e prazos em um só lugar, e quanto tempo você pode ganhar.
 - Nome
 - E-mail
 - Telefone
-- Instituição
-- Cargo
-- Porte
-- Pequeno porte
-- Médio porte
-- Grande porte
-- Rede hospitalar
+- Você é: Médico / Hospital / clínica (grava em `visao`)
 - Mensagem
+- Campos em uma coluna; instituição, cargo e porte saíram do formulário e seguem vazios no lead.
 - Enviando...
 - Solicitar demonstração
 - Lead salvo com sucesso.

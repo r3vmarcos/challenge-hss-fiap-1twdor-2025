@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "@/components/ui/shimmer-button";
 
 
 /* === TIPOS | inicio === */
@@ -307,10 +307,10 @@ export function SecaoBeneficios(): JSX.Element {
       <section
         id="beneficios"
         lang="pt-BR"
-        className="scroll-mt-[74px] bg-[#eef0f7] px-4 py-16 sm:px-6 md:py-20"
+        className="scroll-mt-[74px] px-4 py-16 sm:px-6 md:py-20"
       >
         <div className="mx-auto max-w-[720px]">
-          <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem] sm:text-center">
+          <h2 className="text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#070814] sm:text-center">
             Benefícios da nossa solução
           </h2>
           <p className="mt-5 text-sm font-thin leading-7 text-slate-700 sm:text-lg sm:text-center">
@@ -345,7 +345,7 @@ export function SecaoBeneficios(): JSX.Element {
             )}
           </div>
 
-          <ShimmerButton href="#lead" className="px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+          <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-auto lg:min-w-[220px] lg:px-8`}>
             Agendar demonstração
           </ShimmerButton>
         </div>
@@ -367,7 +367,7 @@ export function SecaoBeneficios(): JSX.Element {
       ref={secaoRef}
       id="beneficios"
       lang="pt-BR"
-      className="relative scroll-mt-[74px] bg-[#eef0f7] px-4 sm:px-6 lg:px-8"
+      className="relative scroll-mt-[74px] px-4 sm:px-6 lg:px-8"
       style={{
         minHeight: `calc(100vh + ${alturaScrollInterno}px)`,
       }}
@@ -398,7 +398,7 @@ export function SecaoBeneficios(): JSX.Element {
               controle operacional.
             </p>
 
-            <ShimmerButton href="#lead" className="px-6 py-4 sm:w-auto sm:min-w-[220px] sm:px-8">
+            <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-auto lg:min-w-[220px] lg:px-8`}>
               Agendar demonstração
             </ShimmerButton>
           </div>

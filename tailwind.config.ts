@@ -12,9 +12,10 @@ export default {
       },
       colors: {
         hss: {
-          roxo: "#291B7F",
-          violeta: "#4B32D8",
-          lavanda: "#8D7BFF",
+          // Variaveis RGB para a calculadora trocar o tema por tipo (ver index.css, data-tema-calculadora).
+          roxo: "rgb(var(--hss-roxo) / <alpha-value>)",
+          violeta: "rgb(var(--hss-violeta) / <alpha-value>)",
+          lavanda: "rgb(var(--hss-lavanda) / <alpha-value>)",
           ciano: "#22D3EE",
           verde: "#34D399",
           tinta: "#080711",

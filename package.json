@@ -10,7 +10,8 @@
     "preview": "vite preview --host localhost --port 4196 --strictPort",
     "wrangler:deploy": "npm run build && wrangler pages deploy dist",
     "d1:migrar:local": "wrangler d1 migrations apply hss_roi_db --local",
-    "d1:migrar:remoto": "wrangler d1 migrations apply hss_roi_db --remote"
+    "d1:migrar:remoto": "wrangler d1 migrations apply hss_roi_db --remote",
+    "ia:publicar-chave": "node scripts/publicar-chave-gemini.mjs"
   },
   "dependencies": {
     "react": "18.3.1",

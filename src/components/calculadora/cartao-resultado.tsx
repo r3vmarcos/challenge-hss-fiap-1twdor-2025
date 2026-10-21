@@ -15,15 +15,15 @@ export function CartaoResultado({
     <article
       className={
         destaque
-          ? "rounded-[1.1rem] bg-hss-roxo p-3 text-white shadow-neon"
-          : "rounded-[1.1rem] border border-[#c7d2fe] bg-[#eef4ff] p-3 shadow-sm dark:border-white/10 dark:bg-white/10"
+          ? "rounded-[1.35rem] bg-hss-roxo p-3.5 text-white"
+          : "rounded-2xl border border-hss-violeta/15 bg-white p-3"
       }
     >
       <p
         className={
           destaque
-            ? "text-[10px] font-black uppercase tracking-[0.14em] text-hss-lavanda"
-            : "text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400"
+            ? "text-[0.8125rem] font-medium text-white/75"
+            : "text-[0.8125rem] font-medium text-slate-600"
         }
       >
         {titulo}
@@ -31,8 +31,8 @@ export function CartaoResultado({
       <strong
         className={
           destaque
-            ? "mt-1 block text-2xl font-black text-white"
-            : "mt-1 block text-2xl font-black text-hss-roxo dark:text-white"
+            ? "mt-1 block text-3xl font-semibold tracking-[-0.02em] text-white"
+            : "mt-1 block text-xl font-semibold tracking-[-0.01em] text-slate-950"
         }
       >
         {valor}
@@ -40,8 +40,8 @@ export function CartaoResultado({
       <p
         className={
           destaque
-            ? "mt-1 text-xs leading-4 text-white/75"
-            : "mt-1 text-xs leading-4 text-slate-500 dark:text-slate-300"
+            ? "mt-1 text-[0.8125rem] leading-4 text-white/75"
+            : "mt-1 text-[0.8125rem] leading-4 text-slate-600"
         }
       >
         {detalhe}
