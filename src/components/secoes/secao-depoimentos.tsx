@@ -6,7 +6,7 @@ export function SecaoDepoimentos(): JSX.Element {
   return (
     <section id="depoimentos" className="scroll-mt-28 overflow-hidden px-4 py-12 sm:px-6 sm:py-24 lg:px-8">
       <div className="mx-auto max-w-[1200px]">
-        <h2 className="revelar-scroll text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#070814]">Depoimentos</h2>
+        <h2 className="revelar-scroll text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#070814]">Depoimentos</h2>
         <p className="revelar-scroll mt-2 text-base font-bold text-slate-500 sm:mt-3 sm:text-lg">O que nossos clientes estão dizendo:</p>
       </div>
 

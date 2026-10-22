@@ -20,7 +20,7 @@ export function SecaoComoFunciona(): JSX.Element {
     <section id="como-funciona" lang="pt-BR" className="scroll-mt-28 px-4 py-12 max-[900px]:py-[42px] sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="mb-[34px] max-[900px]:mb-[26px]">
-          <h2 className=" mb-[22px] text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#080b15] max-[900px]:mb-4">Como funciona?</h2>
+          <h2 className=" mb-[22px] text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#080b15] max-[900px]:mb-4">Como funciona?</h2>
           <p className="mx-auto max-w-[1070px] text-base leading-[1.45] text-slate-700 max-[900px]:max-w-[680px] max-[900px]:text-[0.9375rem] max-[900px]:leading-[1.6] max-[460px]:text-[0.875rem]">
             <span className="lg:whitespace-nowrap">A Health Sync estrutura as etapas do credenciamento médico em uma plataforma digital, auditável e rastreável.</span>
             <br />

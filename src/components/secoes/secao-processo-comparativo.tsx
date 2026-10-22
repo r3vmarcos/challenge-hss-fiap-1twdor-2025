@@ -131,7 +131,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
     >
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="mb-5 sm:mb-6 lg:mb-[2dvh]">
-          <h2 id="diferenciais-title" className="text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#080b15]">Diferenciais</h2>
+          <h2 id="diferenciais-title" className="text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#080b15]">Diferenciais</h2>
           {/* No celular o painel "Dúvidas comuns" some, entao este texto (que fala das duvidas) tambem sai. */}
           <p className="mx-auto mt-2 max-w-[620px] text-sm leading-6 text-slate-600 max-sm:hidden sm:text-base">
             Entenda as principais dúvidas dos gestores e veja como a HSS torna a implementação segura, viável e eficiente.

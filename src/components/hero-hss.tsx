@@ -44,7 +44,7 @@ export function HeroHss(): JSX.Element {
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-b from-transparent via-[#eef0f7]/75 to-[#eef0f7] sm:h-32 lg:h-40"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24  sm:h-32 lg:h-40"
           />
         </div>
       </div>
