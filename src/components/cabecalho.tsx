@@ -86,12 +86,12 @@ export function Cabecalho({
                 Em telas bem estreitas, "Agendar demonstração" encurta para "Agendar". */}
             {!paginaAdm ? (
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
-                <a
+                {/* <a
                   href="#roi"
                   className="inline-flex h-9 items-center whitespace-nowrap rounded-full border border-hss-roxo/30 bg-white px-3 text-[0.75rem] font-semibold text-hss-roxo transition-colors hover:border-hss-roxo min-[390px]:text-[0.8125rem] sm:px-4"
                 >
                   Calcular ROI
-                </a>
+                </a> */}
                 <a
                   href="#lead"
                   className="inline-flex h-9 items-center whitespace-nowrap rounded-full bg-hss-roxo px-3 text-[0.75rem] font-semibold text-white transition-colors hover:bg-hss-violeta min-[390px]:text-[0.8125rem] sm:px-4"

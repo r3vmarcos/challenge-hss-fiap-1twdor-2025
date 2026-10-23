@@ -72,7 +72,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
   const duvidas = [
     {
       icone: iconeFileText,
-      titulo: '"A implementacao vai ser complicada."',
+      titulo: '"A implementação vai ser complicada."',
       descricao: "Medo de interromper a operação e exigir muitos recursos da equipe.",
     },
     {
@@ -82,7 +82,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
     },
     {
       icone: iconeEyeOff,
-      titulo: '"Sera que o investimento compensa?"',
+      titulo: '"Será que o investimento compensa?"',
       descricao: "Dúvida sobre os custos e o retorno real da solução.",
     },
     {
@@ -119,7 +119,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
     },
     {
       icone: iconeUsers,
-      titulo: "Uso intuitivo e suporte continuo",
+      titulo: "Uso intuitivo e suporte contínuo",
       descricao: "Interface simples, treinamento e equipe de suporte para garantir a adesão da sua equipe.",
     },
   ];
