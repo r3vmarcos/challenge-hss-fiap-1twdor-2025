@@ -38,17 +38,10 @@ export function SecaoComoFunciona(): JSX.Element {
         <div className="grid grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] items-center gap-[56px] max-[900px]:grid-cols-1 max-[900px]:gap-6">
           <figure className="mx-0 min-w-0 max-[900px]:mx-auto max-[900px]:max-w-[620px]">
             <img className="block h-auto w-full" src={mockupIllustration} width="607" height="535" loading="lazy" decoding="async" alt="Prévia da plataforma HSS para credenciamento médico, com envio de documentos, checklist, análise com apoio de IA e acompanhamento do processo." />
-            <div className="mt-6 flex items-center justify-center gap-5 max-[560px]:flex-wrap max-[560px]:justify-center">
-              <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-auto lg:min-w-[220px] lg:px-8`}>
+            <div className="mt-6 flex items-center justify-center gap-5 max-[560px]:flex-wrap max-[560px]:justify-center max-[900px]:hidden">
+              <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-[50%] lg:min-w-[220px] lg:px-8`}>
                 Agendar demonstração
               </ShimmerButton>
-              <span aria-hidden="true" className="h-10 w-px shrink-0 bg-hss-violeta/20 max-[560px]:hidden" />
-              <div className="flex min-w-0 items-center gap-3 text-left">
-                <img src={iconeShieldCheck} alt="" aria-hidden="true" className="h-9 w-9 shrink-0" />
-                <span className="max-w-[190px] text-[0.85rem] leading-5 text-slate-600">
-                  Processo seguro, com total transparência
-                </span>
-              </div>
             </div>
           </figure>
           <ListaEtapas />
@@ -86,39 +79,39 @@ function ListaEtapas(): JSX.Element {
   const [aberta, definirAberta] = useState<number | null>(null);
 
   return (
-    <>
-      <ol
-        className="relative m-0 grid list-none gap-4 p-0 before:absolute before:bottom-10 before:left-10 before:top-10 before:w-px before:bg-[#c9cbd6] before:content-[''] max-[900px]:mx-auto max-[900px]:w-full max-[900px]:max-w-[620px] max-[900px]:gap-3 max-[460px]:before:left-[33px]"
-        aria-label="Etapas do processo de credenciamento"
-      >
-        {etapasProcesso.map((etapa, indice) => {
-          const destacada = indice === ativa;
-          return (
-            <li key={etapa.titulo} className="relative">
-              <button
-                type="button"
-                onMouseEnter={() => definirAtiva(indice)}
-                onFocus={() => definirAtiva(indice)}
-                onClick={() => definirAberta(indice)}
-                aria-haspopup="dialog"
-                className={[CLASSE_BOTAO, destacada ? "border-[#7156ff] bg-[#ece8ff]" : "border-[#cdd0d9] bg-white"].join(" ")}
-              >
-                <span className={[CLASSE_NUMERO, destacada ? "bg-[#5037e6] text-white" : "bg-[#ebe6ff] text-[#5037e6]"].join(" ")} aria-hidden="true">
-                  {numeroEtapa(indice)}
-                </span>
-                <span className="min-w-0">
-                  <span className={[CLASSE_TITULO, destacada ? "text-[#281b75] text-sm" : "text-[#252837] text-sm"].join(" ")}>
-                    <span className="sr-only">Etapa {indice + 1}: </span>
-                    {etapa.titulo}
+    <div className="flex flex-col align-middle">
+        <ol
+          className="relative m-0 grid list-none gap-4 p-0 before:absolute before:bottom-10 before:left-10 before:top-10 before:w-px before:bg-[#c9cbd6] before:content-[''] max-[900px]:mx-auto max-[900px]:w-full max-[900px]:max-w-[620px] max-[900px]:gap-3 max-[460px]:before:left-[33px]"
+          aria-label="Etapas do processo de credenciamento"
+        >
+          {etapasProcesso.map((etapa, indice) => {
+            const destacada = indice === ativa;
+            return (
+              <li key={etapa.titulo} className="relative">
+                <button
+                  type="button"
+                  onMouseEnter={() => definirAtiva(indice)}
+                  onFocus={() => definirAtiva(indice)}
+                  onClick={() => definirAberta(indice)}
+                  aria-haspopup="dialog"
+                  className={[CLASSE_BOTAO, destacada ? "border-[#7156ff] bg-[#ece8ff]" : "border-[#cdd0d9] bg-white"].join(" ")}
+                >
+                  <span className={[CLASSE_NUMERO, destacada ? "bg-[#5037e6] text-white" : "bg-[#ebe6ff] text-[#5037e6]"].join(" ")} aria-hidden="true">
+                    {numeroEtapa(indice)}
                   </span>
-                  <span className="mt-[3px] block text-sm leading-[1.5] text-[#4f5465] max-[460px]:text-[0.75rem]">{etapa.resumo}</span>
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
-
+                  <span className="min-w-0">
+                    <span className={[CLASSE_TITULO, destacada ? "text-[#281b75] text-sm" : "text-[#252837] text-sm"].join(" ")}>
+                      <span className="sr-only">Etapa {indice + 1}: </span>
+                      {etapa.titulo}
+                    </span>
+                    <span className="mt-[3px] block text-sm leading-[1.5] text-[#4f5465] max-[460px]:text-[0.75rem]">{etapa.resumo}</span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+        
       <ModalEtapa
         indice={aberta}
         aoTrocar={(indice) => {
@@ -127,7 +120,13 @@ function ListaEtapas(): JSX.Element {
         }}
         aoFechar={() => definirAberta(null)}
       />
-    </>
+
+      <div className="mt-6 flex items-center justify-center gap-5 max-[560px]:flex-wrap max-[560px]:justify-center min-[901px]:hidden">
+              <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-[50%] min-w-[220px] lg:px-8 max-[900px]:w-full max-[900px]:max-w-[620px]`}>
+                Agendar demonstração
+              </ShimmerButton>
+            </div>
+    </div>
   );
 }
 /* === LISTA DE ETAPAS | fim === */

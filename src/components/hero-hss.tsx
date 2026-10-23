@@ -5,10 +5,9 @@ import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "@/components/ui/shimmer-but
 /* === COMPONENTE HERO | inicio === */
 export function HeroHss(): JSX.Element {
   return (
-    // Tablet e celular: a hero ocupa exatamente a tela abaixo do header (100dvh - 74px). Titulo, texto e botoes mantem
-    // a altura natural; a imagem fica com o espaco que sobra e encolhe, para os botoes aparecerem sempre.
-    <section className="relative isolate mx-auto min-h-[calc(100vh-74px)] w-full max-w-[1480px] overflow-hidden px-4 pb-10 pt-10 max-lg:h-[calc(100dvh-74px)] max-lg:min-h-0 max-lg:py-5 sm:px-8 md:pb-12 md:pt-14 max-lg:md:py-8 lg:px-12 lg:pb-10 lg:pt-8 xl:px-16">
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-132px)] w-full max-w-[1480px] items-center gap-7 max-lg:flex max-lg:h-full max-lg:min-h-0 max-lg:flex-col max-lg:gap-4 md:gap-8 lg:grid-cols-[minmax(680px,0.55fr)_minmax(0,0.45fr)] lg:gap-8">
+    // Em telas menores, a hero cresce com o conteudo para manter os botoes visiveis sem cortar a imagem.
+    <section className="relative isolate mx-auto min-h-[calc(100vh-74px)] w-full max-w-[1480px] overflow-hidden px-4 pb-10 pt-10 max-lg:h-auto max-lg:min-h-0 max-lg:overflow-visible max-lg:py-5 sm:px-8 md:pb-12 md:pt-14 max-lg:md:py-8 lg:px-12 lg:pb-10 lg:pt-8 xl:px-16">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-132px)] w-full max-w-[1480px] items-center gap-7 max-lg:flex max-lg:h-auto max-lg:min-h-0 max-lg:flex-col max-lg:gap-4 md:gap-8 lg:grid-cols-[minmax(680px,0.55fr)_minmax(0,0.45fr)] lg:gap-8">
         {/* No celular e no tablet a coluna de texto vira "contents": titulo, texto, imagem e botoes entram nessa ordem no grid. */}
         <div className="revelar-scroll relative z-20 w-full max-w-[860px] min-w-0 max-lg:mx-auto max-lg:text-center max-lg:contents">
           <h1 className="max-w-full max-lg:order-1 max-lg:shrink-0 text-[1.2rem] font-black leading-[1.15] tracking-normal text-[#070814] min-[380px]:text-[1.65rem] sm:text-[2.55rem] md:text-[3.15rem] lg:text-[3rem] xl:text-[3.25rem] 2xl:text-[3.5rem]">
@@ -36,11 +35,11 @@ export function HeroHss(): JSX.Element {
           </div> */}
         </div>
 
-        <div className="revelar-scroll relative z-10 flex min-h-[330px] max-lg:order-3 max-lg:min-h-0 max-lg:w-full max-lg:flex-1 items-center justify-center overflow-visible sm:min-h-[430px] md:min-h-[530px] lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:min-h-0 lg:w-[56%] lg:justify-center xl:right-[-4rem]">
+        <div className="revelar-scroll relative z-10 flex min-h-0 max-lg:order-3 max-lg:w-full max-lg:flex-none items-center justify-center overflow-visible lg:absolute lg:inset-y-0 lg:right-[-5rem] lg:w-[56%] lg:justify-center xl:right-[-4rem]">
           <img
             src={medicaHero}
             alt="Médica representando o credenciamento digital da Health Sync Solutions"
-            className="relative z-10 w-[70%] max-w-[430px] object-contain max-lg:h-full max-lg:w-auto max-lg:max-w-full sm:max-w-[540px] md:max-w-[650px] lg:max-w-[820px] xl:max-w-[980px] 2xl:max-w-[1080px]"
+            className="relative z-10 h-auto w-[70%] max-w-[430px] object-contain max-lg:max-w-full sm:max-w-[540px] md:max-w-[650px] lg:max-w-[820px] xl:max-w-[980px] 2xl:max-w-[1080px]"
           />
           <div
             aria-hidden="true"
