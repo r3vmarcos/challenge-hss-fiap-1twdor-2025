@@ -1,5 +1,11 @@
 # Histórico de prompts do projeto
 
+## 2026-10-22 - Alinhamento dos textos das etapas de credenciamento
+
+Pedido: refazer resumo, texto e demais descrições das etapas para que fiquem em conformidade com o título de cada uma.
+
+Aplicação: revisados os textos de envio de documentos, análise com apoio de tecnologia, validação de credenciais, resultado do credenciamento e monitoramento contínuo; documentação da landing atualizada.
+
 ## 2026-10-20 - Passos de gastos do curso e atendimentos na carreira
 
 Pedido: depois de "Qual perfil de formação se parece com o seu?", mostrar uma janela para ajustar os gastos do curso e depois outra para os dados dos atendimentos do médico.

@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.44 - Textos das etapas de credenciamento alinhados aos títulos
+
+01 - Revisados resumo, explicação, contribuição da HSS e limite de cada etapa em `src/data/dadosLanding.ts`.
+02 - Envio de documentos, triagem tecnológica, validação de credenciais, resultado do credenciamento e monitoramento contínuo agora descrevem fases distintas e coerentes.
+
 ## v6.43 - Vários locais de atendimento na calculadora de carreira
 
 01 - No passo "Seus atendimentos", o médico pode adicionar até 5 locais (hospital, clínica, pronto atendimento), cada um com nome, atendimentos por plantão, plantões por mês, valor por atendimento e parte que fica com ele.

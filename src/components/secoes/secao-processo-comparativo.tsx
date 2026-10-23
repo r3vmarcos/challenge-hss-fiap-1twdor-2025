@@ -179,7 +179,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
               key={duvida.titulo}
               style={{ gridRow: indice + 2, gridColumn: "1 / -1" }}
               // Hover no par: retangulo com margem agrupando a duvida, a seta e o beneficio.
-              className="group relative grid grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] gap-x-3 before:pointer-events-none before:absolute before:-inset-y-1 before:inset-x-2 before:rounded-[1.1rem] before:border-2 before:border-[#7156ff] before:bg-[#ece8ff]/60 before:opacity-0 before:transition-opacity before:duration-200 before:content-[''] hover:before:opacity-100 motion-reduce:before:transition-none"
+              className="group relative grid grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] gap-x-3 before:pointer-events-none before:absolute before:-inset-y-1 before:inset-x-2 before:rounded-[1.1rem] before:border-2 before:border-[#7256ff21] before:bg-[#ece8ff]/60 before:opacity-0 before:transition-opacity before:duration-200 before:content-[''] hover:before:opacity-100 motion-reduce:before:transition-none"
             >
               <div className="relative mx-5 flex">
                 <CartaoComparativo tipo="sem" {...duvida} />

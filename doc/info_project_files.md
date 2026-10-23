@@ -139,11 +139,11 @@ Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/componen
   processo, economizando tempo e com menos burocracia.
 - Etapas do processo de credenciamento
 - Hover ou foco destaca a etapa; clique abre o modal com "O que acontece", "Com a HSS", "O que continua com a instituição", "Etapa anterior" e "Próxima etapa" (textos em `etapasProcesso`: `texto`, `comHss`, `limite`).
-- Pré-cadastro do médico: Instituição ou médico inicia o fluxo com dados básicos, vínculo desejado e tipo de credenciamento.
-- Envio e triagem documental: Documentos obrigatórios são reunidos, classificados e conferidos conforme o perfil do cenário.
-- Validação de CRM, RQE e certidões: A etapa reduz risco assistencial e organiza a conferência das credenciais profissionais.
-- Análise técnica e aprovação interna: Coordenação, corpo clínico, compliance ou jurídico validam o médico conforme as regras da instituição.
-- Liberação operacional para atuação: O médico é liberado para agenda, plantão, procedimento ou recredenciamento conforme o cenário.
+- Envio de Documentos: O médico envia os documentos e os dados cadastrais exigidos para o tipo de credenciamento.
+- Análise com Apoio de Tecnologia: Os documentos recebidos são organizados e conferidos de acordo com os requisitos do credenciamento.
+- Validação de Credenciais: As credenciais profissionais e certidões são verificadas quanto à regularidade e validade.
+- Resultado do Credenciamento: As áreas responsáveis avaliam o dossiê e registram a decisão ou as pendências.
+- Monitoramento Contínuo: Após a decisão, são acompanhados o status, a validade dos documentos e a necessidade de recredenciamento.
 
 ### Processo Comparativo
 

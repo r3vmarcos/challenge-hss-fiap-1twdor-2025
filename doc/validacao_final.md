@@ -1,5 +1,11 @@
 # Validação Final
 
+## Alteração v6.44
+
+- Textos das cinco etapas de credenciamento revisados para corresponder aos títulos e diferenciar envio, análise, validação, decisão e monitoramento.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+- `npm run dev`: não iniciou porque a porta configurada 5196 já estava ocupada; o servidor existente respondeu HTTP 200 no smoke local.
+
 ## Alteração v6.34
 
 - Refinamento visual da calculadora e do Portal ADM.
