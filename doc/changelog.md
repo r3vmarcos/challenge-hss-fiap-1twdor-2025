@@ -1,5 +1,26 @@
 # Changelog
 
+## v6.48 - Rótulos visíveis no formulário de demonstração
+
+01 - Adicionados labels visíveis para Nome, Empresa, Cargo, E-mail, Telefone e Mensagem.
+02 - Mantidos o layout em coluna, as dimensões e estilos dos campos, os placeholders e o botão existentes.
+
+## v6.47 - Campos do formulário de demonstração
+
+01 - Formulário atualizado para Nome, Empresa, Cargo, E-mail, Telefone e Mensagem, mantendo a estilização original e os placeholders orientativos.
+02 - Nome e e-mail permanecem obrigatórios; empresa e cargo são gravados nos campos já existentes do lead, mantendo o contrato da API e do D1.
+03 - Mantidos os campos em uma coluna, o formato original de placeholders, a aparência do botão e as demais características visuais preexistentes.
+
+## v6.46 - Diferenciais como quebra de objeções
+
+01 - A seção voltou ao formato comparativo: dúvidas frequentes de um lado e respostas da HSS do outro, com seis pares alinhados, painéis responsivos e destaque no hover.
+02 - Conteúdo aborda IA com supervisão humana, organização de informações, interoperabilidade condicionada à viabilidade técnica, governança, implantação acompanhada e estimativa de ROI sem promessa de resultado.
+
+## v6.45 - Diferenciais da plataforma
+
+01 - A seção Diferenciais foi substituída pela apresentação de quatro pilares: IA como apoio à análise humana, integridade de dados, interoperabilidade e governança.
+02 - Layout responsivo em grade com cartões e ícones próprios; textos deixam explícitos os limites da IA e das integrações.
+
 ## v6.44 - Textos das etapas de credenciamento alinhados aos títulos
 
 01 - Revisados resumo, explicação, contribuição da HSS e limite de cada etapa em `src/data/dadosLanding.ts`.

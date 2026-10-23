@@ -106,9 +106,10 @@ Disponível em `/#adm`. Controla os cenários usados pela calculadora pública:
 ## Landing Page
 
 - Hero com chamada para demonstração e para a calculadora
-- Benefícios, Como funciona?, Diferenciais (dúvidas comuns x com a HSS) e Depoimentos
+- Benefícios, Como funciona?, Diferenciais da plataforma e Depoimentos
+- Diferenciais: seção de quebra de objeções com seis pares de dúvidas e respostas sobre IA, dados, integrações, governança, implantação e retorno.
 - Como funciona? apresenta envio de documentos, análise com apoio de tecnologia, validação de credenciais, resultado do credenciamento e monitoramento contínuo.
-- Formulário de lead
+- Formulário de lead com rótulos visíveis para nome, empresa, cargo, e-mail, telefone e mensagem, preservando o layout visual existente.
 - Fundo com parallax, header que esconde a borda no topo e rodapé com navegação e redes
 - Layout responsivo com ajustes específicos para tablet e celular
 - Menu de acessibilidade: contraste, tamanho de fonte, espaçamento, cursor ampliado, modos de daltonismo e leitura por hover

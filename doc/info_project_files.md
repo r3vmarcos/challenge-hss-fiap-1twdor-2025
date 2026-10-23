@@ -73,12 +73,12 @@
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> faz o botão A11y sumir durante scroll e reaparecer após 3 segundos.
 - [`src/components/menu-acessibilidade.tsx`](../src/components/menu-acessibilidade.tsx) -> no mobile, oculta o botão SVG flutuante quando o painel está aberto e destaca o fechar em
   azul.
-- [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> apresenta os painéis em desktop com setas entre os cartões e preserva o empilhamento responsivo em telas menores.
+- [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) -> seção de quebra de objeções com seis pares de dúvidas e respostas, painéis responsivos e destaque visual por par.
 - [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx) -> ajusta largura, título em três linhas e imagem do hero; no desktop, a médica fica posicionada no lado direito,
   centralizada verticalmente e com degradê transparente na base.
 - [`src/components/calculadora/calculadora-roi.tsx`](../src/components/calculadora/calculadora-roi.tsx) -> caixa de 90dvh x 90dvw com grade de campos em duas colunas a partir de
   360px; enquanto ocupa a tela, cabeçalho e botão A11y saem de cena (`calculadora-em-tela` em `src/index.css`).
-- [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> reduz padding e limita largura dos campos no mobile.
+- [`src/components/formulario-lead.tsx`](../src/components/formulario-lead.tsx) -> campos de nome, empresa, cargo, e-mail, telefone e mensagem, mantendo a apresentação original em uma coluna.
 
 ## Textos Visíveis Do Site
 
@@ -145,36 +145,9 @@ Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/componen
 - Resultado do Credenciamento: As áreas responsáveis avaliam o dossiê e registram a decisão ou as pendências.
 - Monitoramento Contínuo: Após a decisão, são acompanhados o status, a validade dos documentos e a necessidade de recredenciamento.
 
-### Processo Comparativo
+### Diferenciais e Quebra de Objeções
 
-Origem visual: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx) Origem dos cards laterais:
-[`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) Origem dos cards informativos: [`src/data/dadosLanding.ts`](../src/data/dadosLanding.ts) Observação mobile: no layout
-compacto são exibidos apenas os cards informativos. Observação responsiva: os cards usam `min-w-0`, `overflow-hidden` e quebra de palavras para não ultrapassar 100vw. Observação de
-conteúdo: os textos em `dadosLanding.ts` devem ser frases finais de UI, sem prefixos internos como `sem S`, `sem R`, `com S` ou `com R`. Observação desktop: os quatro cards
-laterais e os quatro cards informativos foram compactados para caber no palco de `100vh`.
-
-- Sem HSS • processos tradicionais
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-- Etapa tradicional 01: ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO. A ausência de leitura automática — no papel ou em sistemas limitados — abre brechas para o erro humano e aprovações
-  irregulares.
-- Etapa tradicional 02: VALIDAÇÃO ARTESANAL E RETRABALHO. O eterno vai-e-vem de e-mails cobrando anexos frustra o corpo clínico e atrasa o início dos plantões.
-- Etapa tradicional 03: INTEGRAÇÃO LIMITADA. Softwares que não conectam ao CRM ou bases federais tornam o preenchimento de dados repetitivo e lento.
-- Etapa tradicional 04: GESTÃO CAÓTICA E VULNERABILIDADE. Sem rastreabilidade clara, comprovar o compliance durante uma auditoria vira uma operação de resgate estressante.
-- Informação tradicional 01: ANÁLISE EXAUSTIVA E FALSA AUTOMAÇÃO. A ausência de leitura automática — no papel ou em sistemas limitados — abre brechas para o erro humano e
-  aprovações irregulares.
-- Informação tradicional 02: VALIDAÇÃO ARTESANAL E RETRABALHO. O eterno vai-e-vem de e-mails cobrando anexos frustra o corpo clínico e atrasa o início dos plantões.
-- Informação tradicional 03: INTEGRAÇÃO LIMITADA. Softwares que não conectam ao CRM ou bases federais tornam o preenchimento de dados repetitivo e lento.
-- Informação tradicional 04: GESTÃO CAÓTICA E VULNERABILIDADE. Sem rastreabilidade clara, comprovar o compliance durante uma auditoria vira uma operação de resgate estressante.
-- Com HSS • processo digital
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-- Ganho digital 01: IA DE ALTA PRECISÃO. Antecipa erros e inconsistências, acelerando drasticamente aprovações e eliminando falhas humanas.
-- Ganho digital 02: SEGURANÇA BLINDADA. Camadas de validação rigorosas que garantem a autenticidade documental e total conformidade com as normas do setor.
-- Ganho digital 03: ECOSSISTEMA INTEROPERÁVEL. Conecte-se aos principais sistemas hospitalares e bases regulatórias sem trabalho manual e silos de informação.
-- Ganho digital 04: FOCO EM COMPLIANCE. Trilhas de auditoria automáticas e arquitetura focada em compliance para fiscalizações sem estresse.
-- Informação digital 01: IA DE ALTA PRECISÃO. Antecipa erros e inconsistências, acelerando drasticamente aprovações e eliminando falhas humanas.
-- Informação digital 02: SEGURANÇA BLINDADA. Camadas de validação rigorosas que garantem a autenticidade documental e total conformidade com as normas do setor.
-- Informação digital 03: ECOSSISTEMA INTEROPERÁVEL. Conecte-se aos principais sistemas hospitalares e bases regulatórias sem trabalho manual e silos de informação.
-- Informação digital 04: FOCO EM COMPLIANCE. Trilhas de auditoria automáticas e arquitetura focada em compliance para fiscalizações sem estresse.
+Origem: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx). No desktop, cada dúvida fica alinhada à resposta correspondente da HSS e o hover destaca o par; em telas menores, os painéis empilham e, no celular, são exibidas as respostas. Os seis temas são IA com supervisão humana, organização e integridade das informações, interoperabilidade condicionada à viabilidade técnica, governança e rastreabilidade, implantação acompanhada e estimativa de retorno baseada nas premissas informadas.
 
 ### Depoimentos
 
@@ -246,12 +219,14 @@ Origem: [`src/components/formulario-lead.tsx`](../src/components/formulario-lead
 
 - MENOS PAPELADA. (maior, caixa alta) / MÉDICOS ATENDENDO MAIS RÁPIDO. (caixa alta, uma linha, sem quebra; "Menos" e "rápido" em hss-verde)
 - Conte como é o credenciamento hoje na sua instituição. / Ou sua rotina como médico. / Nossa equipe mostra como a HSS reúne documentos, validações e prazos em um só lugar, e quanto tempo você pode ganhar.
-- Nome
-- E-mail
+- Nome (obrigatório)
+- Empresa (grava em `instituicao`)
+- Cargo
+- E-mail (obrigatório)
 - Telefone
-- Você é: Médico / Hospital / clínica (grava em `visao`)
 - Mensagem
-- Campos em uma coluna; instituição, cargo e porte saíram do formulário e seguem vazios no lead.
+- Campos mantidos em uma coluna, com labels visíveis e placeholders orientativos.
+- `visao` continua sendo preenchido a partir do contexto calculadora, sem campo de perfil visível; `porte` permanece vazio.
 - Enviando...
 - Solicitar demonstração
 - Lead salvo com sucesso.

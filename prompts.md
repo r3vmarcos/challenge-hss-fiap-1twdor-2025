@@ -1,5 +1,29 @@
 # Histórico de prompts do projeto
 
+## 2026-10-22 - Rótulos visíveis no formulário
+
+Pedido: adicionar os labels correspondentes aos campos do formulário.
+
+Aplicação: labels visíveis para Nome, Empresa, Cargo, E-mail, Telefone e Mensagem, mantendo as classes e o layout dos campos existentes.
+
+## 2026-10-22 - Campos do formulário conforme referência
+
+Pedido: alterar os campos do formulário de demonstração conforme a captura enviada.
+
+Aplicação: formulário com nome, empresa, cargo, e-mail, telefone e mensagem; depois foi preservada a estilização original (campos em uma coluna, placeholders e botão roxo), alterando somente os campos e o conteúdo dos placeholders.
+
+## 2026-10-22 - Diferenciais como quebra de objeções
+
+Pedido: usar a imagem como insumo para criar estrategicamente uma seção de quebra de objeções com cerca de seis diferenciais, sem copiar o layout da imagem e preservando os principais conceitos visuais da comparação anterior.
+
+Aplicação: retomados os painéis de dúvidas e respostas, com seis pares alinhados e responsivos; conteúdo cobre IA com supervisão humana, dados, integrações, governança, implantação e retorno estimado com premissas claras.
+
+## 2026-10-22 - Diferenciais da plataforma
+
+Pedido: refazer a seção de diferenciais considerando os pontos da imagem de referência.
+
+Aplicação: substituída a comparação de dúvidas e benefícios por quatro cartões sobre IA com supervisão humana, integridade dos dados, interoperabilidade e governança; layout responsivo e documentação atualizada.
+
 ## 2026-10-22 - Alinhamento dos textos das etapas de credenciamento
 
 Pedido: refazer resumo, texto e demais descrições das etapas para que fiquem em conformidade com o título de cada uma.

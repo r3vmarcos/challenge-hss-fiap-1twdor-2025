@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { etapasProcesso } from "@/data/dadosLanding";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import mockupIllustration from "@/assets/steps-section-ilustration 1.png";
+import mockupIllustration from "@/assets/steps-section-ilustration.png";
 
 /* === ESTILOS DAS ETAPAS | inicio === */
 // O destaque (antes fixo na etapa 1) acompanha o mouse e o foco do teclado; a ultima etapa destacada continua destacada.

@@ -1,5 +1,26 @@
 # Validação Final
 
+## Alteração v6.48
+
+- Labels visíveis adicionados aos seis campos do formulário, preservando a estilização existente.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.47
+
+- Campos do formulário alinhados à captura: nome, empresa, cargo, e-mail, telefone e mensagem, preservando a estilização existente e o contrato da API.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.46
+
+- Seção Diferenciais retomou o formato de quebra de objeções com seis pares de dúvidas e respostas, mantendo painéis responsivos e destaque dos pares.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+- `npm run dev` na porta configurada 5196 e smoke HTTP local: HTTP 200.
+
+## Alteração v6.45
+
+- Primeira versão da seção de diferenciais a partir da referência visual, substituída pela v6.46.
+- `npm run build` (`tsc -b && vite build`): aprovado antes da revisão de conteúdo da v6.46.
+
 ## Alteração v6.44
 
 - Textos das cinco etapas de credenciamento revisados para corresponder aos títulos e diferenciar envio, análise, validação, decisão e monitoramento.
