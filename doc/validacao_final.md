@@ -1,5 +1,32 @@
 # Validação Final
 
+## Alteração v6.53
+
+- Ícone de apoio atualizado para escudo roxo contornado com check, sem alterar o CTA ou os demais elementos.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.52
+
+- CTA e frase de apoio adicionados abaixo da ilustração da seção "Como funciona?", sem substituir o conteúdo existente.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.51
+
+- Spans introdutórios abaixo dos H2 de "Como funciona?" e do formulário de demonstração configurados em `0.95rem` a partir de 901px.
+- Tamanhos até 900px e layout das seções preservados.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.50
+
+- Spans do texto introdutório abaixo do H2 de "Como funciona?" com `0.95rem` a partir do breakpoint `lg`; tamanhos menores preservados.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+
+## Alteração v6.49
+
+- Em telas menores que `md`, abas alternam entre os painéis "Dúvidas comuns" e "Com a HSS"; desktop preservado.
+- `npm run build` (`tsc -b && vite build`): aprovado.
+- `npm run dev -- --port 5197` e smoke HTTP local: HTTP 200.
+
 ## Alteração v6.48
 
 - Labels visíveis adicionados aos seis campos do formulário, preservando a estilização existente.

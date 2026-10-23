@@ -6,8 +6,8 @@ export function SecaoDepoimentos(): JSX.Element {
   return (
     <section id="depoimentos" className="scroll-mt-28 overflow-hidden px-4 py-12 sm:px-6 sm:py-24 lg:px-8">
       <div className="mx-auto max-w-[1200px]">
-        <h2 className="revelar-scroll text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#070814]">Depoimentos</h2>
-        <p className="revelar-scroll mt-2 text-base font-bold text-slate-500 sm:mt-3 sm:text-lg">O que nossos clientes estão dizendo:</p>
+        <h2 className="revelar-scroll text-[clamp(2rem,4.2vw,3rem)] font-bold leading-[1.15] tracking-[0.01em] text-slate-900 text-center">Depoimentos</h2>
+        <p className="text-[1rem] revelar-scroll mt-2 font-normal text-slate-700 sm:mt-3 sm:text-lg text-center">Confira os feedbacks de alguns dos nossos clientes</p>
       </div>
 
       <Marquee className="mt-6 sm:mt-12" velocidadeSegundos={58}>

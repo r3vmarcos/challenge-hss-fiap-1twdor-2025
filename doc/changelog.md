@@ -1,5 +1,28 @@
 # Changelog
 
+## v6.53 - Ícone de escudo com check
+
+01 - A frase de apoio na seção "Como funciona?" recebeu um ícone de escudo contornado com check roxo, semelhante à referência enviada.
+
+## v6.52 - CTA de apoio na seção "Como funciona?"
+
+01 - Adicionados, abaixo da ilustração existente, o botão "Conheça a plataforma" e uma frase de apoio com ícone de escudo.
+02 - Mantidos os conteúdos, estilos e interações existentes da seção.
+
+## v6.51 - Tamanho consistente dos spans introdutórios
+
+01 - Aplicado `0.95rem` a todos os spans em textos introdutórios logo abaixo de H2 nas seções "Como funciona?" e formulário de demonstração, a partir de 901px.
+02 - Mantidos os tamanhos para telas de até 900px e os demais estilos das seções.
+
+## v6.50 - Tamanho dos textos abaixo do título "Como funciona?"
+
+01 - Os spans do texto introdutório abaixo do H2 recebem tamanho `0.95rem` em desktop, preservando os tamanhos responsivos em telas menores.
+
+## v6.49 - Alternância mobile nos diferenciais
+
+01 - Adicionadas abas para alternar entre "Dúvidas comuns" e "Com a HSS" em telas menores que md, mantendo os painéis e cartões existentes.
+02 - A apresentação comparativa em desktop permanece inalterada.
+
 ## v6.48 - Rótulos visíveis no formulário de demonstração
 
 01 - Adicionados labels visíveis para Nome, Empresa, Cargo, E-mail, Telefone e Mensagem.

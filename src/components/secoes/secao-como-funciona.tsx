@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { etapasProcesso } from "@/data/dadosLanding";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { ShimmerButton, CLASSE_BOTAO_CELULAR } from "@/components/ui/shimmer-button";
 import mockupIllustration from "@/assets/steps-section-ilustration.png";
+import iconeShieldCheck from "@/assets/icons/shield-check.svg";
 
 /* === ESTILOS DAS ETAPAS | inicio === */
 // O destaque (antes fixo na etapa 1) acompanha o mouse e o foco do teclado; a ultima etapa destacada continua destacada.
@@ -20,15 +22,15 @@ export function SecaoComoFunciona(): JSX.Element {
     <section id="como-funciona" lang="pt-BR" className="scroll-mt-28 px-4 py-12 max-[900px]:py-[42px] sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="mb-[34px] max-[900px]:mb-[26px]">
-          <h2 className=" mb-[22px] text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#080b15] max-[900px]:mb-4">Como funciona?</h2>
-          <p className="mx-auto max-w-[1070px] text-base leading-[1.45] text-slate-700 max-[900px]:max-w-[680px] max-[900px]:text-[0.9375rem] max-[900px]:leading-[1.6] max-[460px]:text-[0.875rem]">
-            <span className="lg:whitespace-nowrap">A Health Sync estrutura as etapas do credenciamento médico em uma plataforma digital, auditável e rastreável.</span>
+          <h2 className=" mb-[22px] text-[clamp(2rem,4.2vw,3rem)] font-bold leading-[1.15] tracking-[0.01em] text-slate-900 max-[900px]:mb-4">Como funciona?</h2>
+          <p className="mx-auto max-w-[1070px] leading-[1.45] text-slate-700 max-[900px]:max-w-[680px] max-[900px]:text-[0.9375rem] max-[900px]:leading-[1.6] max-[460px]:text-[0.875rem]">
+            <span className="min-[901px]:whitespace-nowrap ">A Health Sync estrutura as etapas do credenciamento médico em uma plataforma digital, auditável e rastreável.</span>
             <br />
             <span>As instituições e médicos têm o controle do processo, economizando tempo e com menos burocracia.</span>
           </p>
         </div>
 
-    {/* <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
+        {/* <h2 className="text-[2.15rem] font-black leading-tight text-[#070814] sm:text-[2.8rem]">
             Benefícios da nossa solução
           </h2>
           <p className="mt-5 text-base font-medium leading-7 text-[#171826] sm:text-lg"></p> */}
@@ -36,6 +38,18 @@ export function SecaoComoFunciona(): JSX.Element {
         <div className="grid grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] items-center gap-[56px] max-[900px]:grid-cols-1 max-[900px]:gap-6">
           <figure className="mx-0 min-w-0 max-[900px]:mx-auto max-[900px]:max-w-[620px]">
             <img className="block h-auto w-full" src={mockupIllustration} width="607" height="535" loading="lazy" decoding="async" alt="Prévia da plataforma HSS para credenciamento médico, com envio de documentos, checklist, análise com apoio de IA e acompanhamento do processo." />
+            <div className="mt-6 flex items-center justify-center gap-5 max-[560px]:flex-wrap max-[560px]:justify-center">
+              <ShimmerButton href="#lead" className={`${CLASSE_BOTAO_CELULAR} px-6 py-4 lg:w-auto lg:min-w-[220px] lg:px-8`}>
+                Agendar demonstração
+              </ShimmerButton>
+              <span aria-hidden="true" className="h-10 w-px shrink-0 bg-hss-violeta/20 max-[560px]:hidden" />
+              <div className="flex min-w-0 items-center gap-3 text-left">
+                <img src={iconeShieldCheck} alt="" aria-hidden="true" className="h-9 w-9 shrink-0" />
+                <span className="max-w-[190px] text-[0.85rem] leading-5 text-slate-600">
+                  Processo seguro, com total transparência
+                </span>
+              </div>
+            </div>
           </figure>
           <ListaEtapas />
         </div>
@@ -93,11 +107,11 @@ function ListaEtapas(): JSX.Element {
                   {numeroEtapa(indice)}
                 </span>
                 <span className="min-w-0">
-                  <span className={[CLASSE_TITULO, destacada ? "text-[#281b75]" : "text-[#252837]"].join(" ")}>
+                  <span className={[CLASSE_TITULO, destacada ? "text-[#281b75] text-sm" : "text-[#252837] text-sm"].join(" ")}>
                     <span className="sr-only">Etapa {indice + 1}: </span>
                     {etapa.titulo}
                   </span>
-                  <span className="mt-[3px] block text-[0.8125rem] leading-[1.5] text-[#4f5465] max-[460px]:text-[0.75rem]">{etapa.resumo}</span>
+                  <span className="mt-[3px] block text-sm leading-[1.5] text-[#4f5465] max-[460px]:text-[0.75rem]">{etapa.resumo}</span>
                 </span>
               </button>
             </li>

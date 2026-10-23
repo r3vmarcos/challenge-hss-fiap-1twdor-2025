@@ -1,5 +1,35 @@
 # Histórico de prompts do projeto
 
+## 2026-10-23 - Ícone de escudo semelhante à referência
+
+Pedido: substituir o ícone da parte adicionada por um ícone mais bonito e parecido com o escudo da referência.
+
+Aplicação: criado e aplicado um SVG exclusivo de escudo roxo contornado com check, sem alteração do botão ou do layout.
+
+## 2026-10-23 - CTA e frase junto à ilustração de "Como funciona?"
+
+Pedido: adicionar o `ShimmerButton`, uma ilustração e uma frase de Lorem Ipsum conforme referência, sem modificar o conteúdo existente.
+
+Aplicação: ilustração existente mantida; botão "Conheça a plataforma", ícone de escudo e frase Lorem Ipsum adicionados abaixo dela.
+
+## 2026-10-23 - Tamanho dos spans abaixo dos H2 nas seções
+
+Pedido: aplicar `0.95rem` em desktop a todos os spans logo abaixo dos H2 de todas as seções; corrigir o tamanho na seção "Como funciona?".
+
+Aplicação: os spans introdutórios de "Como funciona?" e do formulário de demonstração usam `0.95rem` a partir de 901px, mantendo os tamanhos mobile.
+
+## 2026-10-23 - Tamanho do texto introdutório de "Como funciona?"
+
+Pedido: deixar todos os spans logo abaixo dos h2 com tamanho `0.95rem` para desktop.
+
+Aplicação: os dois spans do texto introdutório abaixo do H2 da seção "Como funciona?" receberam `lg:text-[0.95rem]`; estilos de telas menores preservados.
+
+## 2026-10-23 - Alternância mobile nos diferenciais
+
+Pedido: adicionar botões no mobile para alternar entre "Dúvidas comuns" e "Com a HSS", preservando o design existente.
+
+Aplicação: seção mobile passou a exibir um painel por vez por meio de abas acessíveis; cartões, painéis e comparação desktop foram mantidos.
+
 ## 2026-10-22 - Rótulos visíveis no formulário
 
 Pedido: adicionar os labels correspondentes aos campos do formulário.

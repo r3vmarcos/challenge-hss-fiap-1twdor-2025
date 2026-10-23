@@ -67,7 +67,7 @@ export function FormularioLead({ visaoPadrao }: FormularioLeadProps): JSX.Elemen
           </h2>
           {/* Tudo alinhado a esquerda. Convite (branco, 600) separado da explicacao (branco 75%, normal). */}
           <p className="mt-5 max-w-[42ch] text-[0.9375rem] font-semibold leading-relaxed text-white sm:text-base">
-            <span className="block">Preencha o formulário para que nossa equipe entre em contato e agende uma apresentação da plataforma, personalizada para a realidade da sua instituição.</span>
+            <span className="block min-[901px]:text-[0.95rem]">Preencha o formulário para que nossa equipe entre em contato e agende uma apresentação da plataforma, personalizada para a realidade da sua instituição.</span>
             {/* <span className="block">Ou sua rotina como médico.</span> */}
           </p>
           <p className="mt-3 max-w-[42ch] text-[0.9375rem] font-normal leading-relaxed text-white/75 sm:text-base">

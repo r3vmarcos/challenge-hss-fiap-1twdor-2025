@@ -310,7 +310,7 @@ export function SecaoBeneficios(): JSX.Element {
         className="scroll-mt-[74px] px-4 py-16 sm:px-6 md:py-20"
       >
         <div className="mx-auto max-w-[720px]">
-          <h2 className="text-[clamp(2rem,4.2vw,3rem)] font-black uppercase leading-[1.15] tracking-[0.01em] text-[#070814] sm:text-center">
+          <h2 className="text-[clamp(2rem,4.2vw,3rem)] font-bold leading-[1.15] tracking-[0.01em] text-slate-800 sm:text-center">
             Benefícios da nossa solução
           </h2>
           <p className="mt-5 text-sm font-thin leading-7 text-slate-700 sm:text-lg sm:text-center">
@@ -334,10 +334,10 @@ export function SecaoBeneficios(): JSX.Element {
                   <span className="pointer-events-none absolute right-3 top-3 flex h-16 w-16 items-center justify-center text-hss-roxo opacity-[0.08] [&>svg]:h-full [&>svg]:w-full">
                     {beneficio.icone}
                   </span>
-                  <h3 className="relative pr-12 text-lg font-black leading-tight text-[#070814]">
+                  <h3 className="relative pr-12 text-lg font-bold leading-tight text-slate-800">
                     {beneficio.titulo}
                   </h3>
-                  <p className="relative mt-2 hyphens-auto text-sm font-medium leading-6 text-[#1f2937]">
+                  <p className="relative mt-2 hyphens-auto text-sm font-medium leading-6 text-slate-800">
                     {beneficio.texto}
                   </p>
                 </article>
@@ -381,12 +381,12 @@ export function SecaoBeneficios(): JSX.Element {
         <div className="mx-auto grid h-[calc(100vh-74px)] max-w-[1200px] items-center gap-12 overflow-hidden px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-2">
           {/* === TEXTO TRAVADO NO MEIO DA TELA | inicio === */}
           <div className="self-center">
-            <h2 className="max-w-[450px] text-[2.5rem] font-black leading-[1.12] tracking-[0.01em] text-slate-900 sm:text-[3.1rem]">
+            <h2 className="max-w-[450px] text-[2.5rem] font-bold   leading-[1.12] tracking-[0.01em] text-slate-900 sm:text-[3.1rem]">
               Benefícios da nossa
               solução
             </h2>
 
-            <p className="mt-7 mb-8 max-w-[460px] text-base font-medium leading-8 text-slate-700">
+            <p className="mt-7 mb-8 max-w-[460px] text-base font-normal leading-8 text-slate-700">
               Transforme o
               credenciamento médico em
               um processo mais
@@ -436,7 +436,7 @@ export function SecaoBeneficios(): JSX.Element {
                       {beneficio.icone}
                     </span>
 
-                    <h3 className="relative pr-12 text-xl font-black leading-tight text-slate-800">
+                    <h3 className="relative pr-12 text-xl font-bold leading-tight text-slate-800">
                       {beneficio.titulo}
                     </h3>
 

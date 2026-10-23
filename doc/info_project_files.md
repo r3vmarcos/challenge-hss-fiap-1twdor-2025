@@ -117,6 +117,7 @@ Origem: [`src/components/hero-hss.tsx`](../src/components/hero-hss.tsx)
 Origem: [`src/components/secao-solucao.tsx`](../src/components/secao-solucao.tsx)
 
 - Benefícios da nossa solução
+- Cartões de benefícios com ícones no topo direito como marca d'água translúcida.
 - Transforme o credenciamento médico em um processo mais organizado, rastreável e eficiente. Centralize validações, reduza retrabalho e acompanhe cada etapa com mais controle
   operacional.
 - Os cards exibem ícones no topo direito como marca d'água translúcida, sem numeração visível.
@@ -137,8 +138,11 @@ Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/componen
 - Como funciona?
 - A Health Sync estrutura cada etapa do credenciamento médico em uma plataforma digital única, auditável e rastreável - para que instituições e médicos assumam o controle do
   processo, economizando tempo e com menos burocracia.
+- Os spans dos textos introdutórios logo abaixo dos H2 de "Como funciona?" e do formulário de demonstração usam `0.95rem` a partir de 901px.
 - Etapas do processo de credenciamento
 - Hover ou foco destaca a etapa; clique abre o modal com "O que acontece", "Com a HSS", "O que continua com a instituição", "Etapa anterior" e "Próxima etapa" (textos em `etapasProcesso`: `texto`, `comHss`, `limite`).
+- Abaixo da ilustração existente, há um botão "Conheça a plataforma" e uma frase de apoio com ícone de escudo.
+- O ícone de apoio usa um SVG exclusivo de escudo contornado com check roxo.
 - Envio de Documentos: O médico envia os documentos e os dados cadastrais exigidos para o tipo de credenciamento.
 - Análise com Apoio de Tecnologia: Os documentos recebidos são organizados e conferidos de acordo com os requisitos do credenciamento.
 - Validação de Credenciais: As credenciais profissionais e certidões são verificadas quanto à regularidade e validade.
@@ -147,7 +151,7 @@ Origem visual: [`src/components/secoes/secao-como-funciona.tsx`](../src/componen
 
 ### Diferenciais e Quebra de Objeções
 
-Origem: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx). No desktop, cada dúvida fica alinhada à resposta correspondente da HSS e o hover destaca o par; em telas menores, os painéis empilham e, no celular, são exibidas as respostas. Os seis temas são IA com supervisão humana, organização e integridade das informações, interoperabilidade condicionada à viabilidade técnica, governança e rastreabilidade, implantação acompanhada e estimativa de retorno baseada nas premissas informadas.
+Origem: [`src/components/secoes/secao-processo-comparativo.tsx`](../src/components/secoes/secao-processo-comparativo.tsx). No desktop, cada dúvida fica alinhada à resposta correspondente da HSS e o hover destaca o par; em telas menores que `md`, abas permitem alternar entre "Dúvidas comuns" e "Com a HSS", preservando os painéis e cartões existentes.
 
 ### Depoimentos
 

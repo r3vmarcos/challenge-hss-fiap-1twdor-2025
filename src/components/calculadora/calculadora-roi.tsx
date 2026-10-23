@@ -668,7 +668,7 @@ function CabecalhoCalculadora({
   return (
     <header className="shrink-0 border-b border-hss-violeta/15 bg-gradient-to-r from-blue-900/15 via-blue-900/5 to-white px-5 pt-4 sm:px-8">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
-        <h2 className="text-[clamp(1.125rem,4.6vw,1.625rem)] font-semibold uppercase leading-tight tracking-[0.02em] text-slate-950">Calcule seu retorno</h2>
+        <h2 className="text-[clamp(1.125rem,4.6vw,1.625rem)] lg:text-[2.75rem] font-extrabold leading-tight tracking-[0.02em] text-slate-800">Calculadora ROI</h2>
         {etapa > 0 ? (
           <div className="flex items-center gap-4 text-sm">
             <span className="whitespace-nowrap font-semibold text-slate-950">{textoEtapa}</span>

@@ -10,8 +10,11 @@ import iconeLock from "@/assets/icons/lock.svg";
 import iconeShield from "@/assets/icons/shield.svg";
 import iconeUsers from "@/assets/icons/users.svg";
 import iconeZap from "@/assets/icons/zap.svg";
+import { useState } from "react";
 import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "../ui/shimmer-button";
 /* === IMPORTAÇÕES | fim === */
+
+type TipoPainel = "sem" | "com";
 
 // /* === TIPOS | inicio === */
 // type EstadoTravamento = "antes" | "travado" | "depois";
@@ -65,6 +68,7 @@ import { CLASSE_BOTAO_CELULAR, ShimmerButton } from "../ui/shimmer-button";
 
 // /* === SEÇÃO PROCESSO COMPARATIVO | inicio === */
 export function SecaoProcessoComparativo(): JSX.Element {
+  const [painelMobile, definirPainelMobile] = useState<TipoPainel>("com");
   const duvidas = [
     {
       icone: iconeFileText,
@@ -131,18 +135,49 @@ export function SecaoProcessoComparativo(): JSX.Element {
     >
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="mb-5 sm:mb-6 lg:mb-[2dvh]">
-          <h2 id="diferenciais-title" className="text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.15] tracking-[0.01em] text-[#080b15]">Diferenciais</h2>
+          <h2 id="diferenciais-title" className="text-[clamp(2rem,4.2vw,3rem)] font-bold leading-[1.15] tracking-[0.01em] text-slate-900">Dúvidas comuns</h2>
           {/* No celular o painel "Dúvidas comuns" some, entao este texto (que fala das duvidas) tambem sai. */}
-          <p className="mx-auto mt-2 max-w-[620px] text-sm leading-6 text-slate-600 max-sm:hidden sm:text-base">
+          <p className="mx-auto mt-2 max-w-[620px] leading-6 text-slate-700">
             Entenda as principais dúvidas dos gestores e veja como a HSS torna a implementação segura, viável e eficiente.
           </p>
         </div>
       </div>
 
       <div className="flex justify-center flex-col">
-        {/* Mobile: os dois paineis empilhados. No celular (abaixo de sm) so aparece "Com a HSS", para encurtar a secao. */}
-        <div className="mx-auto grid w-full max-w-[1120px] gap-4 md:hidden">
-          <article className="rounded-2xl bg-[#f0f3f8] p-4 max-sm:hidden sm:p-5" aria-labelledby="comparison-without-title-mobile">
+        {/* Mobile: alterna entre as dúvidas e os benefícios sem alterar a apresentação desktop. */}
+        <div className="mx-auto w-full max-w-[1120px] md:hidden">
+          <div role="group" aria-label="Comparação dos diferenciais" className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-[#f0f3f8] p-1">
+            <button
+              type="button"
+              id="comparison-mobile-tab-sem"
+              aria-pressed={painelMobile === "sem"}
+              aria-controls="comparison-mobile-panel-sem"
+              onClick={() => definirPainelMobile("sem")}
+              className={`rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hss-violeta ${
+                painelMobile === "sem" ? "bg-white text-[#17223f] shadow-sm" : "text-slate-600 hover:bg-white/70"
+              }`}
+            >
+              Dúvidas comuns
+            </button>
+            <button
+              type="button"
+              id="comparison-mobile-tab-com"
+              aria-pressed={painelMobile === "com"}
+              aria-controls="comparison-mobile-panel-com"
+              onClick={() => definirPainelMobile("com")}
+              className={`rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hss-violeta ${
+                painelMobile === "com" ? "bg-[#079879] text-white shadow-sm" : "text-slate-600 hover:bg-white/70"
+              }`}
+            >
+              Com a HSS
+            </button>
+          </div>
+          <article
+            id="comparison-mobile-panel-sem"
+            hidden={painelMobile !== "sem"}
+            aria-labelledby="comparison-mobile-tab-sem"
+            className="rounded-2xl bg-[#f0f3f8] p-4 sm:p-5"
+          >
             <CabecalhoPainel tipo="sem" idTitulo="comparison-without-title-mobile" />
             <div className="mt-2.5 grid gap-2">
               {duvidas.map((item) => (
@@ -150,7 +185,12 @@ export function SecaoProcessoComparativo(): JSX.Element {
               ))}
             </div>
           </article>
-          <article className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5" aria-labelledby="comparison-with-title-mobile">
+          <article
+            id="comparison-mobile-panel-com"
+            hidden={painelMobile !== "com"}
+            aria-labelledby="comparison-mobile-tab-com"
+            className="rounded-2xl bg-[#e8f5f2] p-4 sm:p-5"
+          >
             <CabecalhoPainel tipo="com" idTitulo="comparison-with-title-mobile" />
             <div className="mt-2.5 grid gap-2">
               {beneficios.map((item) => (
@@ -194,7 +234,7 @@ export function SecaoProcessoComparativo(): JSX.Element {
           ))}
         </div>
 
-          <ShimmerButton href="#lead" className={`mt-6 lg:mt-[2.5dvh] max-w-[1100px] w-full mx-auto h-10 shrink-0 whitespace-nowrap px-3 text-[0.625rem] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-12 lg:px-6 lg:text-[0.8125rem] ${CLASSE_BOTAO_CELULAR}`}>
+          <ShimmerButton href="#lead" className={`mt-6 lg:mt-[2.5dvh] max-w-[1100px] w-full mx-auto h-10 shrink-0 whitespace-nowrap px-3 text-[0.625rem] leading-none transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.04] lg:h-12 lg:px-6 lg:text-[1rem] ${CLASSE_BOTAO_CELULAR}`}>
             Agendar demonstração
           </ShimmerButton>
 
@@ -207,8 +247,6 @@ export function SecaoProcessoComparativo(): JSX.Element {
 /* === SEÇÃO PROCESSO COMPARATIVO | fim === */
 
 /* === PARTES DO COMPARATIVO | inicio === */
-type TipoPainel = "sem" | "com";
-
 function CabecalhoPainel({ tipo, idTitulo }: { tipo: TipoPainel; idTitulo: string }): JSX.Element {
   const comHss = tipo === "com";
 
@@ -222,7 +260,7 @@ function CabecalhoPainel({ tipo, idTitulo }: { tipo: TipoPainel; idTitulo: strin
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#aab6c5] text-xl font-semibold text-white">?</span>
       )}
       <div>
-        <h3 id={idTitulo} className={comHss ? "text-lg font-black text-[#075f50]" : "text-lg font-black text-[#17223f]"}>
+        <h3 id={idTitulo} className={comHss ? "text-lg font-bold text-[#075f50]" : "text-lg font-bold text-slate-800"}>
           {comHss ? "Com a HSS" : "Dúvidas comuns"}
         </h3>
         <p className={comHss ? "mt-0.5 text-sm leading-5 text-[#47756d]" : "mt-0.5 text-sm leading-5 text-slate-600"}>
