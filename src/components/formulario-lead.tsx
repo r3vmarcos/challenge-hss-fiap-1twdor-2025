@@ -61,7 +61,7 @@ export function FormularioLead({ visaoPadrao }: FormularioLeadProps): JSX.Elemen
         <div className="revelar-scroll min-w-0 rounded-[1.5rem] bg-hss-roxo p-5 text-white sm:flex sm:flex-col sm:justify-center sm:p-8">
           {/* Duas linhas fixas; a segunda nunca quebra. O tamanho acompanha a largura do cartao:
               ate lg o cartao ocupa a tela; a partir de lg ele tem ~45% da largura. 2a linha em caixa alta: ~3,7vw (lg: ~1,6vw). */}
-          <h2 className="lg:text-[2.75rem] md:text-[45px] font-black leading-[1.15] tracking-normal lg:text-[clamp(1.125rem,1.9vw,1.625rem)]">
+          <h2 className="lg:text-[2.75rem] md:text-[2rem] sm:text-[1.75rem] max-sm:text-[1.5rem] font-black leading-[1.15] tracking-normal">
             {/* 1a linha em destaque: maior e em caixa alta. Frase curta, cabe em uma linha com ~7,6vw (lg: ~3,1vw). */}
             Agendar demonstração
           </h2>
